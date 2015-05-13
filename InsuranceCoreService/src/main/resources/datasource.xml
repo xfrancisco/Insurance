@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-lazy-init="true">
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
+		p:driverClass="${hibernate.connection.driver_class:oracle.jdbc.driver.OracleDriver}"
+		p:jdbcUrl="${hibernate.connection.url}"
+		p:user="${hibernate.connection.username}"
+		p:password="${hibernate.connection.password}"
+		p:minPoolSize="${hibernate.c3p0.minPoolSize:1}"
+		p:maxPoolSize="${hibernate.c3p0.maxPoolSize:30}"
+		p:maxIdleTime="${hibernate.c3p0.maxIdleTime:10}"
+		p:preferredTestQuery="${hibernate.c3p0.preferredTestQuery:SELECT 1 FROM DUAL}" />
+</beans>
+
