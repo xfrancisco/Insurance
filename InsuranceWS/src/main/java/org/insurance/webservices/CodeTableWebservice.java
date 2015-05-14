@@ -29,7 +29,7 @@ public class CodeTableWebservice {
 	}*/
 
 	@GET
-	@Path("/{version}")
+	@Path("/version")
 	@ApiOperation(value = "Version")
 	public ResponseWrapper<VersionOut> getVersion() {
 		ResponseWrapper<VersionOut> responseWrapper = new ResponseWrapper<VersionOut>();

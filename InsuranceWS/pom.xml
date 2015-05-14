@@ -3,7 +3,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.sample.rest</groupId>
-	<artifactId>Insurance</artifactId>
+	<artifactId>InsuranceWS</artifactId>
 	<version>1</version>
 	<packaging>war</packaging>
 
@@ -250,7 +250,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 			<version>1.6.11</version>
 		</dependency>
 	</dependencies>
+	
+
 	<build>
+	
+	
 	<finalName>${project.name}</finalName>
 		<plugins>
 			
@@ -268,8 +272,9 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 				<configuration>
 					<webXml>src\main\webapp\WEB-INF\web.xml</webXml>
 					<packagingExcludes>**/web.xml</packagingExcludes>
-					<outputDirectory>D:\Programs\apache-tomcat-8.0.8\webapps</outputDirectory>
+					<outputDirectory>C:\applis\apache-tomcat-7.0.61\webapps</outputDirectory>
 				</configuration>
+				
 			</plugin>
 			
 			<plugin>

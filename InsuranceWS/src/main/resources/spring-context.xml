@@ -22,9 +22,9 @@
 	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@172.30.5.243:1521:CGANEW4" />
+		<property name="url" value="jdbc:oracle:thin:@52.28.100.44:1521:DEV" />
 		<property name="username" value="webuser" />
-		<property name="password" value="webuser" />
+		<property name="password" value="webuser00" />
 	</bean>
 	
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
