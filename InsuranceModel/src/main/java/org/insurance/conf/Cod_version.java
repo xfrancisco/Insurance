@@ -1,4 +1,4 @@
-package org.insurance.version;
+package org.insurance.conf;
 
 import java.util.Date;
 

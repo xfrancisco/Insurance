@@ -5,26 +5,38 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	
 	<bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor" />
+	
+	<util:properties id="codeTables"
+		location="classpath:org/insurance/codeTables.properties" />
 
 	<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	<property name="location">
 	    <value>/properties/database.properties</value>
 	</property>
 	</bean>  -->
-	
+	<!-- 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@52.28.100.44:1521:DEV" />
 		<property name="username" value="webuser" />
 		<property name="password" value="webuser00" />
+	</bean> -->
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:MYCGAWEB" />
+		<property name="username" value="webuser" />
+		<property name="password" value="webuser" />
 	</bean>
 	
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -33,7 +45,8 @@
 		</property>
 		<property name="annotatedClasses">
 			<list>
-				<value>org.insurance.version.Cod_version</value>
+				<value>org.insurance.conf.Cod_version</value>
+				<value>org.insurance.conf.Cod_civility</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -54,7 +67,6 @@
 	
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
-
 	<bean id="validationMessageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename"
@@ -75,15 +87,20 @@
 	</bean>
 
 	<context:annotation-config/>
+	<!-- <mvc:annotation-driven/> -->
+	
 	<context:component-scan base-package="org.insurance,
 											org.insurance.dao,
 											org.insurance.dao.impl,
 											org.insurance.common,
 											org.insurance.common.impl,
-											org.insurance.webservices" >
+											org.insurance.webservices,
+											org.insurance.exception" >
  		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Info"/>
+ 		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Check"/>
 		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Manager"/>
 		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Operation"/>
+													  	
 	</context:component-scan>                          
 </beans>
 

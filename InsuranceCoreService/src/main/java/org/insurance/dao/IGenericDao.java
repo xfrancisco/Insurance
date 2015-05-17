@@ -25,7 +25,6 @@ import org.hibernate.transform.ResultTransformer;
  * </ul>
  * Pour éviter de charger la totalité des résultat d'une requête importante en mémoire, on peut utiliser {@link #setMaxResultLimit(int)} pour limiter le nombre d'enregistrements retournés (désactivé par défaut).
  * L'ensemble des exceptions sql/hibernate sont catchées et converties en TechnicalException avec le chaînage vers l'exception d'origine
- * @author Valérian MOQUAY
  * @see DBServiceHelper
  */
 public interface IGenericDao {

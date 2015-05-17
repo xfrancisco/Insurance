@@ -20,7 +20,6 @@ public final class NonNullUtils {
 	 * @param nullableList Liste à retourner si non null
 	 * @return Liste vide si nullableList est null, nullableList sinon
 	 */
-	@SuppressWarnings("null")
 	public static final <T> List<T> nonNullList(final/*@Nullable*/List<T> nullableList) {
 		if (nullableList == null) {
 			return Collections.emptyList();
@@ -34,7 +33,6 @@ public final class NonNullUtils {
 	 * @param nullableMap Map à retourner si non null
 	 * @return Map vide si nullableMap est null, nullableMap sinon
 	 */
-	@SuppressWarnings({ "null" })
 	public static final <K, V> Map<K, V> nonNullMap(final/*@Nullable*/Map<K, V> nullableMap) {
 		if (nullableMap == null) {
 			return Collections.emptyMap();

@@ -26,10 +26,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.google.common.collect.Lists;
 
 @ControllerAdvice
+@EnableWebMvc
 public class ExceptionControllerAdvice {
 
 	@Inject
@@ -68,7 +70,6 @@ public class ExceptionControllerAdvice {
 		return builder.getResponseWrapper();
 	}
 
-	@SuppressWarnings("deprecation")
 	@ExceptionHandler(MethodConstraintViolationException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
@@ -145,6 +146,20 @@ public class ExceptionControllerAdvice {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
 	public ResponseWrapper<String> handleGenericException(Exception exception) {
+		ResponseBuilder<String> builder = new ResponseBuilder<>();
+		builder.addReturnCode(TechnicalException.ErrorCode.ERR_TECH_GEN_DEFAULT.name())
+				.addMessage(propertiesUtils.getMessage(TechnicalException.ErrorCode.ERR_TECH_GEN_DEFAULT.name(), new Object[] {}, ""))
+				.addSeverity(Severity.ERROR);
+		if (isStackTracePrintingEnabled) {
+			builder.addData(ExceptionUtils.getStackTrace(exception));
+		}
+		return builder.getResponseWrapper();
+	}
+	
+	@ExceptionHandler(NullPointerException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ResponseBody
+	public ResponseWrapper<String> handleGenericException(NullPointerException exception) {
 		ResponseBuilder<String> builder = new ResponseBuilder<>();
 		builder.addReturnCode(TechnicalException.ErrorCode.ERR_TECH_GEN_DEFAULT.name())
 				.addMessage(propertiesUtils.getMessage(TechnicalException.ErrorCode.ERR_TECH_GEN_DEFAULT.name(), new Object[] {}, ""))

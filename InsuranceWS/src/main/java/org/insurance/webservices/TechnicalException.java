@@ -70,12 +70,10 @@ public class TechnicalException extends GenericTechnicalException {
 	}
 
 	@Override
-	@SuppressWarnings("null")
 	public String getErrorCode() {
 		return errorCode.name();
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	public Object[] getMessageArgs() {
 		Object[] localMessageArgs = Arrays.copyOf(this.messageArgs, this.messageArgs.length);

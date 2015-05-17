@@ -29,7 +29,6 @@ import org.hibernate.criterion.Criterion;
  *   condition( eq("colA",valueForA) ).add( isNotNull("colB") )
  *   );
  * }</pre>
- * @author Valérian MOQUAY
  * @see IGenericDao#getByCriteria(Class, Condition)
  * @see IGenericDao#getFirstByCriteria(Class, Condition)
  * @see org.hibernate.criterion.Restrictions
@@ -72,7 +71,6 @@ public class Condition implements Iterable<Criterion> {
 	/**
 	 * Permet d'accéder à l'ensemble des critères contenus dans la condition
 	 */
-	@SuppressWarnings("null")
 	@Override
 	public Iterator<Criterion> iterator() {
 		final Iterator<Criterion> result = criterions.iterator();

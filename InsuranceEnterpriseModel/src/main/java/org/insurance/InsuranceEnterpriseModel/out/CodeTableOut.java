@@ -4,6 +4,8 @@ public class CodeTableOut {
 
 	private String label;
 	private String code;
+	private boolean isValid = false;
+	
 	public String getLabel() {
 		return label;
 	}
@@ -16,11 +18,11 @@ public class CodeTableOut {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
-	
-	
+	public boolean getIsValid() {
+		return isValid;
+	}
 
-	
-	
-	
+	public void setIsValid(boolean isValid) {
+		this.isValid = isValid;
+	}
 }
