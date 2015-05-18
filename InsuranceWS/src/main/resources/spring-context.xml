@@ -19,24 +19,17 @@
 	<util:properties id="codeTables"
 		location="classpath:org/insurance/codeTables.properties" />
 
-	<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	<property name="location">
-	    <value>/properties/database.properties</value>
+	    <value>classpath:org/insurance/database.properties</value>
 	</property>
-	</bean>  -->
-	<!-- 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@52.28.100.44:1521:DEV" />
-		<property name="username" value="webuser" />
-		<property name="password" value="webuser00" />
-	</bean> -->
+	</bean>
 	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:MYCGAWEB" />
-		<property name="username" value="webuser" />
-		<property name="password" value="webuser" />
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
 	</bean>
 	
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -47,6 +40,15 @@
 			<list>
 				<value>org.insurance.conf.Cod_version</value>
 				<value>org.insurance.conf.Cod_civility</value>
+				<value>org.insurance.conf.Cli_client</value>
+				<value>org.insurance.conf.Cli_address</value>
+				<value>org.insurance.conf.Cod_country</value>
+				<value>org.insurance.conf.Cod_zip</value>
+				<value>org.insurance.conf.Cli_contract</value>
+				<value>org.insurance.conf.Cod_contract</value>
+				<value>org.insurance.conf.Cod_cancel</value>
+				<value>org.insurance.conf.Cli_guarantee</value>
+				<value>org.insurance.conf.Cod_guarantee</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

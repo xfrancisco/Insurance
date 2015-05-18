@@ -15,8 +15,10 @@ import org.insurance.InsuranceEnterpriseModel.out.VersionOut;
 import org.insurance.common.ICodeTableService;
 import org.insurance.conf.Cod_version;
 import org.insurance.dao.IGenericDao;
+import org.insurance.exception.CodesException;
 import org.insurance.exception.InsuranceException;
-import org.insurance.exception.WSTechnicalException;
+import org.insurance.exception.TechnicalException;
+import org.insurance.exception.TechnicalException.ErrorCode;
 import org.insurance.service.info.ICodesInfo;
 import org.insurance.util.MappingUtils;
 import org.springframework.stereotype.Service;
@@ -52,7 +54,7 @@ public class CodeTableService implements ICodeTableService {
 			query = codeTablesProperties.getProperty(tablename + QUERY_SUFFIX);
 		}
 		if (Strings.isNullOrEmpty(query)){
-			
+			throw new CodesException(CodesException.ErrorCode.ERR_BIZ_CODES_UNKNOWN_TABLE, codeTableName);
 		}
 		List<?> codeTableDatabaseList = codesInfo.getCodeTableList(query.trim(), allValues);
 		return populate(codeTableDatabaseList, tablename);
@@ -76,7 +78,7 @@ public class CodeTableService implements ICodeTableService {
 				elem.setCode(BeanUtils.getProperty(obj, codeTablesProperties.getProperty(codeTableName + CODE_SUFFIX)));
 				elem.setLabel(BeanUtils.getProperty(obj, codeTablesProperties.getProperty(codeTableName + LABEL_SUFFIX)));
 			} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-				throw new WSTechnicalException(WSTechnicalException.ERR_TECH_CODETABLE, e);
+				throw new TechnicalException(ErrorCode.ERR_TECH_CODETABLE, e);
 			}
 
 			try {

@@ -7,6 +7,9 @@ import org.insurance.util.NonNullUtils;
 public class TechnicalException extends RuntimeException {
 
 	private static final long serialVersionUID = -3394484987737334419L;
+	
+	public static final String ERR_TECH_GEN_DEFAULT = "ERR_TECH_GEN_DEFAULT";
+	public static final String ERR_TECH_CODETABLE = "ERR_TECH_CODETABLE";
 
 	public static enum ErrorCode {
 		//@formatter:off
@@ -37,7 +40,7 @@ public class TechnicalException extends RuntimeException {
 		ERR_TECH_CLONE,
 		ERR_TECH_VALIDATION,
 		ERR_TECH_OCCULTATION_DATA,
-		ERR_TECH_JAXB_PARSING;
+		ERR_TECH_JAXB_PARSING, ERR_TECH_CODETABLE;
 		//@formatter:on
 	}
 
