@@ -22,6 +22,8 @@ import org.insurance.util.MappingUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.base.Strings;
+
 @Service
 @Transactional(rollbackFor = Exception.class, readOnly = true)
 public class CodeTableService implements ICodeTableService {
@@ -48,9 +50,10 @@ public class CodeTableService implements ICodeTableService {
 		if (query == null) {
 			tablename = codeTableName.toLowerCase();
 			query = codeTablesProperties.getProperty(tablename + QUERY_SUFFIX);
+		}
+		if (Strings.isNullOrEmpty(query)){
 			
 		}
-		
 		List<?> codeTableDatabaseList = codesInfo.getCodeTableList(query.trim(), allValues);
 		return populate(codeTableDatabaseList, tablename);
 	}

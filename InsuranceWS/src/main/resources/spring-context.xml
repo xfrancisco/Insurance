@@ -87,7 +87,6 @@
 	</bean>
 
 	<context:annotation-config/>
-	<!-- <mvc:annotation-driven/> -->
 	
 	<context:component-scan base-package="org.insurance,
 											org.insurance.dao,
@@ -95,7 +94,8 @@
 											org.insurance.common,
 											org.insurance.common.impl,
 											org.insurance.webservices,
-											org.insurance.exception" >
+											org.insurance.exception,
+											org.insurance.utils" >
  		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Info"/>
  		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Check"/>
 		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Manager"/>

@@ -8,6 +8,10 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>WEB-INF/spring-rest-servlet.xml</param-value>
 	</context-param>
+	<context-param>
+    	<param-name>javax.ws.rs.core.Application</param-name>
+    	<param-value>destiny.web.api.ApiConfig</param-value>
+  	</context-param>
 	
 
   <listener>
@@ -21,11 +25,12 @@
 		<servlet-name>jersey-serlvet</servlet-name>
 		<servlet-class>
          com.sun.jersey.spi.spring.container.servlet.SpringServlet
-  	</servlet-class>
+  		</servlet-class>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
 			<param-value>org.insurance.webservices;com.wordnik.swagger.jersey.listing</param-value>
 		</init-param>
+		
 		<init-param>
     		<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
     		<param-value>true</param-value>

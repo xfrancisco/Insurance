@@ -1,13 +1,10 @@
 package org.insurance.exception;
 
-
 import java.util.Arrays;
 
 import org.insurance.util.NonNullUtils;
 
-
-
-public class TechnicalException extends GenericTechnicalException {
+public class TechnicalException extends RuntimeException {
 
 	private static final long serialVersionUID = -3394484987737334419L;
 
@@ -49,38 +46,35 @@ public class TechnicalException extends GenericTechnicalException {
 	private final Object[] messageArgs;
 
 	public TechnicalException(ErrorCode errorCode) {
-		super(errorCode);
+		super(errorCode.name());
 		this.errorCode = errorCode;
 		this.messageArgs = NonNullUtils.EMPTY_ARRAY;
 	}
 
 	public TechnicalException(ErrorCode errorCode, Object... messageArgs) {
-		super(errorCode);
+		super(errorCode.name());
 		this.errorCode = errorCode;
 		this.messageArgs = messageArgs;
 	}
 
 	public TechnicalException(ErrorCode errorCode, Throwable cause) {
-		super(errorCode, cause);
+		super(errorCode.name(), cause);
 		this.errorCode = errorCode;
 		this.messageArgs = NonNullUtils.EMPTY_ARRAY;
 	}
 
 	public TechnicalException(ErrorCode errorCode, Throwable cause, Object... messageArgs) {
-		super(errorCode, cause);
+		super(errorCode.name(), cause);
 		this.errorCode = errorCode;
 		this.messageArgs = messageArgs;
 	}
 
-	@Override
 	public String getErrorCode() {
 		return errorCode.name();
 	}
 
-	@Override
 	public Object[] getMessageArgs() {
 		Object[] localMessageArgs = Arrays.copyOf(this.messageArgs, this.messageArgs.length);
 		return localMessageArgs;
 	}
 }
-
