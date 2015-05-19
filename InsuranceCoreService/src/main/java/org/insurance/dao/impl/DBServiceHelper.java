@@ -29,18 +29,15 @@ public class DBServiceHelper implements IDBServiceHelper {
 
 	private <T> Connection connection() {
 		try {
-			final Connection result = sessionFactoryManager.session().doReturningWork(
-				    new ReturningWork<java.sql.Connection>() {
-				        public java.sql.Connection execute(Connection connection) throws SQLException 
-				        { 
-				        	final Connection result = connection.getMetaData().getConnection();
-							if (result == null) {
-								throw new TechnicalException(ErrorCode.ERR_TECH_SQLCONNECTION);
-							}
-							return result;
-				        }
-				    }
-				);
+			final Connection result = sessionFactoryManager.session().doReturningWork(new ReturningWork<java.sql.Connection>() {
+				public java.sql.Connection execute(Connection connection) throws SQLException {
+					final Connection result = connection.getMetaData().getConnection();
+					if (result == null) {
+						throw new TechnicalException(ErrorCode.ERR_TECH_SQLCONNECTION);
+					}
+					return result;
+				}
+			});
 			return result;
 		} catch (Exception e) {
 			throw new TechnicalException(ErrorCode.ERR_TECH_SQLCONNECTION, e);
@@ -68,8 +65,7 @@ public class DBServiceHelper implements IDBServiceHelper {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> List<T> sqlToDtoList(final String sqlQuery, Class<T> dtoClass, Map<String, Object> sqlParams, Map<String, Type> paramTypes)
-			 {
+	public <T> List<T> sqlToDtoList(final String sqlQuery, Class<T> dtoClass, Map<String, Object> sqlParams, Map<String, Type> paramTypes) {
 		try {
 			final Query query = sessionFactoryManager.session().createSQLQuery(sqlQuery);
 			for (Map.Entry<String, Object> entry : sqlParams.entrySet()) {
@@ -90,8 +86,7 @@ public class DBServiceHelper implements IDBServiceHelper {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> List<T> sqlToDtoWithScalarsList(final String sqlQuery, Class<T> dtoClass, Map<String, Object> sqlParams, Map<String, Type> scalarsMap)
-			{
+	public <T> List<T> sqlToDtoWithScalarsList(final String sqlQuery, Class<T> dtoClass, Map<String, Object> sqlParams, Map<String, Type> scalarsMap) {
 		try {
 			//FIXME nullete à controler scalarsMap sqlParams
 			SQLQuery query = sessionFactoryManager.session().createSQLQuery(sqlQuery);
@@ -112,8 +107,7 @@ public class DBServiceHelper implements IDBServiceHelper {
 	}
 
 	@Override
-	public <T> T sqlToDto(final String sqlQuery, Class<T> dtoClass, Map<String, Object> sqlParams, Map<String, Type> scalars)
-			 {
+	public <T> T sqlToDto(final String sqlQuery, Class<T> dtoClass, Map<String, Object> sqlParams, Map<String, Type> scalars) {
 		final List<T> list = sqlToDtoWithScalarsList(sqlQuery, dtoClass, sqlParams, scalars);
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -140,7 +134,7 @@ public class DBServiceHelper implements IDBServiceHelper {
 		return sqlToDto(sqlQuery, dtoClass, (Map<String, Object>) Collections.EMPTY_MAP);
 	}
 
-	@SuppressWarnings({ "unchecked"})
+	@SuppressWarnings({ "unchecked" })
 	@Override
 	public <T> List<T> sqlToDtoList(String sqlQuery, Class<T> dtoClass) {
 		return sqlToDtoList(sqlQuery, dtoClass, Collections.EMPTY_MAP);
@@ -260,4 +254,3 @@ public class DBServiceHelper implements IDBServiceHelper {
 		}
 	}
 }
-

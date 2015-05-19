@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.insurance.conf.Cod_version;
 import org.insurance.service.ServiceCore;
 import org.insurance.service.info.ICodesInfo;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CodesInfo extends ServiceCore implements ICodesInfo{
+public class CodesInfo extends ServiceCore implements ICodesInfo {
 
 	@Override
 	public <T> List<T> getCodeTableList(String queryString, boolean allValues) {
@@ -29,6 +32,13 @@ public class CodesInfo extends ServiceCore implements ICodesInfo{
 			return result;
 		}
 		return tmp;
+	}
+
+	@Override
+	public Cod_version getCurrentVersion() {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_version.class);
+		criteria.addOrder(Order.desc("dateversion"));
+		return genericDao.getFirstByCriteria(criteria);
 	}
 
 }

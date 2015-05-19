@@ -2,3 +2,8 @@
 .settings
 .classpath
 target
+/*.~sql
+/InsuranceWS/._pom.xml
+/InsuranceWS/src/main/webapp/._o2c.html
+/InsuranceWS/src/main/webapp/._index.html
+/InsuranceWS/src/main/webapp/WEB-INF/._web.xml

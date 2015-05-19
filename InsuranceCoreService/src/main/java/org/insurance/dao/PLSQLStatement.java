@@ -1,6 +1,5 @@
 package org.insurance.dao;
 
-
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Clob;
@@ -498,4 +497,3 @@ public class PLSQLStatement {
 		}
 	}
 }
-

@@ -1,6 +1,5 @@
 package org.insurance.dao;
 
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.transform.ResultTransformer;
-
 
 /**
  * Classe centrale pour l'accès à la base de donnée.
@@ -201,4 +199,3 @@ public interface IGenericDao {
 
 	Session getSession();
 }
-

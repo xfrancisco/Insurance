@@ -9,7 +9,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.insurance.dao.IDBHelper;
 import org.insurance.dao.IGenericDao;
 
-
 /**
  * Classe mère à tous les services:
  * Check, Info, Transaction
@@ -51,4 +50,3 @@ public class ServiceCore {
 		return table;
 	}
 }
-

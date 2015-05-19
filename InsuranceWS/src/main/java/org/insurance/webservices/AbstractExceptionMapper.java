@@ -14,35 +14,34 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Provider
-public class AbstractExceptionMapper implements ExceptionMapper<Exception>{
+public class AbstractExceptionMapper implements ExceptionMapper<Exception> {
 
 	@Inject
 	private PropertiesUtils propertiesUtils;
-	
+
 	@Override
 	public Response toResponse(Exception exception) {
-
+		//TODO XFR : print de la stack
+		exception.printStackTrace();
 		ResponseBuilder<String> builder = new ResponseBuilder<>();
 		ResponseWrapper<String> wrapper = null;
-		if (exception instanceof InsuranceException){
+		if (exception instanceof InsuranceException) {
 			InsuranceException tmp = (InsuranceException) exception;
 			builder.addReturnCode(tmp.getErrorCode())
-			.addMessage(propertiesUtils.getMessage(tmp.getErrorCode(), tmp.getMessageArgs(), exception.getMessage()));
-		}
-		else{
+					.addMessage(propertiesUtils.getMessage(tmp.getErrorCode(), tmp.getMessageArgs(), exception.getMessage()))
+					.addSeverity(Severity.ERROR);
+		} else {
 			builder.addReturnCode(TechnicalException.ErrorCode.ERR_TECH_GEN_DEFAULT.name())
 					.addMessage(propertiesUtils.getMessage(TechnicalException.ErrorCode.ERR_TECH_GEN_DEFAULT.name(), new Object[] {}, ""))
 					.addSeverity(Severity.ERROR);
 		}
+		//TODO XFR : Ajout de la stack dans le flux de sortie
+
 		/*if (isStackTracePrintingEnabled) {
 		builder.addData(ExceptionUtils.getStackTrace(exception));
 		}*/
 		wrapper = builder.getResponseWrapper();
 		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(wrapper).build();
 	}
-		
-		
-		
+
 }
-	
-	

@@ -2,7 +2,7 @@ package org.insurance.exception;
 
 import java.util.Arrays;
 
-public class InsuranceException extends Exception{
+public class InsuranceException extends Exception {
 
 	private static final long serialVersionUID = -2552269031889664398L;
 

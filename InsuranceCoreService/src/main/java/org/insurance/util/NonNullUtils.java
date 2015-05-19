@@ -1,11 +1,8 @@
 package org.insurance.util;
 
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-
 
 public final class NonNullUtils {
 
@@ -50,4 +47,3 @@ public final class NonNullUtils {
 		}
 	}
 }
-

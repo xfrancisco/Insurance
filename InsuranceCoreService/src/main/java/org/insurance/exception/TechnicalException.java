@@ -7,7 +7,7 @@ import org.insurance.util.NonNullUtils;
 public class TechnicalException extends RuntimeException {
 
 	private static final long serialVersionUID = -3394484987737334419L;
-	
+
 	public static final String ERR_TECH_GEN_DEFAULT = "ERR_TECH_GEN_DEFAULT";
 	public static final String ERR_TECH_CODETABLE = "ERR_TECH_CODETABLE";
 

@@ -65,7 +65,8 @@ public class GenericDao implements IGenericDao {
 			if (id != null) {
 				final Session session = getSession();
 				tRet = (T) session.get(type, id);
-				session.evict(tRet);
+				if (tRet != null)
+					session.evict(tRet);
 			}
 			return tRet;
 		} catch (HibernateException e) {

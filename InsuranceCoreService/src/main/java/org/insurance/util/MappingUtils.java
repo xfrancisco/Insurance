@@ -1,6 +1,5 @@
 package org.insurance.util;
 
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -36,7 +35,6 @@ public final class MappingUtils {
 		}
 	}
 
-	
 	public static String encodeUrl(String urlToBeEncoded) {
 		String encodedUrl = null;
 
@@ -51,7 +49,4 @@ public final class MappingUtils {
 		return encodedUrl;
 	}
 
-	
-
 }
-

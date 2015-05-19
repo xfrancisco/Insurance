@@ -26,8 +26,9 @@ public class CodeTableWebservice {
 
 	@GET
 	@Path("/{codeTableName}")
-	@ApiOperation(value="Ensemble des valeurs pour une code donné")
-	public ResponseWrapper<List<CodeTableOut>> getCodeTable(@ApiParam(value="codeTableName",required=true)@PathParam("codeTableName") String codeTableName ) throws InsuranceException{
+	@ApiOperation(value = "Ensemble des valeurs pour une code donné")
+	public ResponseWrapper<List<CodeTableOut>> getCodeTable(
+			@ApiParam(value = "codeTableName", required = true) @PathParam("codeTableName") String codeTableName) throws InsuranceException {
 		ResponseWrapper<List<CodeTableOut>> responseWrapper = new ResponseWrapper<List<CodeTableOut>>();
 		responseWrapper.setData(codeTableService.getCodeTable(codeTableName, true));
 		return responseWrapper;

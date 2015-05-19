@@ -1,7 +1,5 @@
 package org.insurance.dao;
 
-
-
 public enum DBArrayType {
 	TYPE_TABJAVA("TABJAVA"),
 	TYPE_TABCARTICLE("TABCARTICLE"),
@@ -18,4 +16,3 @@ public enum DBArrayType {
 		return name;
 	}
 }
-

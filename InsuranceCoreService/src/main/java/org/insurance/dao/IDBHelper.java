@@ -1,6 +1,5 @@
 package org.insurance.dao;
 
-
 import java.util.Date;
 
 /**

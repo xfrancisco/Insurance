@@ -1,6 +1,5 @@
 package org.insurance.dao.impl;
 
-
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -30,4 +29,3 @@ public class DBHelper implements IDBHelper {
 		return Long.parseLong(dBServiceHelper.simpleSelect("select " + sequenceName + ".nextval from dual").toString());
 	}
 }
-

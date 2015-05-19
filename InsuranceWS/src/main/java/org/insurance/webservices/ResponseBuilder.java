@@ -38,5 +38,5 @@ public class ResponseBuilder<T> {
 		responseWrapper.setData(data);
 		return this;
 	}
-	
+
 }

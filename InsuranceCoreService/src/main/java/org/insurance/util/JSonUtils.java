@@ -1,6 +1,5 @@
 package org.insurance.util;
 
-
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -86,9 +85,9 @@ public final class JSonUtils {
 		} else if (objClass.equals(Boolean.class)) {
 			strbuff.append("\"" + MappingUtils.boolToString((Boolean) obj) + "\"");
 		} else if (objClass.equals(java.sql.Date.class)) {
-			strbuff.append("\"" + DateUtils.formatDate((java.sql.Date)obj)+ "\"");
+			strbuff.append("\"" + DateUtils.formatDate((java.sql.Date) obj) + "\"");
 		} else if (objClass.equals(java.util.Date.class)) {
-			strbuff.append("\"" + DateUtils.formatDate((java.util.Date)obj, DatePattern.DATE_DD_MM_YYYY_HH_MM_SS) + "\"");
+			strbuff.append("\"" + DateUtils.formatDate((java.util.Date) obj, DatePattern.DATE_DD_MM_YYYY_HH_MM_SS) + "\"");
 		} else if (objClass.equals(Long.class) || objClass.equals(Integer.class) || objClass.equals(Double.class) || objClass.equals(Float.class)) {
 			strbuff.append("\"" + obj.toString().replace(',', '.') + "\"");
 		} else if (obj instanceof Collection) {
@@ -190,4 +189,3 @@ public final class JSonUtils {
 	}
 
 }
-
