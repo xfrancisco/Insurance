@@ -43,13 +43,15 @@
 				<value>org.insurance.conf.Cod_civility</value>
 				<value>org.insurance.conf.Cod_country</value>
 				<value>org.insurance.conf.Cod_zip</value>
-				<value>org.insurance.conf.Cod_contract</value>
+				<value>org.insurance.conf.Cod_branch</value>
+				<value>org.insurance.conf.Cod_category</value>
 				<value>org.insurance.conf.Cod_cancel</value>
 				<value>org.insurance.conf.Cod_guarantee</value>
 
-				<!-- <value>org.insurance.conf.Cli_client</value> <value>org.insurance.conf.Cli_address</value> 
-					<value>org.insurance.conf.Cli_contract</value> <value>org.insurance.conf.Cli_guarantee</value> -->
-
+				<value>org.insurance.data.Cli_client</value> 
+				<value>org.insurance.data.Cli_address</value> 
+				<value>org.insurance.data.Cli_contract</value> 
+				<value>org.insurance.data.Cli_guarantee</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
