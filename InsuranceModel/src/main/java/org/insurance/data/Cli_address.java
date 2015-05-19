@@ -3,7 +3,10 @@ package org.insurance.data;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -12,6 +15,8 @@ public class Cli_address implements Serializable {
 
 	private static final long serialVersionUID = 2065521207003803792L;
 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NUMADDRESS_SEQ")
+	@SequenceGenerator(name = "NUMADDRESS_SEQ", sequenceName = "NUMADDRESS_SEQ")
 	@Id
 	private Long numaddress;
 	private Long numcli;
@@ -19,6 +24,7 @@ public class Cli_address implements Serializable {
 	private String street2;
 	private String street3;
 	private String street4;
+	private String city;
 	private String zipcode;
 	private String ccountry;
 
@@ -84,6 +90,14 @@ public class Cli_address implements Serializable {
 
 	public void setCcountry(String ccountry) {
 		this.ccountry = ccountry;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 }

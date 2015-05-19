@@ -1,13 +1,18 @@
 package org.insurance.data;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "CLI_CLIENT")
 public class Cli_client {
 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NUMCLI_SEQ")
+	@SequenceGenerator(name = "NUMCLI_SEQ", sequenceName = "NUMCLI_SEQ")
 	@Id
 	private Long numcli;
 
@@ -15,6 +20,7 @@ public class Cli_client {
 	private String name;
 	private String firstname;
 	private String companyname;
+	private String companyid;
 
 	public Long getNumcli() {
 		return numcli;
@@ -54,6 +60,14 @@ public class Cli_client {
 
 	public void setCompanyname(String companyname) {
 		this.companyname = companyname;
+	}
+
+	public String getCompanyid() {
+		return companyid;
+	}
+
+	public void setCompanyid(String companyid) {
+		this.companyid = companyid;
 	}
 
 }

@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -13,6 +16,8 @@ public class Cli_guarantee implements Serializable {
 
 	private static final long serialVersionUID = -4695640649182214238L;
 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NUMGUARANTEE_SEQ")
+	@SequenceGenerator(name = "NUMGUARANTEE_SEQ", sequenceName = "NUMGUARANTEE_SEQ")
 	@Id
 	private Long numguarantee;
 	private Long numcli;
