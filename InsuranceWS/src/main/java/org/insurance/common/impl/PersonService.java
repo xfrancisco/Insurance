@@ -8,6 +8,9 @@ import org.insurance.InsuranceEnterpriseModel.out.PersonOut;
 import org.insurance.common.IPersonService;
 import org.insurance.data.Cli_address;
 import org.insurance.data.Cli_client;
+import org.insurance.exception.InsuranceException;
+import org.insurance.exception.PersonException;
+import org.insurance.exception.PersonException.ErrorCode;
 import org.insurance.service.info.IPersonInfo;
 import org.insurance.service.manager.IPersonManager;
 import org.insurance.utils.mapping.PersonMapping;
@@ -27,16 +30,18 @@ public class PersonService implements IPersonService {
 	private IPersonInfo personInfo;
 
 	@Override
-	public PersonOut insertPerson(PersonIn personIn) {
+	public PersonOut insertPerson(PersonIn personIn) throws InsuranceException {
 		Cli_client client = PersonMapping.populateClient(personIn);
 		Cli_address address = PersonMapping.populateAddress(personIn.getAddress());
-		Long personId = personManager.insertPerson(client, address);
+		personManager.insertPerson(client, address);
 		return PersonMapping.populatePersonOut(client, address);
 	}
 
 	@Override
-	public PersonOut getPerson(long personId) {
+	public PersonOut getPerson(long personId) throws InsuranceException {
 		Cli_client client = personInfo.getPerson(personId);
+		if (client == null)
+			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_PERSON);
 		Cli_address address = personInfo.getAddress(personId);
 		return PersonMapping.populatePersonOut(client, address);
 	}

@@ -25,7 +25,7 @@ public class Cli_address implements Serializable {
 	private String street3;
 	private String street4;
 	private String city;
-	private String zipcode;
+	private String cpostal;
 	private String ccountry;
 
 	public Long getNumaddress() {
@@ -76,14 +76,6 @@ public class Cli_address implements Serializable {
 		this.street4 = street4;
 	}
 
-	public String getZipcode() {
-		return zipcode;
-	}
-
-	public void setZipcode(String zipcode) {
-		this.zipcode = zipcode;
-	}
-
 	public String getCcountry() {
 		return ccountry;
 	}
@@ -98,6 +90,14 @@ public class Cli_address implements Serializable {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public String getCpostal() {
+		return cpostal;
+	}
+
+	public void setCpostal(String cpostal) {
+		this.cpostal = cpostal;
 	}
 
 }

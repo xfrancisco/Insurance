@@ -42,7 +42,7 @@
 				<value>org.insurance.conf.Cod_version</value>
 				<value>org.insurance.conf.Cod_civility</value>
 				<value>org.insurance.conf.Cod_country</value>
-				<value>org.insurance.conf.Cod_zip</value>
+				<value>org.insurance.conf.Cod_postal</value>
 				<value>org.insurance.conf.Cod_branch</value>
 				<value>org.insurance.conf.Cod_category</value>
 				<value>org.insurance.conf.Cod_cancel</value>

@@ -28,7 +28,7 @@ public final class PersonMapping {
 			result.setStreet2(addressIn.getStreet2());
 			result.setStreet3(addressIn.getStreet3());
 			result.setStreet4(addressIn.getStreet4());
-			result.setZipcode(addressIn.getZipCode());
+			result.setCpostal(addressIn.getZipCode());
 			result.setCity(addressIn.getCity());
 			result.setCcountry(addressIn.getCountry());
 		}
@@ -54,7 +54,7 @@ public final class PersonMapping {
 				resultAddress.setStreet4(address.getStreet4());
 				resultAddress.setCity(address.getCity());
 				resultAddress.setCountry(address.getCcountry());
-				resultAddress.setZipCode(address.getZipcode());
+				resultAddress.setZipCode(address.getCpostal());
 				result.setAddress(resultAddress);
 			}
 		}

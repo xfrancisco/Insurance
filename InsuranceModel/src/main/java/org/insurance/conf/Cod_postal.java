@@ -7,17 +7,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "COD_ZIP")
-public class Cod_zip implements Serializable {
+@Table(name = "COD_POSTAL")
+public class Cod_postal implements Serializable {
 
 	private static final long serialVersionUID = 2470684085717690736L;
 
 	@Id
-	private String zipcode;
+	private String cpostal;
 	@Id
 	private String city;
 	@Id
 	private String ccountry;
+
+	public Cod_postal(String cpostal, String city, String ccountry) {
+		this.cpostal = cpostal;
+		this.city = city;
+		this.ccountry = ccountry;
+	}
 
 	public String getCcountry() {
 		return ccountry;
@@ -28,14 +34,6 @@ public class Cod_zip implements Serializable {
 	}
 
 	private String indvali;
-
-	public String getZipcode() {
-		return zipcode;
-	}
-
-	public void setZipcode(String zipcode) {
-		this.zipcode = zipcode;
-	}
 
 	public String getCity() {
 		return city;

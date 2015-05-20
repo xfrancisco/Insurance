@@ -9,24 +9,24 @@ import javax.persistence.Table;
 public class Cod_category {
 
 	@Id
-	private String ccateg;
-	private String lcateg;
+	private String ccategory;
+	private String lcategory;
 	private String indvali;
 
-	public String getCcateg() {
-		return ccateg;
+	public String getCcategory() {
+		return ccategory;
 	}
 
-	public void setCcateg(String ccateg) {
-		this.ccateg = ccateg;
+	public void setCcategory(String ccategory) {
+		this.ccategory = ccategory;
 	}
 
-	public String getLcateg() {
-		return lcateg;
+	public String getLcategory() {
+		return lcategory;
 	}
 
-	public void setLcateg(String lcateg) {
-		this.lcateg = lcateg;
+	public void setLcategory(String lcategory) {
+		this.lcategory = lcategory;
 	}
 
 	public String getIndvali() {
