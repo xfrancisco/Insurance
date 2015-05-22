@@ -10,16 +10,28 @@ import javax.inject.Inject;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
-import org.insurance.InsuranceEnterpriseModel.out.CodeTableOut;
-import org.insurance.InsuranceEnterpriseModel.out.VersionOut;
 import org.insurance.common.ICodeTableService;
+import org.insurance.conf.Cod_branch;
+import org.insurance.conf.Cod_category;
+import org.insurance.conf.Cod_guarantee;
+import org.insurance.conf.Cod_premium;
+import org.insurance.conf.Cod_section;
 import org.insurance.conf.Cod_version;
 import org.insurance.exception.CodesException;
 import org.insurance.exception.InsuranceException;
 import org.insurance.exception.TechnicalException;
 import org.insurance.exception.TechnicalException.ErrorCode;
+import org.insurance.out.BranchOut;
+import org.insurance.out.CategoryOut;
+import org.insurance.out.CodeTableOut;
+import org.insurance.out.GuaranteeOut;
+import org.insurance.out.PremiumOut;
+import org.insurance.out.SectionOut;
+import org.insurance.out.VersionOut;
 import org.insurance.service.info.ICodesInfo;
+import org.insurance.service.info.IPremiumInfo;
 import org.insurance.util.MappingUtils;
+import org.insurance.utils.mapping.PremiumMapping;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +43,9 @@ public class CodeTableService implements ICodeTableService {
 
 	@Inject
 	private ICodesInfo codesInfo;
+
+	@Inject
+	private IPremiumInfo premiumInfo;
 
 	@Resource(name = "codeTables")
 	private Properties codeTablesProperties;
@@ -92,4 +107,51 @@ public class CodeTableService implements ICodeTableService {
 		}
 		return codeTableListToReturn;
 	}
+
+	@Override
+	public List<BranchOut> getBranches() {
+		List<Cod_branch> branches = premiumInfo.getBranches();
+		return PremiumMapping.populateBranchOutList(branches);
+	}
+
+	@Override
+	public List<CategoryOut> getCategories(String branchId) {
+		List<Cod_category> categories = premiumInfo.getCategories(branchId);
+		List<CategoryOut> result = PremiumMapping.populateCategoryOutList(categories);
+		if (Strings.isNullOrEmpty(branchId)) {
+			//TODO XFR
+		}
+		return result;
+	}
+
+	@Override
+	public List<SectionOut> getSections(String categoryId) {
+		List<Cod_section> sections = premiumInfo.getSections(categoryId);
+		List<SectionOut> result = PremiumMapping.populateSectionOutList(sections);
+		if (Strings.isNullOrEmpty(categoryId)) {
+			//TODO XFR
+		}
+		return result;
+	}
+
+	@Override
+	public List<GuaranteeOut> getGuarantees(String sectionId) {
+		List<Cod_guarantee> guarantees = premiumInfo.getGuarantees(sectionId);
+		List<GuaranteeOut> result = PremiumMapping.populateGuaranteeOutList(guarantees);
+		if (Strings.isNullOrEmpty(sectionId)) {
+			//TODO XFR
+		}
+		return result;
+	}
+
+	@Override
+	public List<PremiumOut> getPremiums(String guaranteeId) {
+		List<Cod_premium> premiums = premiumInfo.getPremiums(guaranteeId);
+		List<PremiumOut> result = PremiumMapping.populatePremiumOutList(premiums);
+		if (Strings.isNullOrEmpty(guaranteeId)) {
+			//TODO XFR
+		}
+		return result;
+	}
+
 }

@@ -1,6 +1,6 @@
-package org.insurance.InsuranceEnterpriseModel.out;
+package org.insurance.in;
 
-public class AddressOut {
+public class AddressIn {
 	private String street1;
 	private String street2;
 	private String street3;

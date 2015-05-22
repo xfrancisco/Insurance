@@ -12,10 +12,8 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 
-	<bean
-		class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor" />
-
-	<util:properties id="codeTables"
+	<bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor" />
+		<util:properties id="codeTables"
 		location="classpath:org/insurance/codeTables.properties" />
 
 	<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
@@ -43,10 +41,15 @@
 				<value>org.insurance.conf.Cod_civility</value>
 				<value>org.insurance.conf.Cod_country</value>
 				<value>org.insurance.conf.Cod_postal</value>
+				<value>org.insurance.conf.Cod_cancel</value>
+				
 				<value>org.insurance.conf.Cod_branch</value>
 				<value>org.insurance.conf.Cod_category</value>
-				<value>org.insurance.conf.Cod_cancel</value>
+				<value>org.insurance.conf.Cod_section</value>
 				<value>org.insurance.conf.Cod_guarantee</value>
+				<value>org.insurance.conf.Cod_premium</value>
+				<value>org.insurance.conf.Cod_tax</value>
+				<value>org.insurance.conf.Cod_premiumconfig</value>
 
 				<value>org.insurance.data.Cli_client</value> 
 				<value>org.insurance.data.Cli_address</value> 

@@ -28,7 +28,7 @@ public class PersonManager extends ServiceCore implements IPersonManager {
 	public long insertPerson(final Cli_client client, Cli_address address) throws InsuranceException {
 		personCheck.checkCivility(client.getCcivil());
 		personCheck.checkName(client.getName(), client.getCompanyname(), client.getCompanyid());
-		addressCheck.checkPostalCode(address.getCpostal(), address.getCity(), address.getCity());
+		addressCheck.checkPostalCode(address.getCpostal(), address.getCity(), address.getCcountry());
 		addressCheck.checkStreets(address.getStreet2());
 		long numcli = personOperation.insertClient(client);
 		address.setNumcli(numcli);

@@ -1,8 +1,8 @@
 package org.insurance.common;
 
-import org.insurance.InsuranceEnterpriseModel.in.PersonIn;
-import org.insurance.InsuranceEnterpriseModel.out.PersonOut;
 import org.insurance.exception.InsuranceException;
+import org.insurance.in.PersonIn;
+import org.insurance.out.PersonOut;
 
 public interface IPersonService {
 

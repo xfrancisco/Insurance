@@ -1,11 +1,11 @@
 package org.insurance.utils.mapping;
 
-import org.insurance.InsuranceEnterpriseModel.in.AddressIn;
-import org.insurance.InsuranceEnterpriseModel.in.PersonIn;
-import org.insurance.InsuranceEnterpriseModel.out.AddressOut;
-import org.insurance.InsuranceEnterpriseModel.out.PersonOut;
 import org.insurance.data.Cli_address;
 import org.insurance.data.Cli_client;
+import org.insurance.in.AddressIn;
+import org.insurance.in.PersonIn;
+import org.insurance.out.AddressOut;
+import org.insurance.out.PersonOut;
 
 public final class PersonMapping {
 

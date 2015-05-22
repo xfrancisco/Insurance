@@ -6,10 +6,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
-import org.insurance.InsuranceEnterpriseModel.in.PersonIn;
-import org.insurance.InsuranceEnterpriseModel.out.PersonOut;
 import org.insurance.common.IPersonService;
 import org.insurance.exception.InsuranceException;
+import org.insurance.in.PersonIn;
+import org.insurance.out.PersonOut;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 

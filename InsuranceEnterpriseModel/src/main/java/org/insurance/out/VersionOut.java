@@ -1,4 +1,4 @@
-package org.insurance.InsuranceEnterpriseModel.out;
+package org.insurance.out;
 
 public class VersionOut {
 	private String databaseVersion;

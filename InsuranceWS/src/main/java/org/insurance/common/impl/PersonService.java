@@ -3,14 +3,14 @@ package org.insurance.common.impl;
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
-import org.insurance.InsuranceEnterpriseModel.in.PersonIn;
-import org.insurance.InsuranceEnterpriseModel.out.PersonOut;
 import org.insurance.common.IPersonService;
 import org.insurance.data.Cli_address;
 import org.insurance.data.Cli_client;
 import org.insurance.exception.InsuranceException;
 import org.insurance.exception.PersonException;
 import org.insurance.exception.PersonException.ErrorCode;
+import org.insurance.in.PersonIn;
+import org.insurance.out.PersonOut;
 import org.insurance.service.info.IPersonInfo;
 import org.insurance.service.manager.IPersonManager;
 import org.insurance.utils.mapping.PersonMapping;

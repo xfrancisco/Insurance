@@ -1,4 +1,4 @@
-package org.insurance.InsuranceEnterpriseModel.in;
+package org.insurance.in;
 
 public class PersonIn {
 	private String ccivil;
