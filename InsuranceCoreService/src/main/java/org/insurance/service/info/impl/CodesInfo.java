@@ -37,7 +37,7 @@ public class CodesInfo extends ServiceCore implements ICodesInfo {
 	@Override
 	public Cod_version getCurrentVersion() {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_version.class);
-		criteria.addOrder(Order.desc("dateversion"));
+		criteria.addOrder(Order.desc("versionDate"));
 		return genericDao.getFirstByCriteria(criteria);
 	}
 

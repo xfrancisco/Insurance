@@ -5,7 +5,11 @@ import org.insurance.data.Cli_client;
 
 public interface IPersonOperation {
 
-	Long insertClient(Cli_client client);
+	Long insertClient(String cuser, Cli_client client);
 
-	Long insertAddress(Cli_address address);
+	Long insertAddress(String cuser, Cli_address address);
+
+	Long updateClient(String cuser, Cli_client client);
+
+	Long updateAddress(String cuser, Cli_address address);
 }

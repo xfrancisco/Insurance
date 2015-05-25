@@ -3,20 +3,21 @@ package org.insurance.utils.mapping;
 import org.insurance.data.Cli_address;
 import org.insurance.data.Cli_client;
 import org.insurance.in.AddressIn;
-import org.insurance.in.PersonIn;
+import org.insurance.in.InsertPersonIn;
 import org.insurance.out.AddressOut;
 import org.insurance.out.PersonOut;
 
 public final class PersonMapping {
 
-	public static Cli_client populateClient(PersonIn personIn) {
+	public static Cli_client populateClient(InsertPersonIn personIn) {
 		Cli_client result = new Cli_client();
 		if (personIn != null) {
-			result.setCcivil(personIn.getCcivil());
+			result.setCcivil(personIn.getCivility());
 			result.setFirstname(personIn.getFirstName());
 			result.setName(personIn.getName());
 			result.setCompanyname(personIn.getCompanyName());
 			result.setCompanyid(personIn.getCompanyId());
+			result.setCcatcli(personIn.getPersonCategory());
 		}
 		return result;
 	}
@@ -45,6 +46,7 @@ public final class PersonMapping {
 			result.setFirstName(client.getFirstname());
 			result.setName(client.getName());
 			result.setPersonId(client.getNumcli());
+			result.setPersonCategory(client.getCcatcli());
 
 			if (address != null) {
 				AddressOut resultAddress = new AddressOut();

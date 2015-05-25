@@ -3,7 +3,7 @@ package org.insurance.out;
 public class CodeTableOut {
 
 	private String label;
-	private String code;
+	private String id;
 	private boolean isValid = false;
 
 	public String getLabel() {
@@ -14,12 +14,12 @@ public class CodeTableOut {
 		this.label = label;
 	}
 
-	public String getCode() {
-		return code;
+	public String getId() {
+		return id;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public boolean getIsValid() {
@@ -29,4 +29,5 @@ public class CodeTableOut {
 	public void setIsValid(boolean isValid) {
 		this.isValid = isValid;
 	}
+
 }

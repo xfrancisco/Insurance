@@ -8,95 +8,91 @@ import org.insurance.conf.Cod_category;
 import org.insurance.conf.Cod_guarantee;
 import org.insurance.conf.Cod_premium;
 import org.insurance.conf.Cod_section;
-import org.insurance.out.BranchOut;
-import org.insurance.out.CategoryOut;
-import org.insurance.out.GuaranteeOut;
-import org.insurance.out.PremiumOut;
-import org.insurance.out.SectionOut;
+import org.insurance.out.EntityOut;
 import org.insurance.util.MappingUtils;
 
 public final class PremiumMapping {
 
-	public static BranchOut populateBranchOut(Cod_branch codBranch) {
-		BranchOut result = new BranchOut();
-		result.setBranchId(codBranch.getCbranch());
-		result.setBranchLabel(codBranch.getLbranch());
-		result.setValid(MappingUtils.toBoolean(codBranch.getIndvali()));
+	public static EntityOut populateBranchOut(Cod_branch codBranch) {
+		EntityOut result = new EntityOut();
+		result.setId(codBranch.getCbranch());
+		result.setLabel(codBranch.getLbranch());
+		result.setIsValid(MappingUtils.toBoolean(codBranch.getIndvali()));
 		return result;
 	}
 
-	public static List<BranchOut> populateBranchOutList(List<Cod_branch> branches) {
-		List<BranchOut> result = new ArrayList<BranchOut>();
+	public static List<EntityOut> populateBranchOutList(List<Cod_branch> branches) {
+		List<EntityOut> result = new ArrayList<EntityOut>();
 		for (Cod_branch codBranch : branches) {
-			BranchOut tmp = populateBranchOut(codBranch);
+			EntityOut tmp = populateBranchOut(codBranch);
 			result.add(tmp);
 		}
 		return result;
 	}
 
-	public static CategoryOut populateCategoryOut(Cod_category codCategory) {
-		CategoryOut result = new CategoryOut();
-		result.setCategoryId(codCategory.getCcategory());
-		result.setCategoryLabel(codCategory.getLcategory());
-		result.setValid(MappingUtils.toBoolean(codCategory.getIndvali()));
+	public static EntityOut populateCategoryOut(Cod_category codCategory) {
+		EntityOut result = new EntityOut();
+		result.setId(codCategory.getCcategory());
+		result.setLabel(codCategory.getLcategory());
+		result.setIsValid(MappingUtils.toBoolean(codCategory.getIndvali()));
 		return result;
 	}
 
-	public static List<CategoryOut> populateCategoryOutList(List<Cod_category> categories) {
-		List<CategoryOut> result = new ArrayList<CategoryOut>();
+	public static List<EntityOut> populateCategoryOutList(List<Cod_category> categories) {
+		List<EntityOut> result = new ArrayList<EntityOut>();
 		for (Cod_category codCategory : categories) {
-			CategoryOut tmp = populateCategoryOut(codCategory);
+			EntityOut tmp = populateCategoryOut(codCategory);
 			result.add(tmp);
 		}
 		return result;
 	}
 
-	public static SectionOut populateSectionOut(Cod_section codSection) {
-		SectionOut result = new SectionOut();
-		result.setSectionId(codSection.getCsection());
-		result.setSectionLabel(codSection.getLsection());
-		result.setValid(MappingUtils.toBoolean(codSection.getIndvali()));
+	public static EntityOut populateSectionOut(Cod_section codSection) {
+		EntityOut result = new EntityOut();
+		result.setId(codSection.getCsection());
+		result.setLabel(codSection.getLsection());
+		result.setIsValid(MappingUtils.toBoolean(codSection.getIndvali()));
 		return result;
 	}
 
-	public static List<SectionOut> populateSectionOutList(List<Cod_section> sections) {
-		List<SectionOut> result = new ArrayList<SectionOut>();
+	public static List<EntityOut> populateSectionOutList(List<Cod_section> sections) {
+		List<EntityOut> result = new ArrayList<EntityOut>();
 		for (Cod_section codSection : sections) {
-			SectionOut tmp = populateSectionOut(codSection);
+			EntityOut tmp = populateSectionOut(codSection);
 			result.add(tmp);
 		}
 		return result;
 	}
 
-	public static GuaranteeOut populateGuaranteeOut(Cod_guarantee codGuarantee) {
-		GuaranteeOut result = new GuaranteeOut();
-		result.setGuaranteeId(codGuarantee.getCguarantee());
-		result.setGuaranteeLabel(codGuarantee.getLguarantee());
-		result.setValid(MappingUtils.toBoolean(codGuarantee.getIndvali()));
+	public static EntityOut populateGuaranteeOut(Cod_guarantee codGuarantee) {
+		EntityOut result = new EntityOut();
+		result.setId(codGuarantee.getCguarantee());
+		result.setLabel(codGuarantee.getLguarantee());
+		result.setIsValid(MappingUtils.toBoolean(codGuarantee.getIndvali()));
 		return result;
 	}
 
-	public static List<GuaranteeOut> populateGuaranteeOutList(List<Cod_guarantee> guarantees) {
-		List<GuaranteeOut> result = new ArrayList<GuaranteeOut>();
+	public static List<EntityOut> populateGuaranteeOutList(List<Cod_guarantee> guarantees) {
+		List<EntityOut> result = new ArrayList<EntityOut>();
 		for (Cod_guarantee codGuarantee : guarantees) {
-			GuaranteeOut tmp = populateGuaranteeOut(codGuarantee);
+			EntityOut tmp = populateGuaranteeOut(codGuarantee);
 			result.add(tmp);
 		}
 		return result;
 	}
 
-	public static PremiumOut populatePremiumOut(Cod_premium codPremium) {
-		PremiumOut result = new PremiumOut();
-		result.setPremiumId(codPremium.getCpremium());
-		result.setPremiumLabel(codPremium.getLpremium());
-		result.setValid(MappingUtils.toBoolean(codPremium.getIndvali()));
+	public static EntityOut populatePremiumOut(Cod_premium codPremium) {
+		EntityOut result = new EntityOut();
+		result.setId(codPremium.getCpremium());
+		result.setLabel(codPremium.getLpremium());
+		result.setIsValid(MappingUtils.toBoolean(codPremium.getIndvali()));
 		return result;
 	}
 
-	public static List<PremiumOut> populatePremiumOutList(List<Cod_premium> premiums) {
-		List<PremiumOut> result = new ArrayList<PremiumOut>();
+	public static List<EntityOut> populatePremiumOutList(List<Cod_premium> premiums) {
+		List<EntityOut> result = new ArrayList<EntityOut>();
 		for (Cod_premium codPremium : premiums) {
-			PremiumOut tmp = populatePremiumOut(codPremium);
+			EntityOut tmp = populatePremiumOut(codPremium);
 			result.add(tmp);
 		}
 		return result;

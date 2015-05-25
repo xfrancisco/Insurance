@@ -8,6 +8,7 @@ public class PersonOut {
 	private String firstName;
 	private String companyName;
 	private String companyId;
+	private String personCategory;
 	private AddressOut address;
 
 	public PersonOut() {
@@ -67,5 +68,13 @@ public class PersonOut {
 
 	public void setAddress(AddressOut address) {
 		this.address = address;
+	}
+
+	public String getPersonCategory() {
+		return personCategory;
+	}
+
+	public void setPersonCategory(String personCategory) {
+		this.personCategory = personCategory;
 	}
 }

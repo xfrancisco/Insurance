@@ -21,12 +21,8 @@ import org.insurance.exception.CodesException;
 import org.insurance.exception.InsuranceException;
 import org.insurance.exception.TechnicalException;
 import org.insurance.exception.TechnicalException.ErrorCode;
-import org.insurance.out.BranchOut;
-import org.insurance.out.CategoryOut;
 import org.insurance.out.CodeTableOut;
-import org.insurance.out.GuaranteeOut;
-import org.insurance.out.PremiumOut;
-import org.insurance.out.SectionOut;
+import org.insurance.out.EntityOut;
 import org.insurance.out.VersionOut;
 import org.insurance.service.info.ICodesInfo;
 import org.insurance.service.info.IPremiumInfo;
@@ -57,7 +53,7 @@ public class CodeTableService implements ICodeTableService {
 	private static final String LABEL_SUFFIX = ".label";
 
 	@Override
-	public List<CodeTableOut> getCodeTable(final String codeTableName, final boolean allValues) throws InsuranceException {
+	public List<CodeTableOut> getCodeTable(final String userId, final String codeTableName, final boolean allValues) throws InsuranceException {
 		String tablename = codeTableName;
 		String query = codeTablesProperties.getProperty(tablename + QUERY_SUFFIX);
 		if (query == null) {
@@ -72,7 +68,7 @@ public class CodeTableService implements ICodeTableService {
 	}
 
 	@Override
-	public VersionOut getVersion() {
+	public VersionOut getVersion(final String userId) {
 		Cod_version version = codesInfo.getCurrentVersion();
 		VersionOut result = new VersionOut();
 
@@ -90,7 +86,7 @@ public class CodeTableService implements ICodeTableService {
 		for (Object obj : codeTableDatabaseList) {
 			CodeTableOut elem = new CodeTableOut();
 			try {
-				elem.setCode(BeanUtils.getProperty(obj, codeTablesProperties.getProperty(codeTableName + CODE_SUFFIX)));
+				elem.setId(BeanUtils.getProperty(obj, codeTablesProperties.getProperty(codeTableName + CODE_SUFFIX)));
 				elem.setLabel(BeanUtils.getProperty(obj, codeTablesProperties.getProperty(codeTableName + LABEL_SUFFIX)));
 			} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 				throw new TechnicalException(ErrorCode.ERR_TECH_CODETABLE, e);
@@ -109,15 +105,15 @@ public class CodeTableService implements ICodeTableService {
 	}
 
 	@Override
-	public List<BranchOut> getBranches() {
+	public List<EntityOut> getBranches(final String userId) {
 		List<Cod_branch> branches = premiumInfo.getBranches();
 		return PremiumMapping.populateBranchOutList(branches);
 	}
 
 	@Override
-	public List<CategoryOut> getCategories(String branchId) {
+	public List<EntityOut> getCategories(final String userId, String branchId) {
 		List<Cod_category> categories = premiumInfo.getCategories(branchId);
-		List<CategoryOut> result = PremiumMapping.populateCategoryOutList(categories);
+		List<EntityOut> result = PremiumMapping.populateCategoryOutList(categories);
 		if (Strings.isNullOrEmpty(branchId)) {
 			//TODO XFR
 		}
@@ -125,9 +121,9 @@ public class CodeTableService implements ICodeTableService {
 	}
 
 	@Override
-	public List<SectionOut> getSections(String categoryId) {
+	public List<EntityOut> getSections(final String userId, String categoryId) {
 		List<Cod_section> sections = premiumInfo.getSections(categoryId);
-		List<SectionOut> result = PremiumMapping.populateSectionOutList(sections);
+		List<EntityOut> result = PremiumMapping.populateSectionOutList(sections);
 		if (Strings.isNullOrEmpty(categoryId)) {
 			//TODO XFR
 		}
@@ -135,9 +131,9 @@ public class CodeTableService implements ICodeTableService {
 	}
 
 	@Override
-	public List<GuaranteeOut> getGuarantees(String sectionId) {
+	public List<EntityOut> getGuarantees(final String userId, String sectionId) {
 		List<Cod_guarantee> guarantees = premiumInfo.getGuarantees(sectionId);
-		List<GuaranteeOut> result = PremiumMapping.populateGuaranteeOutList(guarantees);
+		List<EntityOut> result = PremiumMapping.populateGuaranteeOutList(guarantees);
 		if (Strings.isNullOrEmpty(sectionId)) {
 			//TODO XFR
 		}
@@ -145,9 +141,9 @@ public class CodeTableService implements ICodeTableService {
 	}
 
 	@Override
-	public List<PremiumOut> getPremiums(String guaranteeId) {
+	public List<EntityOut> getPremiums(final String userId, String guaranteeId) {
 		List<Cod_premium> premiums = premiumInfo.getPremiums(guaranteeId);
-		List<PremiumOut> result = PremiumMapping.populatePremiumOutList(premiums);
+		List<EntityOut> result = PremiumMapping.populatePremiumOutList(premiums);
 		if (Strings.isNullOrEmpty(guaranteeId)) {
 			//TODO XFR
 		}

@@ -3,7 +3,7 @@ package org.insurance.out;
 import java.io.Serializable;
 import java.util.List;
 
-public class EntityOut implements Serializable {
+public class EntityOut extends CodeTableOut implements Serializable {
 
 	private static final long serialVersionUID = 2695116003256677670L;
 	private List<String> authorizedParents;

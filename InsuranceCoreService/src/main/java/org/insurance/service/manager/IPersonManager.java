@@ -6,5 +6,7 @@ import org.insurance.exception.InsuranceException;
 
 public interface IPersonManager {
 
-	long insertPerson(Cli_client client, Cli_address address) throws InsuranceException;
+	long insertPerson(String cuser, Cli_client client, Cli_address address) throws InsuranceException;
+
+	long updatePerson(String cuser, Cli_client client, Cli_address address) throws InsuranceException;
 }

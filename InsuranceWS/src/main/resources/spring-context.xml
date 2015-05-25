@@ -12,26 +12,26 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 	<bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor" />
-		<util:properties id="codeTables"
-		location="classpath:org/insurance/codeTables.properties" />
-
-	<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
-		<property name="location"> <value>classpath:org/insurance/database.properties</value> 
-		</property> </bean> -->
-	<context:property-placeholder
-		location="classpath:org/insurance/database.properties" />
-
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
 		<property name="url" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
 	</bean>
+	
+	<bean id="codesMessagesErrors" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:org/insurance/codes-messages.properties</value>
+				<value>classpath:org/insurance/codes-messages-validation.properties</value>
+			</list>
+		</property>
+	</bean>
 
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource">
 			<ref bean="dataSource" />
 		</property>
@@ -42,6 +42,7 @@
 				<value>org.insurance.conf.Cod_country</value>
 				<value>org.insurance.conf.Cod_postal</value>
 				<value>org.insurance.conf.Cod_cancel</value>
+				<value>org.insurance.conf.Cod_catcli</value>
 				
 				<value>org.insurance.conf.Cod_branch</value>
 				<value>org.insurance.conf.Cod_category</value>
@@ -50,6 +51,9 @@
 				<value>org.insurance.conf.Cod_premium</value>
 				<value>org.insurance.conf.Cod_tax</value>
 				<value>org.insurance.conf.Cod_premiumconfig</value>
+				
+				<value>org.insurance.conf.Usr_user</value>
+				<value>org.insurance.conf.Usr_role</value>
 
 				<value>org.insurance.data.Cli_client</value> 
 				<value>org.insurance.data.Cli_address</value> 
@@ -70,52 +74,27 @@
 		</property>
 	</bean>
 
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+	<util:properties id="codeTables" location="classpath:org/insurance/codeTables.properties" />
+	<context:property-placeholder location="classpath:org/insurance/database.properties" />
 	<tx:annotation-driven transaction-manager="transactionManager" />
-
-	<bean id="validationMessageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basename" value="classpath:org/insurance/ValidationMessages" />
-		<property name="defaultEncoding" value="UTF-8" />
-	</bean>
-
-
 	<aop:aspectj-autoproxy />
-
-
-	<bean id="codesMessagesErrors"
-		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-		<property name="locations">
-			<list>
-				<value>classpath:org/insurance/codes-messages-fr.properties</value>
-			</list>
-		</property>
-	</bean>
-
 	<context:annotation-config />
-
-	<context:component-scan
-		base-package="org.insurance,
-											org.insurance.dao,
-											org.insurance.dao.impl,
-											org.insurance.common,
-											org.insurance.common.impl,
-											org.insurance.webservices,
-											org.insurance.exception,
-											org.insurance.utils">
-		<context:include-filter type="regex"
-			expression="org.insurance.service.*.impl.*Info" />
-		<context:include-filter type="regex"
-			expression="org.insurance.service.*.impl.*Check" />
-		<context:include-filter type="regex"
-			expression="org.insurance.service.*.impl.*Manager" />
-		<context:include-filter type="regex"
-			expression="org.insurance.service.*.impl.*Operation" />
-
+	<context:component-scan base-package="org.insurance,
+										org.insurance.dao,
+										org.insurance.dao.impl,
+										org.insurance.common,
+										org.insurance.common.impl,
+										org.insurance.webservices,
+										org.insurance.exception,
+										org.insurance.utils">
+		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Info" />
+		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Check" />
+		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Manager" />
+		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Operation" />
 	</context:component-scan>
 </beans>
 

@@ -7,10 +7,11 @@ import org.insurance.common.IPersonService;
 import org.insurance.data.Cli_address;
 import org.insurance.data.Cli_client;
 import org.insurance.exception.InsuranceException;
-import org.insurance.exception.PersonException;
-import org.insurance.exception.PersonException.ErrorCode;
-import org.insurance.in.PersonIn;
+import org.insurance.in.InsertPersonIn;
+import org.insurance.in.UpdatePersonIn;
 import org.insurance.out.PersonOut;
+import org.insurance.service.check.IPersonCheck;
+import org.insurance.service.check.IUserCheck;
 import org.insurance.service.info.IPersonInfo;
 import org.insurance.service.manager.IPersonManager;
 import org.insurance.utils.mapping.PersonMapping;
@@ -29,20 +30,46 @@ public class PersonService implements IPersonService {
 	@Inject
 	private IPersonInfo personInfo;
 
+	@Inject
+	private IPersonCheck personCheck;
+
+	@Inject
+	private IUserCheck userCheck;
+
 	@Override
-	public PersonOut insertPerson(PersonIn personIn) throws InsuranceException {
+	public PersonOut insertPerson(final String userId, InsertPersonIn personIn) throws InsuranceException {
+		userCheck.checkUser(userId);
 		Cli_client client = PersonMapping.populateClient(personIn);
 		Cli_address address = PersonMapping.populateAddress(personIn.getAddress());
-		personManager.insertPerson(client, address);
+		personManager.insertPerson(userId, client, address);
 		return PersonMapping.populatePersonOut(client, address);
 	}
 
 	@Override
-	public PersonOut getPerson(long personId) throws InsuranceException {
-		Cli_client client = personInfo.getPerson(personId);
-		if (client == null)
-			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_PERSON);
+	public PersonOut getPerson(final String userId, long personId) throws InsuranceException {
+		userCheck.checkUser(userId);
+		Cli_client client = personCheck.checkAndGetPerson(personId);
 		Cli_address address = personInfo.getAddress(personId);
+		return PersonMapping.populatePersonOut(client, address);
+	}
+
+	@Override
+	public PersonOut updatePerson(String userId, UpdatePersonIn personIn) throws InsuranceException {
+		// Contrôles
+		userCheck.checkUser(userId);
+		long personId = personIn.getPersonId();
+		personCheck.checkAndGetPerson(personIn.getPersonId());
+
+		// Alimentation des beans
+		Cli_client client = PersonMapping.populateClient(personIn);
+		client.setNumcli(personId);
+		Cli_address oldAddress = personInfo.getAddress(personId);
+		Cli_address address = PersonMapping.populateAddress(personIn.getAddress());
+		address.setNumcli(personId);
+		address.setNumaddress(oldAddress.getNumaddress());
+
+		// Mise à jour
+		personManager.updatePerson(userId, client, address);
 		return PersonMapping.populatePersonOut(client, address);
 	}
 }

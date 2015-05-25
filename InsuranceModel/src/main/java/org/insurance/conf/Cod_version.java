@@ -13,7 +13,7 @@ public class Cod_version {
 	@Id
 	private String cversion;
 	private String lversion;
-	private Date dateversion;
+	private Date versionDate;
 
 	public String getCversion() {
 		return cversion;
@@ -31,12 +31,12 @@ public class Cod_version {
 		this.lversion = lversion;
 	}
 
-	public Date getDateversion() {
-		return dateversion;
+	public Date getVersionDate() {
+		return versionDate;
 	}
 
-	public void setDateversion(Date dateversion) {
-		this.dateversion = dateversion;
+	public void setVersionDate(Date versionDate) {
+		this.versionDate = versionDate;
 	}
 
 }

@@ -1,6 +1,7 @@
 package org.insurance.data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,6 +25,13 @@ public class Cli_contract implements Serializable {
 	private java.sql.Date endDate;
 
 	private String ccancel;
+
+	private String cusercre;
+	private String cusermod;
+	private String cusercancel;
+	private Date creationDate;
+	private Date modifDate;
+	private Date cancelDate;
 
 	public Long getNumcli() {
 		return numcli;
@@ -71,6 +79,54 @@ public class Cli_contract implements Serializable {
 
 	public void setCcancel(String ccancel) {
 		this.ccancel = ccancel;
+	}
+
+	public String getCusercre() {
+		return cusercre;
+	}
+
+	public void setCusercre(String cusercre) {
+		this.cusercre = cusercre;
+	}
+
+	public String getCusermod() {
+		return cusermod;
+	}
+
+	public void setCusermod(String cusermod) {
+		this.cusermod = cusermod;
+	}
+
+	public String getCusercancel() {
+		return cusercancel;
+	}
+
+	public void setCusercancel(String cusercancel) {
+		this.cusercancel = cusercancel;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public Date getModifDate() {
+		return modifDate;
+	}
+
+	public void setModifDate(Date modifDate) {
+		this.modifDate = modifDate;
+	}
+
+	public Date getCancelDate() {
+		return cancelDate;
+	}
+
+	public void setCancelDate(Date cancelDate) {
+		this.cancelDate = cancelDate;
 	}
 
 }
