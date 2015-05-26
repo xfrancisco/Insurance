@@ -1,4 +1,4 @@
-package org.insurance.out;
+package org.insurance.out.movements;
 
 import java.util.List;
 

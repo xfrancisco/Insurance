@@ -7,10 +7,12 @@ import org.insurance.data.Cli_movement;
 import org.insurance.dto.MovementChangeDto;
 import org.insurance.dto.MovementDetailDetailsDto;
 import org.insurance.dto.MovementDetailDto;
-import org.insurance.out.MovementChangeDetail;
-import org.insurance.out.MovementChangeValues;
-import org.insurance.out.MovementChanges;
-import org.insurance.out.MovementDetailsOut;
+import org.insurance.dto.MovementDto;
+import org.insurance.out.movements.MovementChangeDetail;
+import org.insurance.out.movements.MovementChangeValues;
+import org.insurance.out.movements.MovementChanges;
+import org.insurance.out.movements.MovementDetailsOut;
+import org.insurance.out.movements.MovementOut;
 
 public class MovementMapping {
 	public static MovementDetailsOut populateMovementChanges(final Cli_movement m, MovementChangeDto movementChange) {
@@ -65,6 +67,20 @@ public class MovementMapping {
 				detail.setDetailValueLabel(movementDetailDetails.getDetailValueLabel());
 				result.add(detail);
 			}
+		}
+		return result;
+	}
+
+	public static List<MovementOut> populateMovements(List<MovementDto> movements) {
+		List<MovementOut> result = new ArrayList<MovementOut>();
+		for (MovementDto movementDto : movements) {
+			MovementOut tmp = new MovementOut();
+			tmp.setCode(movementDto.getCmovement());
+			//TODO XFR : Mapping des dates!! tmp.setDate();
+			tmp.setId(movementDto.getNummovement());
+			tmp.setLabel(movementDto.getLmovement());
+			tmp.setUser(movementDto.getCusermovement());
+			result.add(tmp);
 		}
 		return result;
 	}

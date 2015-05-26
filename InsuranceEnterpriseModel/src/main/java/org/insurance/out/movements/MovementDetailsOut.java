@@ -1,4 +1,4 @@
-package org.insurance.out;
+package org.insurance.out.movements;
 
 public class MovementDetailsOut {
 

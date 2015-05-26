@@ -61,7 +61,7 @@ public class CodeTableWebservice extends AbstractWebservice {
 
 	@GET
 	@Path("/categories/filter")
-	@ApiOperation(value = "Liste des catégories filtrées par branch")
+	@ApiOperation(value = "Liste des catégories filtrées par branche")
 	public ResponseWrapper<List<EntityOut>> getCategories(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(value = "branchId", required = false) @QueryParam("branchId") String branchId) throws InsuranceException {

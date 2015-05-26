@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.insurance.conf.Cod_movement;
 import org.insurance.conf.Cod_movementdet;
 import org.insurance.dao.IDBServiceHelper;
 import org.insurance.data.Cli_movement;
@@ -20,6 +21,7 @@ import org.insurance.data.Cli_movementdet;
 import org.insurance.dto.MovementChangeDto;
 import org.insurance.dto.MovementDetailDetailsDto;
 import org.insurance.dto.MovementDetailDto;
+import org.insurance.dto.MovementDto;
 import org.insurance.service.ServiceCore;
 import org.insurance.service.info.IMovementInfo;
 import org.springframework.stereotype.Service;
@@ -221,6 +223,31 @@ public class MovementInfo extends ServiceCore implements IMovementInfo {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public List<MovementDto> getMovements(long numcli, Integer numcon) {
+		DetachedCriteria crit = DetachedCriteria.forClass(Cli_movement.class);
+		if (numcon != null) {
+			crit.add(Restrictions.eq("numcli", numcli));
+			crit.add(Restrictions.eq("numcon", numcon));
+		} else {
+			crit.add(Restrictions.eq("numcli", numcli));
+			crit.add(Restrictions.isNull("numcon"));
+		}
+		List<Cli_movement> movements = genericDao.getByCriteria(crit);
+		List<MovementDto> result = new ArrayList<MovementDto>();
+		for (Cli_movement cliMovement : movements) {
+			MovementDto tmp = new MovementDto();
+			tmp.setCmovement(cliMovement.getCmovement());
+			tmp.setMovementDate(cliMovement.getMovementDate());
+			tmp.setCusermovement(cliMovement.getCusermovement());
+			tmp.setNummovement(cliMovement.getNummovement());
+			Cod_movement codMovement = genericDao.get(Cod_movement.class, cliMovement.getCmovement());
+			tmp.setLmovement(codMovement.getLmovement());
+			result.add(tmp);
+		}
+		return result;
 	}
 
 }

@@ -1,15 +1,20 @@
 package org.insurance.common.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 import org.insurance.common.IMovementService;
 import org.insurance.data.Cli_movement;
 import org.insurance.dto.MovementChangeDto;
+import org.insurance.dto.MovementDto;
 import org.insurance.exception.InsuranceException;
 import org.insurance.exception.MovementException;
 import org.insurance.exception.MovementException.ErrorCode;
-import org.insurance.out.MovementDetailsOut;
+import org.insurance.out.movements.MovementDetailsOut;
+import org.insurance.out.movements.MovementOut;
+import org.insurance.service.check.IPersonCheck;
 import org.insurance.service.check.IUserCheck;
 import org.insurance.service.info.IMovementInfo;
 import org.insurance.utils.mapping.MovementMapping;
@@ -28,6 +33,9 @@ public class MovementService implements IMovementService {
 	@Inject
 	private IUserCheck userCheck;
 
+	@Inject
+	private IPersonCheck personCheck;
+
 	@Override
 	public MovementDetailsOut getMovement(String userId, long movementId) throws InsuranceException {
 		MovementDetailsOut details = null;
@@ -38,6 +46,15 @@ public class MovementService implements IMovementService {
 		MovementChangeDto movementChange = movementInfo.getMovementDetails(movementId);
 		details = MovementMapping.populateMovementChanges(cliMovement, movementChange);
 		return details;
+	}
+
+	@Override
+	public List<MovementOut> getMovements(String userId, long personId, Integer contractId) throws InsuranceException {
+		userCheck.checkUser(userId);
+		personCheck.checkAndGetPerson(personId);
+		//TODO XFR Contrôle du contrat
+		List<MovementDto> movements = movementInfo.getMovements(personId, contractId);
+		return MovementMapping.populateMovements(movements);
 	}
 
 }
