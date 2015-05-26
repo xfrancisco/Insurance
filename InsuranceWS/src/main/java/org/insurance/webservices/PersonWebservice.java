@@ -6,7 +6,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 
 import org.insurance.common.IPersonService;
@@ -53,11 +52,11 @@ public class PersonWebservice extends AbstractWebservice {
 	}
 
 	@GET
-	@Path("/{personId}")
+	@Path("/detail")
 	@ApiOperation(value = "Données d'un individu")
 	public ResponseWrapper<PersonOut> getCodeTable(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
-			@ApiParam(value = "personId", required = true) @PathParam("personId") Long personId) throws InsuranceException {
+			@ApiParam(value = "personId", required = true) @QueryParam("personId") Long personId) throws InsuranceException {
 		ResponseWrapper<PersonOut> responseWrapper = new ResponseWrapper<PersonOut>();
 		responseWrapper.setData(personService.getPerson(userId, personId));
 		return responseWrapper;

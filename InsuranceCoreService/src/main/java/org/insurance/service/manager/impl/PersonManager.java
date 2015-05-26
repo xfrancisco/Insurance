@@ -6,11 +6,14 @@ import org.insurance.data.Cli_address;
 import org.insurance.data.Cli_client;
 import org.insurance.exception.AddressException;
 import org.insurance.exception.PersonException;
+import org.insurance.movements.person.ModAddressMovement;
+import org.insurance.movements.person.ModPersonMovement;
 import org.insurance.service.ServiceCore;
 import org.insurance.service.check.IAddressCheck;
 import org.insurance.service.check.IPersonCheck;
 import org.insurance.service.info.IPersonInfo;
 import org.insurance.service.manager.IPersonManager;
+import org.insurance.service.transactional.IMovementOperation;
 import org.insurance.service.transactional.IPersonOperation;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,9 @@ public class PersonManager extends ServiceCore implements IPersonManager {
 
 	@Inject
 	private IPersonOperation personOperation;
+
+	@Inject
+	private IMovementOperation movementOperation;
 
 	@Inject
 	private IAddressCheck addressCheck;
@@ -49,11 +55,15 @@ public class PersonManager extends ServiceCore implements IPersonManager {
 		addressCheck.checkPostalCode(address.getCpostal(), address.getCity(), address.getCcountry());
 		addressCheck.checkStreets(address.getStreet2());
 		long numcli = client.getNumcli();
-		if (personInfo.hasClientChanged(client)) {
+		ModPersonMovement modPersonMovement = personInfo.hasClientChanged(client);
+		if (modPersonMovement != null) {
 			personOperation.updateClient(cuser, client);
+			movementOperation.insertMovement(client.getNumcli(), null, cuser, modPersonMovement);
 		}
-		if (personInfo.hasAddressChanged(address)) {
+		ModAddressMovement modAddressMovement = personInfo.hasAddressChanged(address);
+		if (modAddressMovement != null) {
 			personOperation.updateAddress(cuser, address);
+			movementOperation.insertMovement(client.getNumcli(), null, cuser, modAddressMovement);
 		}
 		return numcli;
 	}

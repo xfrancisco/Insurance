@@ -43,6 +43,8 @@
 				<value>org.insurance.conf.Cod_postal</value>
 				<value>org.insurance.conf.Cod_cancel</value>
 				<value>org.insurance.conf.Cod_catcli</value>
+				<value>org.insurance.conf.Cod_movement</value>
+				<value>org.insurance.conf.Cod_movementdet</value>
 				
 				<value>org.insurance.conf.Cod_branch</value>
 				<value>org.insurance.conf.Cod_category</value>
@@ -59,6 +61,8 @@
 				<value>org.insurance.data.Cli_address</value> 
 				<value>org.insurance.data.Cli_contract</value> 
 				<value>org.insurance.data.Cli_guarantee</value>
+				<value>org.insurance.data.Cli_movement</value>
+				<value>org.insurance.data.Cli_movementdet</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

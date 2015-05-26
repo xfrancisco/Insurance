@@ -4,6 +4,8 @@ import org.insurance.conf.Cod_catcli;
 import org.insurance.conf.Cod_civility;
 import org.insurance.data.Cli_address;
 import org.insurance.data.Cli_client;
+import org.insurance.movements.person.ModAddressMovement;
+import org.insurance.movements.person.ModPersonMovement;
 
 public interface IPersonInfo {
 
@@ -15,7 +17,7 @@ public interface IPersonInfo {
 
 	Cod_catcli getCategory(String ccatcli);
 
-	boolean hasClientChanged(Cli_client client);
+	ModPersonMovement hasClientChanged(Cli_client client);
 
-	boolean hasAddressChanged(Cli_address address);
+	ModAddressMovement hasAddressChanged(Cli_address address);
 }
