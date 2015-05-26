@@ -1,7 +1,9 @@
 package org.insurance.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.google.common.base.Strings;
 
 @Entity
 @Table(name = "CLI_ADDRESS")
@@ -135,6 +139,38 @@ public class Cli_address implements Serializable {
 
 	public void setModifDate(Date modifDate) {
 		this.modifDate = modifDate;
+	}
+
+	public List<String> getChanges(Cli_address oldAddress) {
+		List<String> result = new ArrayList<String>();
+		if (!Strings.nullToEmpty(this.street1).equals(Strings.nullToEmpty(oldAddress.getStreet1()))) {
+			result.add("STREET1");
+		}
+
+		if (!Strings.nullToEmpty(this.street2).equals(Strings.nullToEmpty(oldAddress.getStreet2()))) {
+			result.add("STREET2");
+		}
+
+		if (!Strings.nullToEmpty(this.street3).equals(Strings.nullToEmpty(oldAddress.getStreet3()))) {
+			result.add("STREET3");
+		}
+
+		if (!Strings.nullToEmpty(this.street4).equals(Strings.nullToEmpty(oldAddress.getStreet4()))) {
+			result.add("STREET4");
+		}
+
+		if (!Strings.nullToEmpty(this.city).equals(Strings.nullToEmpty(oldAddress.getCity()))) {
+			result.add("CITY");
+		}
+
+		if (!Strings.nullToEmpty(this.cpostal).equals(Strings.nullToEmpty(oldAddress.getCpostal()))) {
+			result.add("CPOSTAL");
+		}
+
+		if (!Strings.nullToEmpty(this.ccountry).equals(Strings.nullToEmpty(oldAddress.getCcountry()))) {
+			result.add("CCOUNTRY");
+		}
+		return result;
 	}
 
 }

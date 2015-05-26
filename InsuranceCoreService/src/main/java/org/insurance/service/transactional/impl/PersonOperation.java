@@ -35,7 +35,7 @@ public class PersonOperation extends ServiceCore implements IPersonOperation {
 	public Long updateAddress(final String cuser, Cli_address address) {
 		address.setCusermod(cuser);
 		address.setModifDate(dbHelper.getNow());
-		genericDao.saveOrUpdate(address);
+		genericDao.merge(address);
 		return address.getNumaddress();
 	}
 

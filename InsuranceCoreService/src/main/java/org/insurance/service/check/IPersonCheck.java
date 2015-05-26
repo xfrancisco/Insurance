@@ -11,4 +11,5 @@ public interface IPersonCheck {
 	void checkCategory(String ccatcli) throws PersonException;
 
 	Cli_client checkAndGetPerson(long personId) throws PersonException;
+
 }

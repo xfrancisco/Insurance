@@ -15,14 +15,16 @@ public class UserInfo extends ServiceCore implements IUserInfo {
 
 	@Override
 	public Usr_user getUser(String cuser) {
-		final DetachedCriteria criteria = DetachedCriteria.forClass(Usr_user.class, cuser);
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Usr_user.class);
+		criteria.add(Restrictions.eq("cuser", cuser));
 		criteria.add(Restrictions.eq("indvali", "1"));
 		return genericDao.getFirstByCriteria(criteria);
 	}
 
 	@Override
 	public Usr_role getRole(String crole) {
-		final DetachedCriteria criteria = DetachedCriteria.forClass(Usr_role.class, crole);
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Usr_role.class);
+		criteria.add(Restrictions.eq("crole", crole));
 		criteria.add(Restrictions.eq("indvali", "1"));
 		return genericDao.getFirstByCriteria(criteria);
 	}
@@ -32,6 +34,15 @@ public class UserInfo extends ServiceCore implements IUserInfo {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Usr_user.class);
 		return genericDao.getByCriteria(criteria);
 
+	}
+
+	@Override
+	public boolean hasUserChanged(Usr_user usrUser) {
+		Usr_user oldUser = getUser(usrUser.getCuser());
+		List<String> changes = usrUser.getChanges(oldUser);
+		usrUser.setCreationDate(oldUser.getCreationDate());
+		usrUser.setCusercre(oldUser.getCusercre());
+		return !changes.isEmpty();
 	}
 
 }

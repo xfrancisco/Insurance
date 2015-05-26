@@ -4,11 +4,10 @@ public class PersonOut {
 
 	private long personId;
 	private String ccivil;
-	private String name;
+	private String lastName;
 	private String firstName;
 	private String companyName;
 	private String companyId;
-	private String personCategory;
 	private AddressOut address;
 
 	public PersonOut() {
@@ -30,12 +29,12 @@ public class PersonOut {
 		this.ccivil = ccivil;
 	}
 
-	public String getName() {
-		return name;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getFirstName() {
@@ -70,11 +69,4 @@ public class PersonOut {
 		this.address = address;
 	}
 
-	public String getPersonCategory() {
-		return personCategory;
-	}
-
-	public void setPersonCategory(String personCategory) {
-		this.personCategory = personCategory;
-	}
 }

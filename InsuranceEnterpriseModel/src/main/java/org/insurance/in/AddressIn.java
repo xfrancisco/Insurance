@@ -4,24 +4,32 @@ import org.insurance.validation.constraints.EnterpriseModelEnum;
 import org.insurance.validation.constraints.Length;
 import org.insurance.validation.constraints.Mandatory;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.Strings;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AddressIn {
 	@Length(max = EnterpriseModelEnum.STREET1)
 	private String street1;
+
 	@Mandatory
 	@Length(max = EnterpriseModelEnum.STREET2)
 	private String street2;
+
 	@Length(max = EnterpriseModelEnum.STREET3)
 	private String street3;
+
 	@Length(max = EnterpriseModelEnum.STREET4)
 	private String street4;
+
 	@Mandatory
 	@Length(max = EnterpriseModelEnum.ZIPCODE)
 	private String zipCode;
+
 	@Mandatory
 	@Length(max = EnterpriseModelEnum.CITY)
 	private String city;
+
 	@Mandatory
 	@Length(max = EnterpriseModelEnum.COUNTRY)
 	private String country;

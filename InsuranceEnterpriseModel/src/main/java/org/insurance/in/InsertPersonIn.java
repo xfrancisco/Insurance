@@ -6,22 +6,27 @@ import org.insurance.validation.constraints.EnterpriseModelEnum;
 import org.insurance.validation.constraints.Length;
 import org.insurance.validation.constraints.Mandatory;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.Strings;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class InsertPersonIn {
 	@Mandatory
 	@Length(min = EnterpriseModelEnum.CIVILITY, max = EnterpriseModelEnum.CIVILITY)
 	private String civility;
-	@Length(max = EnterpriseModelEnum.NAME)
-	private String name;
+
+	@Length(max = EnterpriseModelEnum.LASTNAME)
+	private String lastName;
+
 	@Length(max = EnterpriseModelEnum.FIRSTNAME)
 	private String firstName;
+
 	@Length(max = EnterpriseModelEnum.COMPANYNAME)
 	private String companyName;
+
 	@Length(max = EnterpriseModelEnum.COMPANYID)
 	private String companyId;
-	@Length(max = EnterpriseModelEnum.PERSONCATEGORY)
-	private String personCategory;
+
 	@Valid
 	private AddressIn address;
 
@@ -33,12 +38,12 @@ public class InsertPersonIn {
 		this.companyId = companyId;
 	}
 
-	public String getName() {
-		return Strings.nullToEmpty(name).toUpperCase();
+	public String getLastName() {
+		return Strings.nullToEmpty(lastName).toUpperCase();
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getFirstName() {
@@ -71,14 +76,6 @@ public class InsertPersonIn {
 
 	public void setCivility(String civility) {
 		this.civility = civility;
-	}
-
-	public String getPersonCategory() {
-		return Strings.nullToEmpty(personCategory).toUpperCase();
-	}
-
-	public void setPersonCategory(String personCategory) {
-		this.personCategory = personCategory;
 	}
 
 }

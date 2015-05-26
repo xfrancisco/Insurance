@@ -14,10 +14,9 @@ public final class PersonMapping {
 		if (personIn != null) {
 			result.setCcivil(personIn.getCivility());
 			result.setFirstname(personIn.getFirstName());
-			result.setName(personIn.getName());
+			result.setName(personIn.getLastName());
 			result.setCompanyname(personIn.getCompanyName());
 			result.setCompanyid(personIn.getCompanyId());
-			result.setCcatcli(personIn.getPersonCategory());
 		}
 		return result;
 	}
@@ -44,9 +43,8 @@ public final class PersonMapping {
 			result.setCompanyId(client.getCompanyid());
 			result.setCompanyName(client.getCompanyname());
 			result.setFirstName(client.getFirstname());
-			result.setName(client.getName());
+			result.setLastName(client.getName());
 			result.setPersonId(client.getNumcli());
-			result.setPersonCategory(client.getCcatcli());
 
 			if (address != null) {
 				AddressOut resultAddress = new AddressOut();

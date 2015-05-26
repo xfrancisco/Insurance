@@ -12,4 +12,6 @@ public interface IUserInfo {
 	Usr_role getRole(String crole);
 
 	List<Usr_user> getUsers();
+
+	boolean hasUserChanged(Usr_user usrUser);
 }

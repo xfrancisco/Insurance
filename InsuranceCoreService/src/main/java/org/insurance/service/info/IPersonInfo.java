@@ -14,4 +14,8 @@ public interface IPersonInfo {
 	Cod_civility getCivility(String ccivil);
 
 	Cod_catcli getCategory(String ccatcli);
+
+	boolean hasClientChanged(Cli_client client);
+
+	boolean hasAddressChanged(Cli_address address);
 }

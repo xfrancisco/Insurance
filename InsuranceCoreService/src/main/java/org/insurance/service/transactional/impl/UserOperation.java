@@ -20,7 +20,7 @@ public class UserOperation extends ServiceCore implements IUserOperation {
 	public void updateUser(final String cuser, Usr_user usrUser) {
 		usrUser.setModifDate(dbHelper.getNow());
 		usrUser.setCusermod(cuser);
-		genericDao.saveOrUpdate(usrUser);
+		genericDao.merge(usrUser);
 
 	}
 

@@ -1,6 +1,8 @@
 package org.insurance.data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.google.common.base.Strings;
 
 @Entity
 @Table(name = "CLI_CLIENT")
@@ -23,7 +27,6 @@ public class Cli_client {
 	private String firstname;
 	private String companyname;
 	private String companyid;
-	private String ccatcli;
 	private String cusercre;
 	private String cusermod;
 	private Date creationDate;
@@ -77,14 +80,6 @@ public class Cli_client {
 		this.companyid = companyid;
 	}
 
-	public String getCcatcli() {
-		return ccatcli;
-	}
-
-	public void setCcatcli(String ccatcli) {
-		this.ccatcli = ccatcli;
-	}
-
 	public String getCusercre() {
 		return cusercre;
 	}
@@ -115,6 +110,32 @@ public class Cli_client {
 
 	public void setModifDate(Date modifDate) {
 		this.modifDate = modifDate;
+	}
+
+	public List<String> getChanges(Cli_client client) {
+		List<String> result = new ArrayList<String>();
+		if (!Strings.nullToEmpty(this.ccivil).equals(Strings.nullToEmpty(client.getCcivil()))) {
+			result.add("CCIVIL");
+		}
+
+		if (!Strings.nullToEmpty(this.name).equals(Strings.nullToEmpty(client.getName()))) {
+			result.add("NAME");
+		}
+
+		if (!Strings.nullToEmpty(this.firstname).equals(Strings.nullToEmpty(client.getFirstname()))) {
+			result.add("FIRSTNAME");
+		}
+
+		if (!Strings.nullToEmpty(this.companyname).equals(Strings.nullToEmpty(client.getCompanyname()))) {
+			result.add("COMPANYNAME");
+		}
+
+		if (!Strings.nullToEmpty(this.companyid).equals(Strings.nullToEmpty(client.getCompanyid()))) {
+			result.add("COMPANYID");
+		}
+
+		return result;
+
 	}
 
 }

@@ -4,15 +4,19 @@ import org.insurance.validation.constraints.EnterpriseModelEnum;
 import org.insurance.validation.constraints.Length;
 import org.insurance.validation.constraints.Mandatory;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.Strings;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserIn {
 	@Mandatory
 	@Length(max = EnterpriseModelEnum.USERID)
 	private String userId;
+
 	@Mandatory
 	@Length(max = EnterpriseModelEnum.USERNAME)
 	private String userName;
+
 	@Mandatory
 	@Length(max = EnterpriseModelEnum.USERPROFILE)
 	private String profile;

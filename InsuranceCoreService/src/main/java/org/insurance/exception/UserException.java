@@ -6,7 +6,8 @@ public class UserException extends InsuranceException {
 
 	public static enum ErrorCode {
 		ERR_BIZ_USER_UNKNOWN_USER,
-		ERR_BIZ_USER_UNKNOWN_ROLE;
+		ERR_BIZ_USER_UNKNOWN_ROLE,
+		ERR_BIZ_USER_ALREADY_EXISTS;
 	}
 
 	public UserException(ErrorCode errorCode) {

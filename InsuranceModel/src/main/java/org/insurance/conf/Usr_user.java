@@ -1,10 +1,14 @@
 package org.insurance.conf;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.google.common.base.Strings;
 
 @Entity
 @Table(name = "USR_USER")
@@ -82,6 +86,22 @@ public class Usr_user {
 
 	public void setModifDate(Date modifDate) {
 		this.modifDate = modifDate;
+	}
+
+	public List<String> getChanges(Usr_user oldUser) {
+		List<String> result = new ArrayList<String>();
+		if (!Strings.nullToEmpty(this.crole).equals(Strings.nullToEmpty(oldUser.getCrole()))) {
+			result.add("CROLE");
+		}
+
+		if (!Strings.nullToEmpty(this.cuser).equals(Strings.nullToEmpty(oldUser.getCuser()))) {
+			result.add("CUSER");
+		}
+
+		if (!Strings.nullToEmpty(this.luser).equals(Strings.nullToEmpty(oldUser.getLuser()))) {
+			result.add("LUSER");
+		}
+		return result;
 	}
 
 }

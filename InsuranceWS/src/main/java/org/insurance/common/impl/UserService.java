@@ -12,7 +12,7 @@ import org.insurance.in.UserIn;
 import org.insurance.out.UserOut;
 import org.insurance.service.check.IUserCheck;
 import org.insurance.service.info.IUserInfo;
-import org.insurance.service.transactional.IUserOperation;
+import org.insurance.service.manager.IUserManager;
 import org.insurance.utils.mapping.UserMapping;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,24 +30,21 @@ public class UserService implements IUserService {
 	private IUserCheck userCheck;
 
 	@Inject
-	private IUserOperation userOperation;
+	private IUserManager userManager;
 
 	@Override
 	public UserOut insertUser(String userId, UserIn userIn) throws UserException {
 		userCheck.checkUser(userId);
-		userCheck.checkRole(userIn.getProfile());
 		Usr_user usrUser = UserMapping.populateUser(userIn);
-		userOperation.insertUser(userId, usrUser);
+		userManager.insertUser(userId, usrUser);
 		return UserMapping.populateUser(usrUser);
 	}
 
 	@Override
 	public UserOut updateUser(String userId, UserIn userIn) throws UserException {
 		userCheck.checkUser(userId);
-		userCheck.checkRole(userIn.getProfile());
-		userCheck.checkUser(userIn.getUserId());
 		Usr_user usrUser = UserMapping.populateUser(userIn);
-		userOperation.updateUser(userId, usrUser);
+		userManager.updateUser(userId, usrUser);
 		return UserMapping.populateUser(usrUser);
 	}
 
