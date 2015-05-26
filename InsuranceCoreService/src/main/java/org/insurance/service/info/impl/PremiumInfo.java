@@ -79,7 +79,7 @@ public class PremiumInfo extends ServiceCore implements IPremiumInfo {
 			return genericDao.getList(Cod_section.class);
 		else {
 			final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_premiumconfig.class);
-			subQuery.add(eq("ccategory", ccategory)).setProjection(property("ccsection"));
+			subQuery.add(eq("ccategory", ccategory)).setProjection(property("csection"));
 
 			final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cod_section.class);
 			mainQuery.add(propertyIn("csection", subQuery));
