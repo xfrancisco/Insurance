@@ -1,10 +1,13 @@
 package org.insurance.common.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 import org.insurance.common.IPersonService;
 import org.insurance.data.Cli_address;
+import org.insurance.data.Cli_catcli;
 import org.insurance.data.Cli_client;
 import org.insurance.exception.InsuranceException;
 import org.insurance.in.InsertPersonIn;
@@ -41,8 +44,9 @@ public class PersonService implements IPersonService {
 		userCheck.checkUser(userId);
 		Cli_client client = PersonMapping.populateClient(personIn);
 		Cli_address address = PersonMapping.populateAddress(personIn.getAddress());
-		personManager.insertPerson(userId, client, address);
-		return PersonMapping.populatePersonOut(client, address);
+		List<Cli_catcli> categories = PersonMapping.populateCategories(personIn.getCategories(), null);
+		personManager.insertPerson(userId, client, address, categories);
+		return PersonMapping.populatePersonOut(client, address, categories);
 	}
 
 	@Override
@@ -50,7 +54,8 @@ public class PersonService implements IPersonService {
 		userCheck.checkUser(userId);
 		Cli_client client = personCheck.checkAndGetPerson(personId);
 		Cli_address address = personInfo.getAddress(personId);
-		return PersonMapping.populatePersonOut(client, address);
+		List<Cli_catcli> categories = personInfo.getCategories(personId);
+		return PersonMapping.populatePersonOut(client, address, categories);
 	}
 
 	@Override
@@ -68,8 +73,10 @@ public class PersonService implements IPersonService {
 		address.setNumcli(personId);
 		address.setNumaddress(oldAddress.getNumaddress());
 
+		List<Cli_catcli> categories = PersonMapping.populateCategories(personIn.getCategories(), personId);
+
 		// Mise à jour
-		personManager.updatePerson(userId, client, address);
-		return PersonMapping.populatePersonOut(client, address);
+		personManager.updatePerson(userId, client, address, categories);
+		return PersonMapping.populatePersonOut(client, address, categories);
 	}
 }

@@ -1,10 +1,13 @@
 package org.insurance.service.info.impl;
 
+import java.util.List;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.insurance.conf.Cod_catcli;
 import org.insurance.conf.Cod_civility;
 import org.insurance.data.Cli_address;
+import org.insurance.data.Cli_catcli;
 import org.insurance.data.Cli_client;
 import org.insurance.movements.person.ModAddressMovement;
 import org.insurance.movements.person.ModPersonMovement;
@@ -73,6 +76,13 @@ public class PersonInfo extends ServiceCore implements IPersonInfo {
 					oldAddress.getCpostal(), oldAddress.getCity(), oldAddress.getCcountry());
 		}
 		return result;
+	}
+
+	@Override
+	public List<Cli_catcli> getCategories(long numcli) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_catcli.class);
+		criteria.add(Restrictions.eq("numcli", numcli));
+		return genericDao.getByCriteria(criteria);
 	}
 
 }

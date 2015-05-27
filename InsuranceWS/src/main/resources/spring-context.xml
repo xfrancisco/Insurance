@@ -57,7 +57,8 @@
 				<value>org.insurance.conf.Usr_user</value>
 				<value>org.insurance.conf.Usr_role</value>
 
-				<value>org.insurance.data.Cli_client</value> 
+				<value>org.insurance.data.Cli_client</value>
+				<value>org.insurance.data.Cli_catcli</value> 
 				<value>org.insurance.data.Cli_address</value> 
 				<value>org.insurance.data.Cli_contract</value> 
 				<value>org.insurance.data.Cli_guarantee</value>

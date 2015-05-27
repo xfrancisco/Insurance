@@ -1,5 +1,7 @@
 package org.insurance.in;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.insurance.validation.constraints.EnterpriseModelEnum;
@@ -26,6 +28,19 @@ public class InsertPersonIn {
 
 	@Length(max = EnterpriseModelEnum.COMPANYID)
 	private String companyId;
+
+	@Length(max = EnterpriseModelEnum.EMAIL)
+	private String email;
+
+	@Length(max = EnterpriseModelEnum.MOBILE)
+	private String mobile;
+
+	@Length(max = EnterpriseModelEnum.PHONE)
+	private String phone;
+
+	@Valid
+	@Mandatory
+	private List<ClientCategoryIn> categories;
 
 	@Valid
 	private AddressIn address;
@@ -76,6 +91,38 @@ public class InsertPersonIn {
 
 	public void setCivility(String civility) {
 		this.civility = civility;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public List<ClientCategoryIn> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<ClientCategoryIn> categories) {
+		this.categories = categories;
 	}
 
 }

@@ -21,7 +21,10 @@ public enum EnterpriseModelEnum {
 	COUNTRY(3, "COD_COUNTRY", "CCOUNTRY"),
 	USERID(32, "USR_USER", "CUSER"),
 	USERNAME(128, "USR_USER", "LUSER"),
-	USERPROFILE(16, "USR_ROLE", "CROLE");
+	USERPROFILE(16, "USR_ROLE", "CROLE"),
+	EMAIL(128, "CLI_EMAIL", "EMAIL"),
+	MOBILE(16, "CLI_PHONE", "PHONENUMBER"),
+	PHONE(16, "CLI_PHONE", "PHONENUMBER");
 
 	public final int length;
 	public final String table;

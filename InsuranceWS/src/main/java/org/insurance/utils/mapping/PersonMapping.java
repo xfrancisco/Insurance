@@ -1,10 +1,16 @@
 package org.insurance.utils.mapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.insurance.data.Cli_address;
+import org.insurance.data.Cli_catcli;
 import org.insurance.data.Cli_client;
 import org.insurance.in.AddressIn;
+import org.insurance.in.ClientCategoryIn;
 import org.insurance.in.InsertPersonIn;
 import org.insurance.out.AddressOut;
+import org.insurance.out.PersonCategoryOut;
 import org.insurance.out.PersonOut;
 
 public final class PersonMapping {
@@ -35,7 +41,7 @@ public final class PersonMapping {
 		return result;
 	}
 
-	public static PersonOut populatePersonOut(Cli_client client, Cli_address address) {
+	public static PersonOut populatePersonOut(Cli_client client, Cli_address address, List<Cli_catcli> categories) {
 		PersonOut result = new PersonOut();
 		if (client != null) {
 
@@ -57,8 +63,28 @@ public final class PersonMapping {
 				resultAddress.setZipCode(address.getCpostal());
 				result.setAddress(resultAddress);
 			}
-		}
 
+			if (categories != null) {
+				List<PersonCategoryOut> categoriesOut = new ArrayList<PersonCategoryOut>();
+				for (Cli_catcli cliCatcli : categories) {
+					PersonCategoryOut out = new PersonCategoryOut();
+					out.setCategoryId(cliCatcli.getCcatcli());
+					categoriesOut.add(out);
+				}
+				result.setCategories(categoriesOut);
+			}
+		}
+		return result;
+	}
+
+	public static List<Cli_catcli> populateCategories(List<ClientCategoryIn> categories, Long personId) {
+		List<Cli_catcli> result = new ArrayList<Cli_catcli>();
+		for (ClientCategoryIn clientCategoryIn : categories) {
+			Cli_catcli tmp = new Cli_catcli();
+			tmp.setNumcli(personId);
+			tmp.setCcatcli(clientCategoryIn.getCategoryId());
+			result.add(tmp);
+		}
 		return result;
 	}
 }

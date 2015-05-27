@@ -1,5 +1,7 @@
 package org.insurance.out;
 
+import java.util.List;
+
 public class PersonOut {
 
 	private long personId;
@@ -9,6 +11,7 @@ public class PersonOut {
 	private String companyName;
 	private String companyId;
 	private AddressOut address;
+	private List<PersonCategoryOut> categories;
 
 	public PersonOut() {
 	}
@@ -67,6 +70,14 @@ public class PersonOut {
 
 	public void setAddress(AddressOut address) {
 		this.address = address;
+	}
+
+	public List<PersonCategoryOut> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<PersonCategoryOut> categories) {
+		this.categories = categories;
 	}
 
 }

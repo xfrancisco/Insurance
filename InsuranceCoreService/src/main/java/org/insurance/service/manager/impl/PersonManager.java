@@ -1,8 +1,11 @@
 package org.insurance.service.manager.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.insurance.data.Cli_address;
+import org.insurance.data.Cli_catcli;
 import org.insurance.data.Cli_client;
 import org.insurance.exception.AddressException;
 import org.insurance.exception.PersonException;
@@ -36,20 +39,28 @@ public class PersonManager extends ServiceCore implements IPersonManager {
 	private IPersonInfo personInfo;
 
 	@Override
-	public long insertPerson(final String cuser, final Cli_client client, Cli_address address) throws PersonException, AddressException {
+	public long insertPerson(final String cuser, final Cli_client client, Cli_address address, List<Cli_catcli> categories) throws PersonException,
+			AddressException {
 		personCheck.checkCivility(client.getCcivil());
 		personCheck.checkName(client.getName(), client.getCompanyname(), client.getCompanyid());
 		addressCheck.checkPostalCode(address.getCpostal(), address.getCity(), address.getCcountry());
 		addressCheck.checkStreets(address.getStreet2());
+		for (Cli_catcli cliCatcli : categories) {
+			personCheck.checkCategory(cliCatcli.getCcatcli());
+		}
 		long numcli = personOperation.insertClient(cuser, client);
 		address.setNumcli(numcli);
 		personOperation.insertAddress(cuser, address);
+		for (Cli_catcli cliCatcli : categories) {
+			cliCatcli.setNumcli(numcli);
+		}
+		personOperation.insertCategories(cuser, categories);
 		return numcli;
-
 	}
 
 	@Override
-	public long updatePerson(String cuser, Cli_client client, Cli_address address) throws PersonException, AddressException {
+	public long updatePerson(String cuser, Cli_client client, Cli_address address, List<Cli_catcli> categories) throws PersonException,
+			AddressException {
 		personCheck.checkCivility(client.getCcivil());
 		personCheck.checkName(client.getName(), client.getCompanyname(), client.getCompanyid());
 		addressCheck.checkPostalCode(address.getCpostal(), address.getCity(), address.getCcountry());
@@ -65,6 +76,7 @@ public class PersonManager extends ServiceCore implements IPersonManager {
 			personOperation.updateAddress(cuser, address);
 			movementOperation.insertMovement(client.getNumcli(), null, cuser, modAddressMovement);
 		}
+		personOperation.updateCategories(numcli, cuser, categories);
 		return numcli;
 	}
 
