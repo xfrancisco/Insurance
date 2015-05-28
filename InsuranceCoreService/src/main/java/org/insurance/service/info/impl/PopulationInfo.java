@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.insurance.conf.Cod_catcli;
+import org.insurance.data.Cli_catcli;
 import org.insurance.data.Cli_client;
 import org.insurance.service.ServiceCore;
 import org.insurance.service.info.IPopulationInfo;
@@ -18,11 +19,14 @@ public class PopulationInfo extends ServiceCore implements IPopulationInfo {
 
 	@Override
 	public List<Cli_client> getClients() {
-		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
-		subQuery.add(eq("indclient", "1")).setProjection(property("ccatcli"));
+		final DetachedCriteria subQuery1 = DetachedCriteria.forClass(Cod_catcli.class);
+		subQuery1.add(eq("indclient", "1")).setProjection(property("ccatcli"));
+
+		final DetachedCriteria subQuery2 = DetachedCriteria.forClass(Cli_catcli.class);
+		subQuery2.add(propertyIn("ccatcli", subQuery1)).setProjection(property("numcli"));
 
 		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_client.class);
-		mainQuery.add(propertyIn("ccatcli", subQuery));
+		mainQuery.add(propertyIn("numcli", subQuery2));
 
 		return genericDao.getByCriteria(mainQuery);
 	}

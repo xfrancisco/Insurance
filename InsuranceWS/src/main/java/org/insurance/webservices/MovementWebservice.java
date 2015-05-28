@@ -32,7 +32,7 @@ public class MovementWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Détail d'un mouvement")
 	public ResponseWrapper<MovementDetailsOut> getMovementDetails(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
-			@ApiParam(value = "Identifiant du mouvement", name = MOVEMENT_ID, required = true) @QueryParam(value = PERSON_ID) Long movementId)
+			@ApiParam(value = "Identifiant du mouvement", name = MOVEMENT_ID, required = true) @QueryParam(value = MOVEMENT_ID) Long movementId)
 			throws InsuranceException {
 		ResponseWrapper<MovementDetailsOut> responseWrapper = new ResponseWrapper<MovementDetailsOut>();
 		responseWrapper.setData(movementService.getMovement(userId, movementId));

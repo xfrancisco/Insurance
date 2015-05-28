@@ -3,7 +3,7 @@ package org.insurance.in;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PopulationIn extends InsertPersonIn {
+public class PopulationIn {
 	private boolean isClient;
 	private boolean isInsurer;
 	private boolean isBroker;
