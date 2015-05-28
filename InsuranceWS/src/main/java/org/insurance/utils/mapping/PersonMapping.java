@@ -1,6 +1,7 @@
 package org.insurance.utils.mapping;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.insurance.data.Cli_address;
@@ -75,6 +76,15 @@ public final class PersonMapping {
 			}
 		}
 		return result;
+	}
+
+	public static List<PersonOut> populatePersonOut(Collection<Cli_client> clients) {
+		List<PersonOut> result = new ArrayList<PersonOut>();
+		for (Cli_client client : clients) {
+			result.add(populatePersonOut(client, null, null));
+		}
+		return result;
+
 	}
 
 	public static List<Cli_catcli> populateCategories(List<ClientCategoryIn> categories, Long personId) {
