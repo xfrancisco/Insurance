@@ -5,7 +5,7 @@ import java.util.List;
 public class PersonOut {
 
 	private long personId;
-	private String ccivil;
+	private String civility;
 	private String lastName;
 	private String firstName;
 	private String companyName;
@@ -22,14 +22,6 @@ public class PersonOut {
 
 	public void setPersonId(long personId) {
 		this.personId = personId;
-	}
-
-	public String getCcivil() {
-		return ccivil;
-	}
-
-	public void setCcivil(String ccivil) {
-		this.ccivil = ccivil;
 	}
 
 	public String getLastName() {
@@ -78,6 +70,14 @@ public class PersonOut {
 
 	public void setCategories(List<PersonCategoryOut> categories) {
 		this.categories = categories;
+	}
+
+	public String getCivility() {
+		return civility;
+	}
+
+	public void setCivility(String civility) {
+		this.civility = civility;
 	}
 
 }

@@ -46,7 +46,7 @@ public final class PersonMapping {
 		PersonOut result = new PersonOut();
 		if (client != null) {
 
-			result.setCcivil(client.getCcivil());
+			result.setCivility(client.getCcivil());
 			result.setCompanyId(client.getCompanyid());
 			result.setCompanyName(client.getCompanyname());
 			result.setFirstName(client.getFirstname());
