@@ -116,26 +116,26 @@ public class Cli_client {
 			return true;
 		Cli_client client = (Cli_client) o;
 		if (!Strings.nullToEmpty(this.ccivil).equals(Strings.nullToEmpty(client.getCcivil()))) {
-			return true;
+			return false;
 		}
 
 		if (!Strings.nullToEmpty(this.name).equals(Strings.nullToEmpty(client.getName()))) {
-			return true;
+			return false;
 		}
 
 		if (!Strings.nullToEmpty(this.firstname).equals(Strings.nullToEmpty(client.getFirstname()))) {
-			return true;
+			return false;
 		}
 
 		if (!Strings.nullToEmpty(this.companyname).equals(Strings.nullToEmpty(client.getCompanyname()))) {
-			return true;
+			return false;
 		}
 
 		if (!Strings.nullToEmpty(this.companyid).equals(Strings.nullToEmpty(client.getCompanyid()))) {
-			return true;
+			return false;
 		}
 
-		return false;
+		return true;
 
 	}
 

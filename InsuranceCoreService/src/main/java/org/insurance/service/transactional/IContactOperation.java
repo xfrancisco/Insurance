@@ -8,9 +8,9 @@ import org.insurance.data.Cli_phone;
 
 public interface IContactOperation {
 
-	Long insertAddress(long numcli, String cuser, Cli_address address);
+	void insertAddresses(long numcli, String cuser, List<Cli_address> addresses);
 
-	Long updateAddress(long numcli, String cuser, Cli_address address);
+	void updateAddresses(long numcli, String cuser, List<Cli_address> addresses);
 
 	void insertPhones(long numcli, List<Cli_phone> phones, String cuser);
 

@@ -3,7 +3,9 @@ package org.insurance.service.info.impl;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.insurance.conf.Cod_address;
 import org.insurance.conf.Cod_email;
 import org.insurance.conf.Cod_phone;
 import org.insurance.conf.Cod_postal;
@@ -19,9 +21,10 @@ import org.springframework.stereotype.Service;
 public class ContactInfo extends ServiceCore implements IContactInfo {
 
 	@Override
-	public Cli_address getAddress(long numcli) {
+	public Cli_address getAddressByType(long numcli, String caddress) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_address.class);
 		criteria.add(Restrictions.eq("numcli", numcli));
+		criteria.add(Restrictions.eq("caddress", caddress));
 		criteria.add(Restrictions.le("startval", dbHelper.getToday()));
 		criteria.add(Restrictions.isNull("endval"));
 		return genericDao.getFirstByCriteria(criteria);
@@ -99,6 +102,63 @@ public class ContactInfo extends ServiceCore implements IContactInfo {
 		criteria.add(Restrictions.eq("cphone", cemail));
 		criteria.add(Restrictions.le("startval", dbHelper.getToday()));
 		criteria.add(Restrictions.isNull("endval"));
+		return genericDao.getFirstByCriteria(criteria);
+	}
+
+	@Override
+	public List<Cli_address> getOldAddresses(long numcli) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_address.class);
+		criteria.add(Restrictions.eq("numcli", numcli));
+		criteria.add(Restrictions.isNotNull("startval"));
+		criteria.add(Restrictions.isNotNull("endval"));
+		criteria.addOrder(Order.desc("startval"));
+		criteria.addOrder(Order.desc("numaddress"));
+		return genericDao.getByCriteria(criteria);
+	}
+
+	@Override
+	public List<Cli_phone> getOldPhones(long numcli) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_phone.class);
+		criteria.add(Restrictions.eq("numcli", numcli));
+		criteria.add(Restrictions.isNotNull("startval"));
+		criteria.add(Restrictions.isNotNull("endval"));
+		criteria.addOrder(Order.desc("startval"));
+		criteria.addOrder(Order.desc("numphone"));
+		return genericDao.getByCriteria(criteria);
+	}
+
+	@Override
+	public List<Cli_email> getOldEmails(long numcli) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_email.class);
+		criteria.add(Restrictions.eq("numcli", numcli));
+		criteria.add(Restrictions.isNotNull("startval"));
+		criteria.add(Restrictions.isNotNull("endval"));
+		criteria.addOrder(Order.desc("startval"));
+		criteria.addOrder(Order.desc("numemail"));
+		return genericDao.getByCriteria(criteria);
+	}
+
+	@Override
+	public Cod_address getDefaultAddressType() {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_address.class);
+		criteria.add(Restrictions.eq("inddefault", "1"));
+		criteria.add(Restrictions.eq("indvali", "1"));
+		return genericDao.getFirstByCriteria(criteria);
+	}
+
+	@Override
+	public Cod_phone getPhoneType(String cphone) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_phone.class);
+		criteria.add(Restrictions.eq("cphone", cphone));
+		criteria.add(Restrictions.eq("indvali", "1"));
+		return genericDao.getFirstByCriteria(criteria);
+	}
+
+	@Override
+	public Cod_email getEmailType(String cemail) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_email.class);
+		criteria.add(Restrictions.eq("cemail", cemail));
+		criteria.add(Restrictions.eq("indvali", "1"));
 		return genericDao.getFirstByCriteria(criteria);
 	}
 

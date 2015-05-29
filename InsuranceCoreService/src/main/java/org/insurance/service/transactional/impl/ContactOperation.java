@@ -34,44 +34,50 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 	private IContactInfo contactInfo;
 
 	@Override
-	public Long insertAddress(long numcli, final String cuser, Cli_address address) {
+	public void insertAddresses(long numcli, final String cuser, List<Cli_address> addresses) {
+		for (Cli_address address : addresses) {
+			insertAddress(numcli, cuser, address);
+		}
+	}
+
+	private void insertAddress(long numcli, final String cuser, Cli_address address) {
 		address.setNumcli(numcli);
 		address.setCusercre(cuser);
 		address.setCreationDate(dbHelper.getNow());
 		address.setStartval(DateUtils.convertUtilDateToSqlDate(dbHelper.getToday()));
-		Long numaddress = (Long) genericDao.save(address);
-		NewAddressMovement movement = new NewAddressMovement(address.getStreet1(), address.getStreet2(), address.getStreet3(), address.getStreet4(),
-				address.getCpostal(), address.getCity(), address.getCcountry());
+		genericDao.save(address);
+		NewAddressMovement movement = new NewAddressMovement(address.getCaddress(), address.getStreet1(), address.getStreet2(), address.getStreet3(),
+				address.getStreet4(), address.getCpostal(), address.getCity(), address.getCcountry());
 		movementOperation.insertMovement(address.getNumcli(), null, cuser, movement);
-		return numaddress;
 	}
 
 	@Override
-	public Long updateAddress(final long numcli, final String cuser, Cli_address address) {
-		Cli_address oldAddress = contactInfo.getAddress(numcli);
-		Long nummouvmt = null;
-		if (!oldAddress.equals(address)) {
-			oldAddress.setCusermod(cuser);
-			oldAddress.setModifDate(dbHelper.getNow());
-			oldAddress.setEndval(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
-			genericDao.merge(oldAddress);
+	public void updateAddresses(final long numcli, final String cuser, List<Cli_address> addresses) {
+		for (Cli_address address : addresses) {
+			Cli_address oldAddress = contactInfo.getAddressByType(numcli, address.getCaddress());
+			if (!oldAddress.equals(address)) {
+				oldAddress.setCusermod(cuser);
+				oldAddress.setModifDate(dbHelper.getNow());
+				oldAddress.setEndval(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
+				genericDao.merge(oldAddress);
 
-			ModAddressMovement movement = new ModAddressMovement(address.getStreet1(), address.getStreet2(), address.getStreet3(),
-					address.getStreet4(), address.getCpostal(), address.getCity(), address.getCcountry());
-			movement.setOldValues(oldAddress.getStreet1(), oldAddress.getStreet2(), oldAddress.getStreet3(), oldAddress.getStreet4(),
-					oldAddress.getCpostal(), oldAddress.getCity(), oldAddress.getCcountry());
+				ModAddressMovement movement = new ModAddressMovement(address.getCaddress(), address.getStreet1(), address.getStreet2(),
+						address.getStreet3(), address.getStreet4(), address.getCpostal(), address.getCity(), address.getCcountry());
+				movement.setOldValues(oldAddress.getCaddress(), oldAddress.getStreet1(), oldAddress.getStreet2(), oldAddress.getStreet3(),
+						oldAddress.getStreet4(), oldAddress.getCpostal(), oldAddress.getCity(), oldAddress.getCcountry());
 
-			address.setCreationDate(oldAddress.getCreationDate());
-			address.setCusercre(oldAddress.getCusercre());
-			address.setStartval(oldAddress.getStartval());
-			address.setNumcli(numcli);
-			address.setCusermod(cuser);
-			address.setModifDate(dbHelper.getNow());
-			genericDao.save(address);
+				address.setCreationDate(oldAddress.getCreationDate());
+				address.setCusercre(oldAddress.getCusercre());
+				address.setStartval(oldAddress.getStartval());
+				address.setNumcli(numcli);
+				address.setCusermod(cuser);
+				address.setModifDate(dbHelper.getNow());
+				genericDao.save(address);
 
-			nummouvmt = movementOperation.insertMovement(numcli, null, cuser, movement);
+				movementOperation.insertMovement(numcli, null, cuser, movement);
+			}
 		}
-		return nummouvmt;
+
 	}
 
 	@Override
@@ -115,7 +121,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 		cliEmail.setCusermod(cuser);
 		cliEmail.setEndval(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
 		genericDao.merge(cliEmail);
-		DelMailMovement movement = new DelMailMovement(cliEmail.getCemail());
+		DelMailMovement movement = new DelMailMovement();
 		movement.setOldValues(cliEmail.getCemail(), cliEmail.getEmail());
 		movementOperation.insertMovement(numcli, null, cuser, movement);
 	}
@@ -126,7 +132,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 		cliPhone.setCusermod(cuser);
 		cliPhone.setEndval(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
 		genericDao.merge(cliPhone);
-		DelPhoneMovement movement = new DelPhoneMovement(cliPhone.getCphone());
+		DelPhoneMovement movement = new DelPhoneMovement();
 		movement.setOldValues(cliPhone.getCphone(), cliPhone.getPhonenumber());
 		movementOperation.insertMovement(numcli, null, cuser, movement);
 	}

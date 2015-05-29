@@ -1,10 +1,17 @@
 package org.insurance.service.check.impl;
 
+import java.util.List;
+import java.util.regex.Pattern;
+
 import javax.inject.Inject;
 
+import org.insurance.conf.Cod_address;
 import org.insurance.conf.Cod_email;
 import org.insurance.conf.Cod_phone;
 import org.insurance.conf.Cod_postal;
+import org.insurance.data.Cli_address;
+import org.insurance.data.Cli_email;
+import org.insurance.data.Cli_phone;
 import org.insurance.exception.ContactException;
 import org.insurance.exception.ContactException.ErrorCode;
 import org.insurance.service.ServiceCore;
@@ -41,7 +48,7 @@ public class ContactCheck extends ServiceCore implements IContactCheck {
 	public Cod_phone checkAndGetDefaultPhoneType() throws ContactException {
 		Cod_phone result = contactInfo.getDefaultPhoneType();
 		if (result == null)
-			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_TEL_UNKNOWN_DEFAULT_PHONE);
+			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_PHONE_UNKNOWN_DEFAULT_PHONE);
 		return result;
 	}
 
@@ -49,7 +56,7 @@ public class ContactCheck extends ServiceCore implements IContactCheck {
 	public Cod_phone checkAndGetDefaultMobilePhoneType() throws ContactException {
 		Cod_phone result = contactInfo.getDefaultMobilePhoneType();
 		if (result == null)
-			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_TEL_UNKNOWN_DEFAULT_MOBILE);
+			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_PHONE_UNKNOWN_DEFAULT_MOBILE);
 		return result;
 	}
 
@@ -59,5 +66,59 @@ public class ContactCheck extends ServiceCore implements IContactCheck {
 		if (result == null)
 			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_EMAIL_UNKNOWN_DEFAULT_EMAIL);
 		return result;
+	}
+
+	@Override
+	public Cod_address checkAndGetDefaultAddressType() throws ContactException {
+		Cod_address result = contactInfo.getDefaultAddressType();
+		if (result == null)
+			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_ADDRESS_UNKNOWN_DEFAULT_ADDRESS);
+		return result;
+	}
+
+	@Override
+	public void checkAddresses(List<Cli_address> addresses) throws ContactException {
+		for (Cli_address address : addresses) {
+			checkPostalCode(address.getCpostal(), address.getCity(), address.getCcountry());
+			checkStreets(address.getStreet2());
+		}
+	}
+
+	@Override
+	public void checkEmails(List<Cli_email> emails) throws ContactException {
+		for (Cli_email cli_email : emails) {
+			checkEmail(cli_email);
+		}
+	}
+
+	@Override
+	public void checkPhones(List<Cli_phone> phones) throws ContactException {
+		for (Cli_phone phone : phones) {
+			checkPhone(phone);
+		}
+	}
+
+	private void checkEmail(Cli_email email) throws ContactException {
+		Cod_email codEmail = contactInfo.getEmailType(email.getCemail());
+		if (codEmail == null)
+			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_EMAIL_UNKNOWN_TYPE, email.getCemail());
+		if (!Strings.isNullOrEmpty(email.getEmail()) && !Strings.isNullOrEmpty(codEmail.getPattern())) {
+			Pattern pattern = Pattern.compile(codEmail.getPattern());
+			if (!pattern.matcher(email.getEmail()).matches()) {
+				throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_EMAIL_INVALID_MAIL, email.getEmail());
+			}
+		}
+	}
+
+	private void checkPhone(Cli_phone phone) throws ContactException {
+		Cod_phone codPhone = contactInfo.getPhoneType(phone.getCphone());
+		if (codPhone == null)
+			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_PHONE_UNKNOWN_TYPE, phone.getCphone());
+		if (!Strings.isNullOrEmpty(phone.getPhonenumber()) && !Strings.isNullOrEmpty(codPhone.getPattern())) {
+			Pattern pattern = Pattern.compile(codPhone.getPattern());
+			if (!pattern.matcher(phone.getPhonenumber()).matches()) {
+				throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_PHONE_INVALID_PHONENUMBER, phone.getPhonenumber());
+			}
+		}
 	}
 }

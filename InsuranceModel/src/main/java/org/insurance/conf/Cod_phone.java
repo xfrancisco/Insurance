@@ -11,6 +11,7 @@ public class Cod_phone {
 	@Id
 	private String cphone;
 	private String lphone;
+	private String pattern;
 	private String indmobile;
 	private String inddefault;
 	private String indvali;
@@ -53,6 +54,14 @@ public class Cod_phone {
 
 	public void setIndvali(String indvali) {
 		this.indvali = indvali;
+	}
+
+	public String getPattern() {
+		return pattern;
+	}
+
+	public void setPattern(String pattern) {
+		this.pattern = pattern;
 	}
 
 }

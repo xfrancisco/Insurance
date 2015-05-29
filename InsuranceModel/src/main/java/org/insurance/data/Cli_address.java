@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.google.common.base.Strings;
 
@@ -30,12 +31,16 @@ public class Cli_address implements Serializable {
 	private String city;
 	private String cpostal;
 	private String ccountry;
+	private String caddress;
 	private String cusercre;
 	private String cusermod;
 	private java.sql.Date startval;
 	private java.sql.Date endval;
 	private Date creationDate;
 	private Date modifDate;
+
+	@Transient
+	private boolean isMain = false;
 
 	public Long getNumaddress() {
 		return numaddress;
@@ -147,33 +152,33 @@ public class Cli_address implements Serializable {
 			return true;
 		Cli_address oldAddress = (Cli_address) o;
 		if (!Strings.nullToEmpty(this.street1).equals(Strings.nullToEmpty(oldAddress.getStreet1()))) {
-			return true;
+			return false;
 		}
 
 		if (!Strings.nullToEmpty(this.street2).equals(Strings.nullToEmpty(oldAddress.getStreet2()))) {
-			return true;
+			return false;
 		}
 
 		if (!Strings.nullToEmpty(this.street3).equals(Strings.nullToEmpty(oldAddress.getStreet3()))) {
-			return true;
+			return false;
 		}
 
 		if (!Strings.nullToEmpty(this.street4).equals(Strings.nullToEmpty(oldAddress.getStreet4()))) {
-			return true;
+			return false;
 		}
 
 		if (!Strings.nullToEmpty(this.city).equals(Strings.nullToEmpty(oldAddress.getCity()))) {
-			return true;
+			return false;
 		}
 
 		if (!Strings.nullToEmpty(this.cpostal).equals(Strings.nullToEmpty(oldAddress.getCpostal()))) {
-			return true;
+			return false;
 		}
 
 		if (!Strings.nullToEmpty(this.ccountry).equals(Strings.nullToEmpty(oldAddress.getCcountry()))) {
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	public java.sql.Date getStartval() {
@@ -190,6 +195,14 @@ public class Cli_address implements Serializable {
 
 	public void setEndval(java.sql.Date endval) {
 		this.endval = endval;
+	}
+
+	public String getCaddress() {
+		return caddress;
+	}
+
+	public void setCaddress(String caddress) {
+		this.caddress = caddress;
 	}
 
 }

@@ -35,17 +35,18 @@ public class PersonManager extends ServiceCore implements IPersonManager {
 	private IPersonCheck personCheck;
 
 	@Override
-	public long insertPerson(final String cuser, final Cli_client client, Cli_address address, List<Cli_catcli> categories, List<Cli_phone> phones,
-			List<Cli_email> emails) throws PersonException, ContactException {
+	public long insertPerson(final String cuser, final Cli_client client, List<Cli_address> addresses, List<Cli_catcli> categories,
+			List<Cli_phone> phones, List<Cli_email> emails) throws PersonException, ContactException {
 		personCheck.checkCivility(client.getCcivil());
 		personCheck.checkName(client.getName(), client.getCompanyname(), client.getCompanyid());
-		contactCheck.checkPostalCode(address.getCpostal(), address.getCity(), address.getCcountry());
-		contactCheck.checkStreets(address.getStreet2());
+		contactCheck.checkAddresses(addresses);
 		personCheck.checkCategories(categories);
+		contactCheck.checkPhones(phones);
+		contactCheck.checkEmails(emails);
 
 		long numcli = personOperation.insertClient(cuser, client);
 
-		contactOperation.insertAddress(numcli, cuser, address);
+		contactOperation.insertAddresses(numcli, cuser, addresses);
 		personOperation.insertCategories(numcli, cuser, categories);
 		contactOperation.insertPhones(numcli, phones, cuser);
 		contactOperation.insertEmails(numcli, emails, cuser);
@@ -53,15 +54,17 @@ public class PersonManager extends ServiceCore implements IPersonManager {
 	}
 
 	@Override
-	public long updatePerson(long numcli, String cuser, Cli_client client, Cli_address address, List<Cli_catcli> categories, List<Cli_phone> phones,
-			List<Cli_email> emails) throws PersonException, ContactException {
+	public long updatePerson(long numcli, String cuser, Cli_client client, List<Cli_address> addresses, List<Cli_catcli> categories,
+			List<Cli_phone> phones, List<Cli_email> emails) throws PersonException, ContactException {
 		personCheck.checkCivility(client.getCcivil());
 		personCheck.checkName(client.getName(), client.getCompanyname(), client.getCompanyid());
-		contactCheck.checkPostalCode(address.getCpostal(), address.getCity(), address.getCcountry());
-		contactCheck.checkStreets(address.getStreet2());
+		contactCheck.checkAddresses(addresses);
+		contactCheck.checkPhones(phones);
+		contactCheck.checkEmails(emails);
+		personCheck.checkCategories(categories);
 
 		personOperation.updateClient(numcli, cuser, client);
-		contactOperation.updateAddress(numcli, cuser, address);
+		contactOperation.updateAddresses(numcli, cuser, addresses);
 		contactOperation.updatePhones(numcli, phones, cuser);
 		contactOperation.updateEmails(numcli, emails, cuser);
 		personOperation.updateCategories(numcli, cuser, categories);

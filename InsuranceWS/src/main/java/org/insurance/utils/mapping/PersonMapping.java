@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.insurance.conf.Cod_address;
 import org.insurance.conf.Cod_email;
 import org.insurance.conf.Cod_phone;
 import org.insurance.data.Cli_address;
@@ -14,9 +15,13 @@ import org.insurance.data.Cli_phone;
 import org.insurance.in.AddressIn;
 import org.insurance.in.ClientCategoryIn;
 import org.insurance.in.InsertPersonIn;
+import org.insurance.out.AddressHistoryOut;
 import org.insurance.out.AddressOut;
+import org.insurance.out.EmailHistoryOut;
 import org.insurance.out.PersonCategoryOut;
 import org.insurance.out.PersonOut;
+import org.insurance.out.PhoneHistoryOut;
+import org.insurance.util.DateUtils;
 
 public final class PersonMapping {
 
@@ -32,16 +37,19 @@ public final class PersonMapping {
 		return result;
 	}
 
-	public static Cli_address populateAddress(AddressIn addressIn) {
-		Cli_address result = new Cli_address();
+	public static List<Cli_address> populateAddress(AddressIn addressIn, Cod_address defaultAddressType) {
+		List<Cli_address> result = new ArrayList<Cli_address>();
 		if (addressIn != null) {
-			result.setStreet1(addressIn.getStreet1());
-			result.setStreet2(addressIn.getStreet2());
-			result.setStreet3(addressIn.getStreet3());
-			result.setStreet4(addressIn.getStreet4());
-			result.setCpostal(addressIn.getZipCode());
-			result.setCity(addressIn.getCity());
-			result.setCcountry(addressIn.getCountry());
+			Cli_address address = new Cli_address();
+			address.setStreet1(addressIn.getStreet1());
+			address.setStreet2(addressIn.getStreet2());
+			address.setStreet3(addressIn.getStreet3());
+			address.setStreet4(addressIn.getStreet4());
+			address.setCpostal(addressIn.getZipCode());
+			address.setCity(addressIn.getCity());
+			address.setCcountry(addressIn.getCountry());
+			address.setCaddress(defaultAddressType.getCaddress());
+			result.add(address);
 		}
 		return result;
 	}
@@ -131,6 +139,56 @@ public final class PersonMapping {
 		List<Cli_email> result = new ArrayList<Cli_email>();
 		Cli_email emailDto = new Cli_email(defaultEmailType.getCemail(), email);
 		result.add(emailDto);
+		return result;
+	}
+
+	public static List<AddressHistoryOut> populateAddressHistoryOut(List<Cli_address> addresses) {
+		List<AddressHistoryOut> result = new ArrayList<AddressHistoryOut>();
+		for (Cli_address address : addresses) {
+			AddressHistoryOut resultAddress = new AddressHistoryOut();
+			resultAddress.setId(address.getNumaddress());
+			resultAddress.setStreet1(address.getStreet1());
+			resultAddress.setStreet2(address.getStreet2());
+			resultAddress.setStreet3(address.getStreet3());
+			resultAddress.setStreet4(address.getStreet4());
+			resultAddress.setCity(address.getCity());
+			resultAddress.setCountry(address.getCcountry());
+			resultAddress.setZipCode(address.getCpostal());
+			resultAddress.setModificationUser(address.getCusermod());
+			resultAddress.setValidityStartDate(DateUtils.formatDate(address.getStartval()));
+			resultAddress.setValidityEndDate(DateUtils.formatDate(address.getEndval()));
+			result.add(resultAddress);
+		}
+		return result;
+	}
+
+	public static List<PhoneHistoryOut> populatePhonesHistoryOut(List<Cli_phone> phones) {
+		List<PhoneHistoryOut> result = new ArrayList<PhoneHistoryOut>();
+		for (Cli_phone phone : phones) {
+			PhoneHistoryOut tmp = new PhoneHistoryOut();
+			tmp.setId(phone.getNumphone());
+			tmp.setPhoneNumber(phone.getPhonenumber());
+			tmp.setPhoneType(phone.getCphone());
+			tmp.setModificationUser(phone.getCusermod());
+			tmp.setValidityStartDate(DateUtils.formatDate(phone.getStartval()));
+			tmp.setValidityEndDate(DateUtils.formatDate(phone.getEndval()));
+			result.add(tmp);
+		}
+		return result;
+	}
+
+	public static List<EmailHistoryOut> getEmailHistoryOut(List<Cli_email> emails) {
+		List<EmailHistoryOut> result = new ArrayList<EmailHistoryOut>();
+		for (Cli_email email : emails) {
+			EmailHistoryOut tmp = new EmailHistoryOut();
+			tmp.setId(email.getNumemail());
+			tmp.setEmail(email.getEmail());
+			tmp.setEmailType(email.getCemail());
+			tmp.setModificationUser(email.getCusermod());
+			tmp.setValidityStartDate(DateUtils.formatDate(email.getStartval()));
+			tmp.setValidityEndDate(DateUtils.formatDate(email.getEndval()));
+			result.add(tmp);
+		}
 		return result;
 	}
 }

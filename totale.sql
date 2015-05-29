@@ -5,7 +5,7 @@ GRANT CREATE SESSION, GRANT ANY PRIVILEGE TO WEBUSER;
 GRANT SELECT ON V_$SESSION TO WEBUSER;
 GRANT ALL PRIVILEGES TO WEBUSER;*/
 
-select * from all_objects where owner = 'INSURANCE';
+select * from all_objects where owner = 'WEBUSER';
 
 DROP TABLE COD_VERSION CASCADE CONSTRAINTS;
 DROP TABLE COD_CIVILITY CASCADE CONSTRAINTS;
@@ -109,24 +109,27 @@ comment on column COD_EMAIL.PATTERN is 'Pattern du format du type. Utile pour le
 comment on column COD_EMAIL.INDDEFAULT is 'Indicateur de type par défaut. Si à 1 alors type par défaut';
 comment on column COD_EMAIL.INDVALI is 'Indicateur de validité de l''enregistrement. Si à 1 alors valide';
 
+
 /* PHONES*/
 CREATE TABLE COD_PHONE
 ( 
   CPHONE VARCHAR2(8) NOT NULL,
   LPHONE VARCHAR2(128) NOT NULL,
+  PATTERN VARCHAR2(128),
   INDMOBILE VARCHAR2(1) DEFAULT '1' NOT NULL,
   INDDEFAULT VARCHAR2(1) DEFAULT '1' NOT NULL,
   INDVALI VARCHAR2(1) DEFAULT '1' NOT NULL,
   CONSTRAINT CODPHONE_PK PRIMARY KEY (CPHONE)
 );
 
-INSERT INTO COD_PHONE(CPHONE, LPHONE, INDMOBILE, INDDEFAULT, INDVALI) values ('WORK', 'TÉLÉPHONE', '0', '1', '1');
-INSERT INTO COD_PHONE(CPHONE, LPHONE, INDMOBILE, INDDEFAULT, INDVALI) values ('MOBILE', 'PORTABLE', '1', '1', '1');
+INSERT INTO COD_PHONE(CPHONE, LPHONE, PATTERN, INDMOBILE, INDDEFAULT, INDVALI) values ('WORK', 'TÉLÉPHONE', NULL, '0', '1', '1');
+INSERT INTO COD_PHONE(CPHONE, LPHONE, PATTERN, INDMOBILE, INDDEFAULT, INDVALI) values ('MOBILE', 'PORTABLE', NULL, '1', '1', '1');
 
 
 comment on table COD_PHONE is 'Table des types de téléphones';
 comment on column COD_PHONE.CPHONE is 'Code du type';
 comment on column COD_PHONE.LPHONE is 'Libellé du type';
+comment on column COD_PHONE.PATTERN is 'Pattern du format du type. Utile pour les contrôles de surface';
 comment on column COD_PHONE.INDMOBILE is 'Indicateur téléphone portable. Si à 1 alors téléphone portable';
 comment on column COD_PHONE.INDDEFAULT is 'Indicateur de type par défaut. Si à 1 alors type par défaut';
 comment on column COD_PHONE.INDVALI is 'Indicateur de validité de l''enregistrement. Si à 1 alors valide';
@@ -286,6 +289,7 @@ INSERT INTO COD_MOVEMENTDET(CCOLUMN, LABEL, VALUETABLE, VALUECOLUMN) values ('CP
 INSERT INTO COD_MOVEMENTDET(CCOLUMN, LABEL, VALUETABLE, VALUECOLUMN) values ('CEMAIL', 'TYPE DE MAIL', 'COD_EMAIL', 'LEMAIL');
 INSERT INTO COD_MOVEMENTDET(CCOLUMN, LABEL, VALUETABLE, VALUECOLUMN) values ('EMAIL', 'ADRESSE EMAIL', NULL, NULL);
 INSERT INTO COD_MOVEMENTDET(CCOLUMN, LABEL, VALUETABLE, VALUECOLUMN) values ('PHONENUMBER', 'NUMÉRO DE TÉLÉPHONE', NULL, NULL);
+INSERT INTO COD_MOVEMENTDET(CCOLUMN, LABEL, VALUETABLE, VALUECOLUMN) values ('CADDRESS', 'TYPE D''ADRESSE', 'COD_ADDRESS', 'LADDRESS');
 
 comment on table COD_MOVEMENTDET is 'Table des détails de mouvements';
 comment on column COD_MOVEMENTDET.CCOLUMN is 'Clé';
@@ -715,7 +719,7 @@ alter table CLI_CONTRACT ADD CONSTRAINT FK_CONTRACTRUSERCRE FOREIGN KEY (CUSERCR
 alter table CLI_CONTRACT ADD CONSTRAINT FK_CONTRACTUSERMOD FOREIGN KEY (CUSERMOD) REFERENCES USR_USER(CUSER);
 alter table CLI_CONTRACT ADD CONSTRAINT FK_CONTRACTUSERCANCEL FOREIGN KEY (CUSERCANCEL) REFERENCES USR_USER(CUSER);
 
-drop table CLI_GUARANTEE cascade constraints;
+
 /*GARANTIES*/
 CREATE TABLE CLI_GUARANTEE
 ( 
@@ -812,7 +816,7 @@ CREATE TABLE CLI_PHONE
   NUMPHONE NUMBER(8) NOT NULL,
   NUMCLI NUMBER(8) NOT NULL,
   CPHONE VARCHAR2(8) NOT NULL,
-  PHONENUMBER VARCHAR2(16) NOT NULL,
+  PHONENUMBER VARCHAR2(64) NOT NULL,
   STARTVAL DATE NOT NULL,
   ENDVAL DATE,
   CUSERCRE VARCHAR2(32) NOT NULL,
@@ -887,9 +891,4 @@ CREATE SEQUENCE NUMEMAIL_SEQ
 
 commit;
 
-select * from cli_movement where numcli = 8;
-
-select * from cli_movementdet where nummovement = 31;
-
-select * from cli_movementdet where nummovement = 32;
 

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 import org.insurance.common.IPersonService;
+import org.insurance.conf.Cod_address;
 import org.insurance.conf.Cod_email;
 import org.insurance.conf.Cod_phone;
 import org.insurance.data.Cli_address;
@@ -16,7 +17,10 @@ import org.insurance.data.Cli_phone;
 import org.insurance.exception.InsuranceException;
 import org.insurance.in.InsertPersonIn;
 import org.insurance.in.UpdatePersonIn;
+import org.insurance.out.AddressHistoryOut;
+import org.insurance.out.EmailHistoryOut;
 import org.insurance.out.PersonOut;
+import org.insurance.out.PhoneHistoryOut;
 import org.insurance.service.check.IContactCheck;
 import org.insurance.service.check.IPersonCheck;
 import org.insurance.service.check.IUserCheck;
@@ -54,15 +58,20 @@ public class PersonService implements IPersonService {
 	@Override
 	public PersonOut insertPerson(final String userId, InsertPersonIn personIn) throws InsuranceException {
 		userCheck.checkUser(userId);
-		Cli_client client = PersonMapping.populateClient(personIn);
-		Cli_address address = PersonMapping.populateAddress(personIn.getAddress());
-		List<Cli_catcli> categories = PersonMapping.populateCategories(personIn.getCategories());
+
 		Cod_phone defaultPhoneType = contactCheck.checkAndGetDefaultPhoneType();
 		Cod_phone defaultMobilePhoneType = contactCheck.checkAndGetDefaultMobilePhoneType();
-		List<Cli_phone> phones = PersonMapping.populatePhones(personIn.getMobile(), personIn.getPhone(), defaultMobilePhoneType, defaultPhoneType);
 		Cod_email defaultEmailType = contactCheck.checkAndGetDefaultEmailType();
+		Cod_address defaultAddressType = contactCheck.checkAndGetDefaultAddressType();
+
+		Cli_client client = PersonMapping.populateClient(personIn);
+		List<Cli_address> addresses = PersonMapping.populateAddress(personIn.getAddress(), defaultAddressType);
+		List<Cli_catcli> categories = PersonMapping.populateCategories(personIn.getCategories());
+		List<Cli_phone> phones = PersonMapping.populatePhones(personIn.getMobile(), personIn.getPhone(), defaultMobilePhoneType, defaultPhoneType);
 		List<Cli_email> emails = PersonMapping.populateEmail(personIn.getEmail(), defaultEmailType);
-		personManager.insertPerson(userId, client, address, categories, phones, emails);
+
+		personManager.insertPerson(userId, client, addresses, categories, phones, emails);
+
 		return getPerson(userId, client.getNumcli());
 	}
 
@@ -70,7 +79,8 @@ public class PersonService implements IPersonService {
 	public PersonOut getPerson(final String userId, long personId) throws InsuranceException {
 		userCheck.checkUser(userId);
 		Cli_client client = personCheck.checkAndGetPerson(personId);
-		Cli_address address = contactInfo.getAddress(personId);
+		Cod_address defaultAddressType = contactCheck.checkAndGetDefaultAddressType();
+		Cli_address address = contactInfo.getAddressByType(personId, defaultAddressType.getCaddress());
 		List<Cli_catcli> categories = personInfo.getCategories(personId);
 		List<Cli_phone> phones = contactInfo.getPhones(personId);
 		List<Cli_email> emails = contactInfo.getEmails(personId);
@@ -82,21 +92,46 @@ public class PersonService implements IPersonService {
 		// Contrôles
 		userCheck.checkUser(userId);
 		long personId = personIn.getPersonId();
-		personCheck.checkAndGetPerson(personIn.getPersonId());
-
-		// Alimentation des beans
-		Cli_client client = PersonMapping.populateClient(personIn);
-		Cli_address address = PersonMapping.populateAddress(personIn.getAddress());
-		List<Cli_catcli> categories = PersonMapping.populateCategories(personIn.getCategories());
+		personCheck.checkAndGetPerson(personId);
 
 		Cod_phone defaultPhoneType = contactCheck.checkAndGetDefaultPhoneType();
 		Cod_phone defaultMobilePhoneType = contactCheck.checkAndGetDefaultMobilePhoneType();
-		List<Cli_phone> phones = PersonMapping.populatePhones(personIn.getMobile(), personIn.getPhone(), defaultMobilePhoneType, defaultPhoneType);
 		Cod_email defaultEmailType = contactCheck.checkAndGetDefaultEmailType();
+		Cod_address defaultAddressType = contactCheck.checkAndGetDefaultAddressType();
+
+		// Alimentation des beans
+		Cli_client client = PersonMapping.populateClient(personIn);
+		List<Cli_address> addresses = PersonMapping.populateAddress(personIn.getAddress(), defaultAddressType);
+		List<Cli_catcli> categories = PersonMapping.populateCategories(personIn.getCategories());
+		List<Cli_phone> phones = PersonMapping.populatePhones(personIn.getMobile(), personIn.getPhone(), defaultMobilePhoneType, defaultPhoneType);
 		List<Cli_email> emails = PersonMapping.populateEmail(personIn.getEmail(), defaultEmailType);
 
 		// Mise à jour
-		personManager.updatePerson(personId, userId, client, address, categories, phones, emails);
+		personManager.updatePerson(personId, userId, client, addresses, categories, phones, emails);
 		return getPerson(userId, personId);
+	}
+
+	@Override
+	public List<AddressHistoryOut> getAddressHistory(String userId, Long personId) throws InsuranceException {
+		userCheck.checkUser(userId);
+		personCheck.checkAndGetPerson(personId);
+		List<Cli_address> addresses = contactInfo.getOldAddresses(personId);
+		return PersonMapping.populateAddressHistoryOut(addresses);
+	}
+
+	@Override
+	public List<PhoneHistoryOut> getPhoneHistory(String userId, Long personId) throws InsuranceException {
+		userCheck.checkUser(userId);
+		personCheck.checkAndGetPerson(personId);
+		List<Cli_phone> phones = contactInfo.getOldPhones(personId);
+		return PersonMapping.populatePhonesHistoryOut(phones);
+	}
+
+	@Override
+	public List<EmailHistoryOut> getEmailHistory(String userId, Long personId) throws InsuranceException {
+		userCheck.checkUser(userId);
+		personCheck.checkAndGetPerson(personId);
+		List<Cli_email> emails = contactInfo.getOldEmails(personId);
+		return PersonMapping.getEmailHistoryOut(emails);
 	}
 }

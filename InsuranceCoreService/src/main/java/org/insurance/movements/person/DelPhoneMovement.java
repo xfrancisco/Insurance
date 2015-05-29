@@ -4,8 +4,8 @@ import org.insurance.movements.MovementCode;
 
 public class DelPhoneMovement extends PhoneMovement {
 
-	public DelPhoneMovement(final String cphone) {
-		super(MovementCode.DELPHONE, cphone, null);
+	public DelPhoneMovement() {
+		super(MovementCode.DELPHONE, null, null);
 	}
 
 	public void setOldValues(final String cphone, final String phonenumber) {
