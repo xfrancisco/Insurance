@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Cli_movementdet {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NUMMOVEMENTDET_SEQ")
-	@SequenceGenerator(name = "NUMMOVEMENTDET_SEQ", sequenceName = "NUMMOVEMENTDET_SEQ")
+	@SequenceGenerator(name = "NUMMOVEMENTDET_SEQ", sequenceName = "NUMMOVEMENTDET_SEQ", allocationSize = 1, initialValue = 1)
 	@Id
 	private Long nummovementdet;
 	private Long nummovement;

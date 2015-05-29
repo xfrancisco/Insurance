@@ -1,5 +1,8 @@
 package org.insurance.service.check;
 
+import java.util.List;
+
+import org.insurance.data.Cli_catcli;
 import org.insurance.data.Cli_client;
 import org.insurance.exception.PersonException;
 
@@ -11,5 +14,7 @@ public interface IPersonCheck {
 	void checkCategory(String ccatcli) throws PersonException;
 
 	Cli_client checkAndGetPerson(long personId) throws PersonException;
+
+	void checkCategories(List<Cli_catcli> categories) throws PersonException;
 
 }

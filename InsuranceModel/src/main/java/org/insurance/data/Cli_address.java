@@ -19,7 +19,7 @@ public class Cli_address implements Serializable {
 	private static final long serialVersionUID = 2065521207003803792L;
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NUMADDRESS_SEQ")
-	@SequenceGenerator(name = "NUMADDRESS_SEQ", sequenceName = "NUMADDRESS_SEQ")
+	@SequenceGenerator(name = "NUMADDRESS_SEQ", sequenceName = "NUMADDRESS_SEQ", allocationSize = 1, initialValue = 1)
 	@Id
 	private Long numaddress;
 	private Long numcli;
@@ -32,6 +32,8 @@ public class Cli_address implements Serializable {
 	private String ccountry;
 	private String cusercre;
 	private String cusermod;
+	private java.sql.Date startVal;
+	private java.sql.Date endVal;
 	private Date creationDate;
 	private Date modifDate;
 
@@ -168,6 +170,22 @@ public class Cli_address implements Serializable {
 			return true;
 		}
 		return false;
+	}
+
+	public java.sql.Date getStartVal() {
+		return startVal;
+	}
+
+	public void setStartVal(java.sql.Date startVal) {
+		this.startVal = startVal;
+	}
+
+	public java.sql.Date getEndVal() {
+		return endVal;
+	}
+
+	public void setEndVal(java.sql.Date endVal) {
+		this.endVal = endVal;
 	}
 
 }

@@ -45,6 +45,9 @@
 				<value>org.insurance.conf.Cod_catcli</value>
 				<value>org.insurance.conf.Cod_movement</value>
 				<value>org.insurance.conf.Cod_movementdet</value>
+				<value>org.insurance.conf.Cod_address</value>
+				<value>org.insurance.conf.Cod_phone</value>
+				<value>org.insurance.conf.Cod_email</value>
 				
 				<value>org.insurance.conf.Cod_branch</value>
 				<value>org.insurance.conf.Cod_category</value>
@@ -60,6 +63,8 @@
 				<value>org.insurance.data.Cli_client</value>
 				<value>org.insurance.data.Cli_catcli</value> 
 				<value>org.insurance.data.Cli_address</value> 
+				<value>org.insurance.data.Cli_phone</value>
+				<value>org.insurance.data.Cli_email</value>
 				<value>org.insurance.data.Cli_contract</value> 
 				<value>org.insurance.data.Cli_guarantee</value>
 				<value>org.insurance.data.Cli_movement</value>

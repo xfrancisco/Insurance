@@ -4,15 +4,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.insurance.conf.Cod_email;
+import org.insurance.conf.Cod_phone;
 import org.insurance.data.Cli_address;
 import org.insurance.data.Cli_catcli;
 import org.insurance.data.Cli_client;
+import org.insurance.data.Cli_email;
+import org.insurance.data.Cli_phone;
 import org.insurance.in.AddressIn;
 import org.insurance.in.ClientCategoryIn;
 import org.insurance.in.InsertPersonIn;
 import org.insurance.out.AddressOut;
 import org.insurance.out.PersonCategoryOut;
 import org.insurance.out.PersonOut;
+
+import com.google.common.base.Strings;
 
 public final class PersonMapping {
 
@@ -91,9 +97,32 @@ public final class PersonMapping {
 		List<Cli_catcli> result = new ArrayList<Cli_catcli>();
 		for (ClientCategoryIn clientCategoryIn : categories) {
 			Cli_catcli tmp = new Cli_catcli();
-			tmp.setNumcli(personId);
 			tmp.setCcatcli(clientCategoryIn.getCategoryId());
+			tmp.setNumcli(personId);
 			result.add(tmp);
+		}
+		return result;
+	}
+
+	public static List<Cli_phone> populatePhones(String mobilePhoneNumber, String phoneNumber, Cod_phone codPhoneMobile, Cod_phone codPhone) {
+		List<Cli_phone> result = new ArrayList<Cli_phone>();
+		if (!Strings.isNullOrEmpty(mobilePhoneNumber)) {
+			Cli_phone mobilePhoneDto = new Cli_phone(codPhoneMobile.getCphone(), mobilePhoneNumber);
+			result.add(mobilePhoneDto);
+		}
+
+		if (!Strings.isNullOrEmpty(phoneNumber)) {
+			Cli_phone phoneDto = new Cli_phone(codPhoneMobile.getCphone(), phoneNumber);
+			result.add(phoneDto);
+		}
+		return result;
+	}
+
+	public static List<Cli_email> populateEmail(String email, Cod_email defaultEmailType) {
+		List<Cli_email> result = new ArrayList<Cli_email>();
+		if (!Strings.isNullOrEmpty(email)) {
+			Cli_email emailDto = new Cli_email(defaultEmailType.getCemail(), email);
+			result.add(emailDto);
 		}
 		return result;
 	}

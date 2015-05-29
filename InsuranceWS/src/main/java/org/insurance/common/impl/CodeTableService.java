@@ -32,7 +32,11 @@ import org.insurance.utils.mapping.PremiumMapping;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 @Service
 @Transactional(rollbackFor = Exception.class, readOnly = true)
@@ -159,6 +163,39 @@ public class CodeTableService implements ICodeTableService {
 			//TODO XFR
 		}
 		return result;
+	}
+
+	@Override
+	public List<String> getAllCodes() {
+		List<String> codeTableValuePropertyNames = new ArrayList<>(codeTablesProperties.stringPropertyNames());
+
+		List<String> filteredCodeTableValuePropertyNames = CodeTableValuesComputing
+				.filterCodeTableValuePropertyNamesByQuerySuffix(codeTableValuePropertyNames);
+
+		return CodeTableValuesComputing.transformCodeTableValuePropertyNames(filteredCodeTableValuePropertyNames);
+	}
+
+	private static class CodeTableValuesComputing {
+
+		private static List<String> filterCodeTableValuePropertyNamesByQuerySuffix(List<String> codeTableValuePropertyNames) {
+			return Lists.newArrayList(Iterables.filter(codeTableValuePropertyNames, new Predicate<String>() {
+
+				@Override
+				public boolean apply(String input) {
+					return input != null && input.endsWith(QUERY_SUFFIX);
+				}
+			}));
+		}
+
+		private static List<String> transformCodeTableValuePropertyNames(List<String> filteredCodeTableValuePropertyNames) {
+			return Lists.transform(filteredCodeTableValuePropertyNames, new Function<String, String>() {
+
+				@Override
+				public String apply(String input) {
+					return (input != null) ? input.substring(0, input.indexOf(QUERY_SUFFIX)) : null;
+				}
+			});
+		}
 	}
 
 }

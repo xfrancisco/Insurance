@@ -1,9 +1,12 @@
 package org.insurance.service.check.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.insurance.conf.Cod_catcli;
 import org.insurance.conf.Cod_civility;
+import org.insurance.data.Cli_catcli;
 import org.insurance.data.Cli_client;
 import org.insurance.exception.PersonException;
 import org.insurance.exception.PersonException.ErrorCode;
@@ -48,5 +51,12 @@ public class PersonCheck extends ServiceCore implements IPersonCheck {
 		if (client == null)
 			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_PERSON, personId);
 		return client;
+	}
+
+	@Override
+	public void checkCategories(List<Cli_catcli> categories) throws PersonException {
+		for (Cli_catcli cliCatcli : categories) {
+			checkCategory(cliCatcli.getCcatcli());
+		}
 	}
 }

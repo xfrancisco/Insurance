@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "CLI_MOVEMENT")
 public class Cli_movement {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NUMMOVEMENT_SEQ")
-	@SequenceGenerator(name = "NUMMOVEMENT_SEQ", sequenceName = "NUMMOVEMENT_SEQ")
+	@SequenceGenerator(name = "NUMMOVEMENT_SEQ", sequenceName = "NUMMOVEMENT_SEQ", allocationSize = 1, initialValue = 1)
 	@Id
 	private Long nummovement;
 	private Long numcli;

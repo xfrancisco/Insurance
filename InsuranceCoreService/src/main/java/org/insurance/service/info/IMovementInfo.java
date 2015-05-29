@@ -3,8 +3,8 @@ package org.insurance.service.info;
 import java.util.List;
 
 import org.insurance.data.Cli_movement;
-import org.insurance.dto.MovementChangeDto;
-import org.insurance.dto.MovementDto;
+import org.insurance.dto.movements.MovementChangeDto;
+import org.insurance.dto.movements.MovementDto;
 
 public interface IMovementInfo {
 

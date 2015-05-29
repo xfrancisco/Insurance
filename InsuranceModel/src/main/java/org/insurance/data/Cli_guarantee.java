@@ -18,7 +18,7 @@ public class Cli_guarantee implements Serializable {
 	private static final long serialVersionUID = -4695640649182214238L;
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NUMGUARANTEE_SEQ")
-	@SequenceGenerator(name = "NUMGUARANTEE_SEQ", sequenceName = "NUMGUARANTEE_SEQ")
+	@SequenceGenerator(name = "NUMGUARANTEE_SEQ", sequenceName = "NUMGUARANTEE_SEQ", allocationSize = 1, initialValue = 1)
 	@Id
 	private Long numguarantee;
 	private Long numcli;

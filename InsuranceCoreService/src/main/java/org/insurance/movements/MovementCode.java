@@ -1,15 +1,17 @@
 package org.insurance.movements;
 
 import org.insurance.movements.person.DelCategoryMovement;
+import org.insurance.movements.person.DelMailMovement;
+import org.insurance.movements.person.DelPhoneMovement;
 import org.insurance.movements.person.ModAddressMovement;
 import org.insurance.movements.person.ModMailMovement;
 import org.insurance.movements.person.ModPersonMovement;
-import org.insurance.movements.person.ModTelMovement;
+import org.insurance.movements.person.ModPhoneMovement;
 import org.insurance.movements.person.NewAddressMovement;
 import org.insurance.movements.person.NewCategoryMovement;
 import org.insurance.movements.person.NewMailMovement;
 import org.insurance.movements.person.NewPersonMovement;
-import org.insurance.movements.person.NewTelMovement;
+import org.insurance.movements.person.NewPhoneMovement;
 
 public enum MovementCode {
 	//@formatter:off
@@ -17,10 +19,12 @@ public enum MovementCode {
 	MODPERSON(ModPersonMovement.class),
 	NEWADDRESS(NewAddressMovement.class),
 	MODADDRESS(ModAddressMovement.class),
-	NEWTEL(NewTelMovement.class),
-	MODTEL(ModTelMovement.class),
+	NEWPHONE(NewPhoneMovement.class),
+	MODPHONE(ModPhoneMovement.class),
+	DELPHONE(DelPhoneMovement.class),
 	NEWMAIL(NewMailMovement.class),
 	MODMAIL(ModMailMovement.class), 
+	DELMAIL(DelMailMovement.class),
 	NEWCATCLI(NewCategoryMovement.class),
 	DELCATCLI(DelCategoryMovement.class);
 	//@formatter:on

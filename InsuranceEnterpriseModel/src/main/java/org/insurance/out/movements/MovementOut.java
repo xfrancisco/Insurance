@@ -4,7 +4,7 @@ public class MovementOut {
 	private String code;
 	private Long id;
 	private String label;
-	private Long date;
+	private String date;
 	private String user;
 
 	public String getCode() {
@@ -31,20 +31,20 @@ public class MovementOut {
 		this.label = label;
 	}
 
-	public Long getDate() {
-		return date;
-	}
-
-	public void setDate(Long date) {
-		this.date = date;
-	}
-
 	public String getUser() {
 		return user;
 	}
 
 	public void setUser(String user) {
 		this.user = user;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 }

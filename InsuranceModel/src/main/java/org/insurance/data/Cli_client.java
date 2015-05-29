@@ -16,7 +16,7 @@ import com.google.common.base.Strings;
 public class Cli_client {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NUMCLI_SEQ")
-	@SequenceGenerator(name = "NUMCLI_SEQ", sequenceName = "NUMCLI_SEQ")
+	@SequenceGenerator(name = "NUMCLI_SEQ", sequenceName = "NUMCLI_SEQ", allocationSize = 1, initialValue = 1)
 	@Id
 	private Long numcli;
 

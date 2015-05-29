@@ -1,12 +1,11 @@
 package org.insurance.movements.person;
 
-import org.insurance.movements.Movement;
 import org.insurance.movements.MovementCode;
 
-public class NewMailMovement extends Movement {
+public class NewMailMovement extends MailMovement {
 
-	protected NewMailMovement(MovementCode movement) {
-		super(MovementCode.NEWMAIL);
+	public NewMailMovement(final String cemail, final String email) {
+		super(MovementCode.NEWMAIL, cemail, email);
 	}
 
 }

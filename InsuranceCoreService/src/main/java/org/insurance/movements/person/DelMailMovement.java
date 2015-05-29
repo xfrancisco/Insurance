@@ -2,10 +2,10 @@ package org.insurance.movements.person;
 
 import org.insurance.movements.MovementCode;
 
-public class ModMailMovement extends MailMovement {
+public class DelMailMovement extends MailMovement {
 
-	public ModMailMovement(final String cemail, final String email) {
-		super(MovementCode.MODMAIL, cemail, email);
+	public DelMailMovement(final String cemail) {
+		super(MovementCode.DELMAIL, cemail, null);
 	}
 
 	public void setOldValues(final String cemail, final String email) {

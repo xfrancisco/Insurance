@@ -37,6 +37,16 @@ public class CodeTableWebservice extends AbstractWebservice {
 	}
 
 	@GET
+	@Path("/codeTable/all")
+	@ApiOperation(value = "Liste des codes table")
+	public ResponseWrapper<List<String>> getAllCodes(
+			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId) {
+		ResponseWrapper<List<String>> responseWrapper = new ResponseWrapper<List<String>>();
+		responseWrapper.setData(codeTableService.getAllCodes());
+		return responseWrapper;
+	}
+
+	@GET
 	@Path("/version")
 	@ApiOperation(value = "Version")
 	public ResponseWrapper<VersionOut> getVersion(

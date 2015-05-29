@@ -23,4 +23,6 @@ public interface ICodeTableService {
 
 	List<EntityOut> getPremiums(final String userId, String guaranteeId) throws InsuranceException;
 
+	List<String> getAllCodes();
+
 }

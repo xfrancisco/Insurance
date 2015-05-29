@@ -18,11 +18,12 @@ public class Cli_contract implements Serializable {
 	@Id
 	private Integer numcon;
 
-	private String ccontract;
+	private String cbranch;
+	private String ccategory;
 
-	private java.sql.Date startDate;
+	private java.sql.Date startVal;
 
-	private java.sql.Date endDate;
+	private java.sql.Date endVal;
 
 	private String ccancel;
 
@@ -47,30 +48,6 @@ public class Cli_contract implements Serializable {
 
 	public void setNumcon(Integer numcon) {
 		this.numcon = numcon;
-	}
-
-	public String getCcontract() {
-		return ccontract;
-	}
-
-	public void setCcontract(String ccontract) {
-		this.ccontract = ccontract;
-	}
-
-	public java.sql.Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(java.sql.Date startDate) {
-		this.startDate = startDate;
-	}
-
-	public java.sql.Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(java.sql.Date endDate) {
-		this.endDate = endDate;
 	}
 
 	public String getCcancel() {
@@ -127,6 +104,38 @@ public class Cli_contract implements Serializable {
 
 	public void setCancelDate(Date cancelDate) {
 		this.cancelDate = cancelDate;
+	}
+
+	public String getCbranch() {
+		return cbranch;
+	}
+
+	public void setCbranch(String cbranch) {
+		this.cbranch = cbranch;
+	}
+
+	public String getCcategory() {
+		return ccategory;
+	}
+
+	public void setCcategory(String ccategory) {
+		this.ccategory = ccategory;
+	}
+
+	public java.sql.Date getStartVal() {
+		return startVal;
+	}
+
+	public void setStartVal(java.sql.Date startVal) {
+		this.startVal = startVal;
+	}
+
+	public java.sql.Date getEndVal() {
+		return endVal;
+	}
+
+	public void setEndVal(java.sql.Date endVal) {
+		this.endVal = endVal;
 	}
 
 }

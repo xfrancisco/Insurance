@@ -1,4 +1,4 @@
-package org.insurance.dto;
+package org.insurance.dto.movements;
 
 import java.util.Date;
 

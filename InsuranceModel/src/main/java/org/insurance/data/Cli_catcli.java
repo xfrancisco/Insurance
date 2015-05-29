@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Cli_catcli {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NUMCLICATCLI_SEQ")
-	@SequenceGenerator(name = "NUMCLICATCLI_SEQ", sequenceName = "NUMCLICATCLI_SEQ")
+	@SequenceGenerator(name = "NUMCLICATCLI_SEQ", sequenceName = "NUMCLICATCLI_SEQ", allocationSize = 1, initialValue = 1)
 	@Id
 	private Long numclicatcli;
 

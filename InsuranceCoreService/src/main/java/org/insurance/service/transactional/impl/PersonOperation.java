@@ -5,11 +5,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.insurance.data.Cli_address;
 import org.insurance.data.Cli_catcli;
 import org.insurance.data.Cli_client;
 import org.insurance.movements.person.DelCategoryMovement;
-import org.insurance.movements.person.NewAddressMovement;
+import org.insurance.movements.person.ModPersonMovement;
 import org.insurance.movements.person.NewCategoryMovement;
 import org.insurance.movements.person.NewPersonMovement;
 import org.insurance.service.ServiceCore;
@@ -38,35 +37,26 @@ public class PersonOperation extends ServiceCore implements IPersonOperation {
 	}
 
 	@Override
-	public Long insertAddress(final String cuser, Cli_address address) {
-		address.setCusercre(cuser);
-		address.setCreationDate(dbHelper.getNow());
-		Long numaddress = (Long) genericDao.save(address);
-		NewAddressMovement movement = new NewAddressMovement(address.getStreet1(), address.getStreet2(), address.getStreet3(), address.getStreet4(),
-				address.getCpostal(), address.getCity(), address.getCcountry());
-		movementOperation.insertMovement(address.getNumcli(), null, cuser, movement);
-		return numaddress;
+	public Long updateClient(final long numcli, final String cuser, final Cli_client client) {
+		Long nummouvmt = null;
+		Cli_client oldClient = personInfo.getPerson(numcli);
+		if (!oldClient.equals(client)) {
+			client.setCusermod(cuser);
+			client.setModifDate(dbHelper.getNow());
+			ModPersonMovement movement = new ModPersonMovement(client.getCcivil(), client.getName(), client.getFirstname(), client.getCompanyname(),
+					client.getCompanyid());
+			movement.setOldValues(oldClient.getCcivil(), oldClient.getName(), oldClient.getFirstname(), oldClient.getCompanyname(),
+					oldClient.getCompanyid());
+			nummouvmt = movementOperation.insertMovement(numcli, 0, cuser, movement);
+			genericDao.saveOrUpdate(client);
+		}
+		return nummouvmt;
 	}
 
 	@Override
-	public Long updateClient(final String cuser, final Cli_client client) {
-		client.setCusermod(cuser);
-		client.setModifDate(dbHelper.getNow());
-		genericDao.saveOrUpdate(client);
-		return client.getNumcli();
-	}
-
-	@Override
-	public Long updateAddress(final String cuser, Cli_address address) {
-		address.setCusermod(cuser);
-		address.setModifDate(dbHelper.getNow());
-		genericDao.merge(address);
-		return address.getNumaddress();
-	}
-
-	@Override
-	public void insertCategories(String cuser, List<Cli_catcli> categories) {
+	public void insertCategories(long numcli, String cuser, List<Cli_catcli> categories) {
 		for (Cli_catcli cliCatcli : categories) {
+			cliCatcli.setNumcli(numcli);
 			genericDao.save(cliCatcli);
 			NewCategoryMovement movement = new NewCategoryMovement(cliCatcli.getCcatcli());
 			movementOperation.insertMovement(cliCatcli.getNumcli(), null, cuser, movement);
