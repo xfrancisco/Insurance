@@ -12,6 +12,9 @@ public class PersonOut {
 	private String companyId;
 	private AddressOut address;
 	private List<PersonCategoryOut> categories;
+	private String mobile;
+	private String phone;
+	private String email;
 
 	public PersonOut() {
 	}
@@ -78,6 +81,30 @@ public class PersonOut {
 
 	public void setCivility(String civility) {
 		this.civility = civility;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

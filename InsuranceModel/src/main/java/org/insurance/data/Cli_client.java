@@ -110,7 +110,11 @@ public class Cli_client {
 		this.modifDate = modifDate;
 	}
 
-	public boolean hasChanged(Cli_client client) {
+	@Override
+	public boolean equals(Object o) {
+		if (o == null)
+			return true;
+		Cli_client client = (Cli_client) o;
 		if (!Strings.nullToEmpty(this.ccivil).equals(Strings.nullToEmpty(client.getCcivil()))) {
 			return true;
 		}

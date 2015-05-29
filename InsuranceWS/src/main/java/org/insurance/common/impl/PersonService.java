@@ -56,14 +56,14 @@ public class PersonService implements IPersonService {
 		userCheck.checkUser(userId);
 		Cli_client client = PersonMapping.populateClient(personIn);
 		Cli_address address = PersonMapping.populateAddress(personIn.getAddress());
-		List<Cli_catcli> categories = PersonMapping.populateCategories(personIn.getCategories(), null);
+		List<Cli_catcli> categories = PersonMapping.populateCategories(personIn.getCategories());
 		Cod_phone defaultPhoneType = contactCheck.checkAndGetDefaultPhoneType();
 		Cod_phone defaultMobilePhoneType = contactCheck.checkAndGetDefaultMobilePhoneType();
 		List<Cli_phone> phones = PersonMapping.populatePhones(personIn.getMobile(), personIn.getPhone(), defaultMobilePhoneType, defaultPhoneType);
 		Cod_email defaultEmailType = contactCheck.checkAndGetDefaultEmailType();
 		List<Cli_email> emails = PersonMapping.populateEmail(personIn.getEmail(), defaultEmailType);
 		personManager.insertPerson(userId, client, address, categories, phones, emails);
-		return PersonMapping.populatePersonOut(client, address, categories);
+		return getPerson(userId, client.getNumcli());
 	}
 
 	@Override
@@ -72,7 +72,9 @@ public class PersonService implements IPersonService {
 		Cli_client client = personCheck.checkAndGetPerson(personId);
 		Cli_address address = contactInfo.getAddress(personId);
 		List<Cli_catcli> categories = personInfo.getCategories(personId);
-		return PersonMapping.populatePersonOut(client, address, categories);
+		List<Cli_phone> phones = contactInfo.getPhones(personId);
+		List<Cli_email> emails = contactInfo.getEmails(personId);
+		return PersonMapping.populatePersonOut(client, address, categories, phones, emails);
 	}
 
 	@Override
@@ -84,13 +86,8 @@ public class PersonService implements IPersonService {
 
 		// Alimentation des beans
 		Cli_client client = PersonMapping.populateClient(personIn);
-		client.setNumcli(personId);
-		Cli_address oldAddress = contactInfo.getAddress(personId);
 		Cli_address address = PersonMapping.populateAddress(personIn.getAddress());
-		address.setNumcli(personId);
-		address.setNumaddress(oldAddress.getNumaddress());
-
-		List<Cli_catcli> categories = PersonMapping.populateCategories(personIn.getCategories(), personId);
+		List<Cli_catcli> categories = PersonMapping.populateCategories(personIn.getCategories());
 
 		Cod_phone defaultPhoneType = contactCheck.checkAndGetDefaultPhoneType();
 		Cod_phone defaultMobilePhoneType = contactCheck.checkAndGetDefaultMobilePhoneType();
@@ -99,7 +96,7 @@ public class PersonService implements IPersonService {
 		List<Cli_email> emails = PersonMapping.populateEmail(personIn.getEmail(), defaultEmailType);
 
 		// Mise à jour
-		personManager.updatePerson(userId, client, address, categories, phones, emails);
-		return PersonMapping.populatePersonOut(client, address, categories);
+		personManager.updatePerson(personId, userId, client, address, categories, phones, emails);
+		return getPerson(userId, personId);
 	}
 }

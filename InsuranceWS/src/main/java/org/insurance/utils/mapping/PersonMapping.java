@@ -18,8 +18,6 @@ import org.insurance.out.AddressOut;
 import org.insurance.out.PersonCategoryOut;
 import org.insurance.out.PersonOut;
 
-import com.google.common.base.Strings;
-
 public final class PersonMapping {
 
 	public static Cli_client populateClient(InsertPersonIn personIn) {
@@ -48,7 +46,8 @@ public final class PersonMapping {
 		return result;
 	}
 
-	public static PersonOut populatePersonOut(Cli_client client, Cli_address address, List<Cli_catcli> categories) {
+	public static PersonOut populatePersonOut(Cli_client client, Cli_address address, List<Cli_catcli> categories, List<Cli_phone> phones,
+			List<Cli_email> emails) {
 		PersonOut result = new PersonOut();
 		if (client != null) {
 
@@ -80,6 +79,21 @@ public final class PersonMapping {
 				}
 				result.setCategories(categoriesOut);
 			}
+
+			if (emails != null) {
+				for (Cli_email cliEmail : emails) {
+					result.setEmail(cliEmail.getEmail());
+				}
+			}
+
+			if (phones != null) {
+				for (Cli_phone cliPhone : phones) {
+					if (cliPhone.isMobile())
+						result.setMobile(cliPhone.getPhonenumber());
+					else
+						result.setPhone(cliPhone.getPhonenumber());
+				}
+			}
 		}
 		return result;
 	}
@@ -87,18 +101,17 @@ public final class PersonMapping {
 	public static List<PersonOut> populatePersonOut(Collection<Cli_client> clients) {
 		List<PersonOut> result = new ArrayList<PersonOut>();
 		for (Cli_client client : clients) {
-			result.add(populatePersonOut(client, null, null));
+			result.add(populatePersonOut(client, null, null, null, null));
 		}
 		return result;
 
 	}
 
-	public static List<Cli_catcli> populateCategories(List<ClientCategoryIn> categories, Long personId) {
+	public static List<Cli_catcli> populateCategories(List<ClientCategoryIn> categories) {
 		List<Cli_catcli> result = new ArrayList<Cli_catcli>();
 		for (ClientCategoryIn clientCategoryIn : categories) {
 			Cli_catcli tmp = new Cli_catcli();
 			tmp.setCcatcli(clientCategoryIn.getCategoryId());
-			tmp.setNumcli(personId);
 			result.add(tmp);
 		}
 		return result;
@@ -106,24 +119,18 @@ public final class PersonMapping {
 
 	public static List<Cli_phone> populatePhones(String mobilePhoneNumber, String phoneNumber, Cod_phone codPhoneMobile, Cod_phone codPhone) {
 		List<Cli_phone> result = new ArrayList<Cli_phone>();
-		if (!Strings.isNullOrEmpty(mobilePhoneNumber)) {
-			Cli_phone mobilePhoneDto = new Cli_phone(codPhoneMobile.getCphone(), mobilePhoneNumber);
-			result.add(mobilePhoneDto);
-		}
+		Cli_phone mobilePhoneDto = new Cli_phone(codPhoneMobile.getCphone(), mobilePhoneNumber);
+		result.add(mobilePhoneDto);
 
-		if (!Strings.isNullOrEmpty(phoneNumber)) {
-			Cli_phone phoneDto = new Cli_phone(codPhoneMobile.getCphone(), phoneNumber);
-			result.add(phoneDto);
-		}
+		Cli_phone phoneDto = new Cli_phone(codPhone.getCphone(), phoneNumber);
+		result.add(phoneDto);
 		return result;
 	}
 
 	public static List<Cli_email> populateEmail(String email, Cod_email defaultEmailType) {
 		List<Cli_email> result = new ArrayList<Cli_email>();
-		if (!Strings.isNullOrEmpty(email)) {
-			Cli_email emailDto = new Cli_email(defaultEmailType.getCemail(), email);
-			result.add(emailDto);
-		}
+		Cli_email emailDto = new Cli_email(defaultEmailType.getCemail(), email);
+		result.add(emailDto);
 		return result;
 	}
 }

@@ -43,12 +43,15 @@ public class PersonOperation extends ServiceCore implements IPersonOperation {
 		if (!oldClient.equals(client)) {
 			client.setCusermod(cuser);
 			client.setModifDate(dbHelper.getNow());
+			client.setCusercre(oldClient.getCusercre());
+			client.setCreationDate(oldClient.getCreationDate());
+			client.setNumcli(numcli);
 			ModPersonMovement movement = new ModPersonMovement(client.getCcivil(), client.getName(), client.getFirstname(), client.getCompanyname(),
 					client.getCompanyid());
 			movement.setOldValues(oldClient.getCcivil(), oldClient.getName(), oldClient.getFirstname(), oldClient.getCompanyname(),
 					oldClient.getCompanyid());
-			nummouvmt = movementOperation.insertMovement(numcli, 0, cuser, movement);
-			genericDao.saveOrUpdate(client);
+			nummouvmt = movementOperation.insertMovement(numcli, null, cuser, movement);
+			genericDao.merge(client);
 		}
 		return nummouvmt;
 	}

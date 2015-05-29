@@ -12,6 +12,7 @@ import org.insurance.data.Cli_email;
 import org.insurance.data.Cli_phone;
 import org.insurance.service.ServiceCore;
 import org.insurance.service.info.IContactInfo;
+import org.insurance.util.MappingUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,27 +22,32 @@ public class ContactInfo extends ServiceCore implements IContactInfo {
 	public Cli_address getAddress(long numcli) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_address.class);
 		criteria.add(Restrictions.eq("numcli", numcli));
-		criteria.add(Restrictions.lt("startval", dbHelper.getToday()));
-		criteria.add(Restrictions.isNull("finval"));
+		criteria.add(Restrictions.le("startval", dbHelper.getToday()));
+		criteria.add(Restrictions.isNull("endval"));
 		return genericDao.getFirstByCriteria(criteria);
 	}
 
 	@Override
 	public List<Cli_phone> getPhones(long numcli) {
-		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_address.class);
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_phone.class);
 		criteria.add(Restrictions.eq("numcli", numcli));
-		criteria.add(Restrictions.lt("startval", dbHelper.getToday()));
-		criteria.add(Restrictions.isNull("finval"));
-		return genericDao.getFirstByCriteria(criteria);
+		criteria.add(Restrictions.le("startval", dbHelper.getToday()));
+		criteria.add(Restrictions.isNull("endval"));
+		List<Cli_phone> result = genericDao.getByCriteria(criteria);
+		for (Cli_phone cliPhone : result) {
+			Cod_phone codPhone = genericDao.get(Cod_phone.class, cliPhone.getCphone());
+			cliPhone.setMobile(MappingUtils.toBoolean(codPhone.getIndmobile()));
+		}
+		return result;
 	}
 
 	@Override
 	public List<Cli_email> getEmails(long numcli) {
-		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_address.class);
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_email.class);
 		criteria.add(Restrictions.eq("numcli", numcli));
-		criteria.add(Restrictions.lt("startval", dbHelper.getToday()));
-		criteria.add(Restrictions.isNull("finval"));
-		return genericDao.getFirstByCriteria(criteria);
+		criteria.add(Restrictions.le("startval", dbHelper.getToday()));
+		criteria.add(Restrictions.isNull("endval"));
+		return genericDao.getByCriteria(criteria);
 	}
 
 	@Override
@@ -81,6 +87,8 @@ public class ContactInfo extends ServiceCore implements IContactInfo {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_email.class);
 		criteria.add(Restrictions.eq("numcli", numcli));
 		criteria.add(Restrictions.eq("cemail", cemail));
+		criteria.add(Restrictions.le("startval", dbHelper.getToday()));
+		criteria.add(Restrictions.isNull("endval"));
 		return genericDao.getFirstByCriteria(criteria);
 	}
 
@@ -89,6 +97,8 @@ public class ContactInfo extends ServiceCore implements IContactInfo {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_phone.class);
 		criteria.add(Restrictions.eq("numcli", numcli));
 		criteria.add(Restrictions.eq("cphone", cemail));
+		criteria.add(Restrictions.le("startval", dbHelper.getToday()));
+		criteria.add(Restrictions.isNull("endval"));
 		return genericDao.getFirstByCriteria(criteria);
 	}
 

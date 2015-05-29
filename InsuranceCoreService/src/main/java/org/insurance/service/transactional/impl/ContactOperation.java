@@ -38,7 +38,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 		address.setNumcli(numcli);
 		address.setCusercre(cuser);
 		address.setCreationDate(dbHelper.getNow());
-		address.setStartVal(DateUtils.convertUtilDateToSqlDate(dbHelper.getToday()));
+		address.setStartval(DateUtils.convertUtilDateToSqlDate(dbHelper.getToday()));
 		Long numaddress = (Long) genericDao.save(address);
 		NewAddressMovement movement = new NewAddressMovement(address.getStreet1(), address.getStreet2(), address.getStreet3(), address.getStreet4(),
 				address.getCpostal(), address.getCity(), address.getCcountry());
@@ -53,7 +53,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 		if (!oldAddress.equals(address)) {
 			oldAddress.setCusermod(cuser);
 			oldAddress.setModifDate(dbHelper.getNow());
-			oldAddress.setEndVal(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
+			oldAddress.setEndval(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
 			genericDao.merge(oldAddress);
 
 			ModAddressMovement movement = new ModAddressMovement(address.getStreet1(), address.getStreet2(), address.getStreet3(),
@@ -63,12 +63,13 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 
 			address.setCreationDate(oldAddress.getCreationDate());
 			address.setCusercre(oldAddress.getCusercre());
+			address.setStartval(oldAddress.getStartval());
 			address.setNumcli(numcli);
 			address.setCusermod(cuser);
 			address.setModifDate(dbHelper.getNow());
 			genericDao.save(address);
 
-			nummouvmt = movementOperation.insertMovement(numcli, 0, cuser, movement);
+			nummouvmt = movementOperation.insertMovement(numcli, null, cuser, movement);
 		}
 		return nummouvmt;
 	}
@@ -83,7 +84,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 	private void insertPhone(long numcli, Cli_phone cliPhone, String cuser) {
 		cliPhone.setCreationDate(dbHelper.getNow());
 		cliPhone.setCusercre(cuser);
-		cliPhone.setStartVal(DateUtils.convertUtilDateToSqlDate(dbHelper.getToday()));
+		cliPhone.setStartval(DateUtils.convertUtilDateToSqlDate(dbHelper.getToday()));
 		cliPhone.setNumcli(numcli);
 		genericDao.save(cliPhone);
 		NewPhoneMovement movement = new NewPhoneMovement(cliPhone.getCphone(), cliPhone.getPhonenumber());
@@ -101,7 +102,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 	private void insertEmail(long numcli, Cli_email cliEmail, String cuser) {
 		cliEmail.setCreationDate(dbHelper.getNow());
 		cliEmail.setCusercre(cuser);
-		cliEmail.setStartVal(DateUtils.convertUtilDateToSqlDate(dbHelper.getToday()));
+		cliEmail.setStartval(DateUtils.convertUtilDateToSqlDate(dbHelper.getToday()));
 		cliEmail.setNumcli(numcli);
 		genericDao.save(cliEmail);
 		NewMailMovement movement = new NewMailMovement(cliEmail.getCemail(), cliEmail.getEmail());
@@ -112,7 +113,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 		cliEmail.setNumcli(numcli);
 		cliEmail.setModifDate(dbHelper.getNow());
 		cliEmail.setCusermod(cuser);
-		cliEmail.setEndVal(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
+		cliEmail.setEndval(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
 		genericDao.merge(cliEmail);
 		DelMailMovement movement = new DelMailMovement(cliEmail.getCemail());
 		movement.setOldValues(cliEmail.getCemail(), cliEmail.getEmail());
@@ -123,7 +124,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 		cliPhone.setNumcli(numcli);
 		cliPhone.setModifDate(dbHelper.getNow());
 		cliPhone.setCusermod(cuser);
-		cliPhone.setEndVal(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
+		cliPhone.setEndval(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
 		genericDao.merge(cliPhone);
 		DelPhoneMovement movement = new DelPhoneMovement(cliPhone.getCphone());
 		movement.setOldValues(cliPhone.getCphone(), cliPhone.getPhonenumber());
@@ -135,9 +136,13 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 		for (Cli_email cliEmail : emails) {
 			Cli_email oldEmail = contactInfo.getEmailByType(numcli, cliEmail.getCemail());
 			if (oldEmail == null) {
-				// Nouvel email
-				insertEmail(numcli, cliEmail, cuser);
-				continue;
+				if (!Strings.isNullOrEmpty(cliEmail.getEmail())) {
+					// Nouvel email
+					insertEmail(numcli, cliEmail, cuser);
+					continue;
+				} else {
+					continue;
+				}
 			}
 			if (!oldEmail.equals(cliEmail) && Strings.isNullOrEmpty(cliEmail.getEmail())) {
 				// Suppression d'email
@@ -153,7 +158,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 	}
 
 	private void updateEmail(Long numcli, Cli_email oldEmail, Cli_email newMail, String cuser) {
-		oldEmail.setEndVal(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
+		oldEmail.setEndval(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
 		oldEmail.setModifDate(dbHelper.getNow());
 		oldEmail.setCusermod(cuser);
 		genericDao.merge(oldEmail);
@@ -161,6 +166,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 		newMail.setCusercre(oldEmail.getCusercre());
 		newMail.setCreationDate(oldEmail.getCreationDate());
 		newMail.setModifDate(dbHelper.getNow());
+		newMail.setStartval(oldEmail.getStartval());
 		newMail.setCusermod(cuser);
 		newMail.setNumcli(numcli);
 		genericDao.save(newMail);
@@ -171,7 +177,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 	}
 
 	private void updatePhone(Long numcli, Cli_phone oldPhone, Cli_phone newPhone, String cuser) {
-		oldPhone.setEndVal(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
+		oldPhone.setEndval(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
 		oldPhone.setModifDate(dbHelper.getNow());
 		oldPhone.setCusermod(cuser);
 		genericDao.merge(oldPhone);
@@ -181,6 +187,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 		newPhone.setModifDate(dbHelper.getNow());
 		newPhone.setCusermod(cuser);
 		newPhone.setNumcli(numcli);
+		newPhone.setStartval(oldPhone.getStartval());
 		genericDao.save(newPhone);
 
 		ModPhoneMovement movement = new ModPhoneMovement(newPhone.getCphone(), newPhone.getPhonenumber());
@@ -193,9 +200,13 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 		for (Cli_phone cliPhone : phones) {
 			Cli_phone oldPhone = contactInfo.getPhoneByType(numcli, cliPhone.getCphone());
 			if (oldPhone == null) {
-				// Nouvel téléphone
-				insertPhone(numcli, cliPhone, cuser);
-				continue;
+				if (!Strings.isNullOrEmpty(cliPhone.getPhonenumber())) {
+					// Nouvel téléphone
+					insertPhone(numcli, cliPhone, cuser);
+					continue;
+				} else {
+					continue;
+				}
 			}
 			if (!oldPhone.equals(cliPhone) && Strings.isNullOrEmpty(cliPhone.getPhonenumber())) {
 				// Suppression de téléphone

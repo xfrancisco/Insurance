@@ -1,0 +1,11 @@
+
+D:\applis\GIT\Insurance>D:\applis\MAVEN\apache-maven-3.1.0\bin\mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.4 -Dpackaging=jar -Dfile=ojdbc6.jar -DgeneratePom=true
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<tomcat-users>
+	<role rolename="manager"/>
+	<role rolename="admin"/>
+	<role rolename="manager-gui"/>
+	<user username="admin" password="admin" roles="admin,manager,manager-gui"/>
+</tomcat-users>

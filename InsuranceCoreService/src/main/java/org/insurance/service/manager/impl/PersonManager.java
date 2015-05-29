@@ -14,11 +14,8 @@ import org.insurance.exception.PersonException;
 import org.insurance.service.ServiceCore;
 import org.insurance.service.check.IContactCheck;
 import org.insurance.service.check.IPersonCheck;
-import org.insurance.service.info.IContactInfo;
-import org.insurance.service.info.IPersonInfo;
 import org.insurance.service.manager.IPersonManager;
 import org.insurance.service.transactional.IContactOperation;
-import org.insurance.service.transactional.IMovementOperation;
 import org.insurance.service.transactional.IPersonOperation;
 import org.springframework.stereotype.Service;
 
@@ -32,19 +29,10 @@ public class PersonManager extends ServiceCore implements IPersonManager {
 	private IContactOperation contactOperation;
 
 	@Inject
-	private IMovementOperation movementOperation;
-
-	@Inject
 	private IContactCheck contactCheck;
 
 	@Inject
-	private IContactInfo contactInfo;
-
-	@Inject
 	private IPersonCheck personCheck;
-
-	@Inject
-	private IPersonInfo personInfo;
 
 	@Override
 	public long insertPerson(final String cuser, final Cli_client client, Cli_address address, List<Cli_catcli> categories, List<Cli_phone> phones,
@@ -65,14 +53,12 @@ public class PersonManager extends ServiceCore implements IPersonManager {
 	}
 
 	@Override
-	public long updatePerson(String cuser, Cli_client client, Cli_address address, List<Cli_catcli> categories, List<Cli_phone> phones,
+	public long updatePerson(long numcli, String cuser, Cli_client client, Cli_address address, List<Cli_catcli> categories, List<Cli_phone> phones,
 			List<Cli_email> emails) throws PersonException, ContactException {
 		personCheck.checkCivility(client.getCcivil());
 		personCheck.checkName(client.getName(), client.getCompanyname(), client.getCompanyid());
 		contactCheck.checkPostalCode(address.getCpostal(), address.getCity(), address.getCcountry());
 		contactCheck.checkStreets(address.getStreet2());
-
-		long numcli = client.getNumcli();
 
 		personOperation.updateClient(numcli, cuser, client);
 		contactOperation.updateAddress(numcli, cuser, address);

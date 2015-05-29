@@ -8,10 +8,8 @@ import org.insurance.validation.constraints.EnterpriseModelEnum;
 import org.insurance.validation.constraints.Length;
 import org.insurance.validation.constraints.Mandatory;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.Strings;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class InsertPersonIn {
 	@Mandatory
 	@Length(min = EnterpriseModelEnum.CIVILITY, max = EnterpriseModelEnum.CIVILITY)

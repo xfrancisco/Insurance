@@ -32,8 +32,8 @@ public class Cli_address implements Serializable {
 	private String ccountry;
 	private String cusercre;
 	private String cusermod;
-	private java.sql.Date startVal;
-	private java.sql.Date endVal;
+	private java.sql.Date startval;
+	private java.sql.Date endval;
 	private Date creationDate;
 	private Date modifDate;
 
@@ -141,7 +141,11 @@ public class Cli_address implements Serializable {
 		this.modifDate = modifDate;
 	}
 
-	public boolean hasChanged(Cli_address oldAddress) {
+	@Override
+	public boolean equals(Object o) {
+		if (o == null)
+			return true;
+		Cli_address oldAddress = (Cli_address) o;
 		if (!Strings.nullToEmpty(this.street1).equals(Strings.nullToEmpty(oldAddress.getStreet1()))) {
 			return true;
 		}
@@ -172,20 +176,20 @@ public class Cli_address implements Serializable {
 		return false;
 	}
 
-	public java.sql.Date getStartVal() {
-		return startVal;
+	public java.sql.Date getStartval() {
+		return startval;
 	}
 
-	public void setStartVal(java.sql.Date startVal) {
-		this.startVal = startVal;
+	public void setStartval(java.sql.Date startval) {
+		this.startval = startval;
 	}
 
-	public java.sql.Date getEndVal() {
-		return endVal;
+	public java.sql.Date getEndval() {
+		return endval;
 	}
 
-	public void setEndVal(java.sql.Date endVal) {
-		this.endVal = endVal;
+	public void setEndval(java.sql.Date endval) {
+		this.endval = endval;
 	}
 
 }

@@ -19,11 +19,11 @@ public class PopulationInfo extends ServiceCore implements IPopulationInfo {
 
 	@Override
 	public List<Cli_client> getClients() {
-		final DetachedCriteria subQuery1 = DetachedCriteria.forClass(Cod_catcli.class);
-		subQuery1.add(eq("indclient", "1")).setProjection(property("ccatcli"));
+		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
+		subQuery.add(eq("indclient", "1")).setProjection(property("ccatcli"));
 
 		final DetachedCriteria subQuery2 = DetachedCriteria.forClass(Cli_catcli.class);
-		subQuery2.add(propertyIn("ccatcli", subQuery1)).setProjection(property("numcli"));
+		subQuery2.add(propertyIn("ccatcli", subQuery)).setProjection(property("numcli"));
 
 		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_client.class);
 		mainQuery.add(propertyIn("numcli", subQuery2));
@@ -36,8 +36,11 @@ public class PopulationInfo extends ServiceCore implements IPopulationInfo {
 		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
 		subQuery.add(eq("indbroker", "1")).setProjection(property("ccatcli"));
 
+		final DetachedCriteria subQuery2 = DetachedCriteria.forClass(Cli_catcli.class);
+		subQuery2.add(propertyIn("ccatcli", subQuery)).setProjection(property("numcli"));
+
 		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_client.class);
-		mainQuery.add(propertyIn("ccatcli", subQuery));
+		mainQuery.add(propertyIn("numcli", subQuery2));
 
 		return genericDao.getByCriteria(mainQuery);
 	}
@@ -47,8 +50,11 @@ public class PopulationInfo extends ServiceCore implements IPopulationInfo {
 		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
 		subQuery.add(eq("indinsurance", "1")).setProjection(property("ccatcli"));
 
+		final DetachedCriteria subQuery2 = DetachedCriteria.forClass(Cli_catcli.class);
+		subQuery2.add(propertyIn("ccatcli", subQuery)).setProjection(property("numcli"));
+
 		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_client.class);
-		mainQuery.add(propertyIn("ccatcli", subQuery));
+		mainQuery.add(propertyIn("numcli", subQuery2));
 
 		return genericDao.getByCriteria(mainQuery);
 	}
@@ -58,8 +64,11 @@ public class PopulationInfo extends ServiceCore implements IPopulationInfo {
 		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
 		subQuery.add(eq("indreinsurance", "1")).setProjection(property("ccatcli"));
 
+		final DetachedCriteria subQuery2 = DetachedCriteria.forClass(Cli_catcli.class);
+		subQuery2.add(propertyIn("ccatcli", subQuery)).setProjection(property("numcli"));
+
 		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_client.class);
-		mainQuery.add(propertyIn("ccatcli", subQuery));
+		mainQuery.add(propertyIn("numcli", subQuery2));
 
 		return genericDao.getByCriteria(mainQuery);
 	}
@@ -69,8 +78,11 @@ public class PopulationInfo extends ServiceCore implements IPopulationInfo {
 		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
 		subQuery.add(eq("indlawyer", "1")).setProjection(property("ccatcli"));
 
+		final DetachedCriteria subQuery2 = DetachedCriteria.forClass(Cli_catcli.class);
+		subQuery2.add(propertyIn("ccatcli", subQuery)).setProjection(property("numcli"));
+
 		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_client.class);
-		mainQuery.add(propertyIn("ccatcli", subQuery));
+		mainQuery.add(propertyIn("numcli", subQuery2));
 
 		return genericDao.getByCriteria(mainQuery);
 	}
@@ -80,8 +92,11 @@ public class PopulationInfo extends ServiceCore implements IPopulationInfo {
 		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
 		subQuery.add(eq("indexpert", "1")).setProjection(property("ccatcli"));
 
+		final DetachedCriteria subQuery2 = DetachedCriteria.forClass(Cli_catcli.class);
+		subQuery2.add(propertyIn("ccatcli", subQuery)).setProjection(property("numcli"));
+
 		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_client.class);
-		mainQuery.add(propertyIn("ccatcli", subQuery));
+		mainQuery.add(propertyIn("numcli", subQuery2));
 
 		return genericDao.getByCriteria(mainQuery);
 	}
@@ -91,8 +106,11 @@ public class PopulationInfo extends ServiceCore implements IPopulationInfo {
 		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
 		subQuery.add(eq("indtiers", "1")).setProjection(property("ccatcli"));
 
+		final DetachedCriteria subQuery2 = DetachedCriteria.forClass(Cli_catcli.class);
+		subQuery2.add(propertyIn("ccatcli", subQuery)).setProjection(property("numcli"));
+
 		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_client.class);
-		mainQuery.add(propertyIn("ccatcli", subQuery));
+		mainQuery.add(propertyIn("numcli", subQuery2));
 
 		return genericDao.getByCriteria(mainQuery);
 	}
@@ -102,8 +120,11 @@ public class PopulationInfo extends ServiceCore implements IPopulationInfo {
 		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
 		subQuery.add(eq("indbenef", "1")).setProjection(property("ccatcli"));
 
+		final DetachedCriteria subQuery2 = DetachedCriteria.forClass(Cli_catcli.class);
+		subQuery2.add(propertyIn("ccatcli", subQuery)).setProjection(property("numcli"));
+
 		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_client.class);
-		mainQuery.add(propertyIn("ccatcli", subQuery));
+		mainQuery.add(propertyIn("numcli", subQuery2));
 
 		return genericDao.getByCriteria(mainQuery);
 	}

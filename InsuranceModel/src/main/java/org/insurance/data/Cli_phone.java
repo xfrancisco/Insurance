@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "CLI_PHONE")
@@ -25,10 +26,13 @@ public class Cli_phone implements Serializable {
 	private String phonenumber;
 	private String cusercre;
 	private String cusermod;
-	private java.sql.Date startVal;
-	private java.sql.Date endVal;
+	private java.sql.Date startval;
+	private java.sql.Date endval;
 	private Date creationDate;
 	private Date modifDate;
+
+	@Transient
+	private boolean isMobile = false;
 
 	public Cli_phone() {
 
@@ -88,22 +92,6 @@ public class Cli_phone implements Serializable {
 		this.cusermod = cusermod;
 	}
 
-	public java.sql.Date getStartVal() {
-		return startVal;
-	}
-
-	public void setStartVal(java.sql.Date startVal) {
-		this.startVal = startVal;
-	}
-
-	public java.sql.Date getEndVal() {
-		return endVal;
-	}
-
-	public void setEndVal(java.sql.Date endVal) {
-		this.endVal = endVal;
-	}
-
 	public Date getCreationDate() {
 		return creationDate;
 	}
@@ -126,6 +114,30 @@ public class Cli_phone implements Serializable {
 			return false;
 		Cli_phone other = (Cli_phone) o;
 		return other.getCphone().equals(cphone) && other.getPhonenumber().equals(phonenumber);
+	}
+
+	public java.sql.Date getStartval() {
+		return startval;
+	}
+
+	public void setStartval(java.sql.Date startval) {
+		this.startval = startval;
+	}
+
+	public java.sql.Date getEndval() {
+		return endval;
+	}
+
+	public void setEndval(java.sql.Date endval) {
+		this.endval = endval;
+	}
+
+	public boolean isMobile() {
+		return isMobile;
+	}
+
+	public void setMobile(boolean isMobile) {
+		this.isMobile = isMobile;
 	}
 
 }
