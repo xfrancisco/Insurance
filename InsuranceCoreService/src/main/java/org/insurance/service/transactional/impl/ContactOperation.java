@@ -83,7 +83,8 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 	@Override
 	public void insertPhones(long numcli, List<Cli_phone> phones, String cuser) {
 		for (Cli_phone cliPhone : phones) {
-			insertPhone(numcli, cliPhone, cuser);
+			if (!Strings.isNullOrEmpty(cliPhone.getPhonenumber()))
+				insertPhone(numcli, cliPhone, cuser);
 		}
 	}
 
@@ -100,6 +101,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 	@Override
 	public void insertEmails(long numcli, List<Cli_email> emails, String cuser) {
 		for (Cli_email cliEmail : emails) {
+			if (!Strings.isNullOrEmpty(cliEmail.getEmail()))
 			insertEmail(numcli, cliEmail, cuser);
 		}
 
