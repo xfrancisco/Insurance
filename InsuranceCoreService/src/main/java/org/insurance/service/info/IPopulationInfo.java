@@ -22,4 +22,6 @@ public interface IPopulationInfo {
 
 	List<Cli_client> getBeneficiaries();
 
+	List<Cli_client> getAgencies();
+
 }

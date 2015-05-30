@@ -6,6 +6,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.insurance.conf.Cod_address;
+import org.insurance.conf.Cod_country;
 import org.insurance.conf.Cod_email;
 import org.insurance.conf.Cod_phone;
 import org.insurance.conf.Cod_postal;
@@ -158,6 +159,14 @@ public class ContactInfo extends ServiceCore implements IContactInfo {
 	public Cod_email getEmailType(String cemail) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_email.class);
 		criteria.add(Restrictions.eq("cemail", cemail));
+		criteria.add(Restrictions.eq("indvali", "1"));
+		return genericDao.getFirstByCriteria(criteria);
+	}
+
+	@Override
+	public Cod_country getDefaultCountry() {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_country.class);
+		criteria.add(Restrictions.eq("inddefault", "1"));
 		criteria.add(Restrictions.eq("indvali", "1"));
 		return genericDao.getFirstByCriteria(criteria);
 	}

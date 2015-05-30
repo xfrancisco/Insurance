@@ -129,4 +129,18 @@ public class PopulationInfo extends ServiceCore implements IPopulationInfo {
 		return genericDao.getByCriteria(mainQuery);
 	}
 
+	@Override
+	public List<Cli_client> getAgencies() {
+		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
+		subQuery.add(eq("indagency", "1")).setProjection(property("ccatcli"));
+
+		final DetachedCriteria subQuery2 = DetachedCriteria.forClass(Cli_catcli.class);
+		subQuery2.add(propertyIn("ccatcli", subQuery)).setProjection(property("numcli"));
+
+		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_client.class);
+		mainQuery.add(propertyIn("numcli", subQuery2));
+
+		return genericDao.getByCriteria(mainQuery);
+	}
+
 }

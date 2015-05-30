@@ -26,4 +26,6 @@ public interface IPopulationService {
 
 	List<PersonOut> getThirdParties(String userId) throws UserException;
 
+	List<PersonOut> getAgencies(String userId) throws UserException;
+
 }

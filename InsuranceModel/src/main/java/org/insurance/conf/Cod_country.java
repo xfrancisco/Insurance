@@ -11,6 +11,8 @@ public class Cod_country {
 	@Id
 	private String ccountry;
 	private String lcountry;
+	private String inddefault;
+	private String indforeign;
 	private String indvali;
 
 	public String getCcountry() {
@@ -35,6 +37,22 @@ public class Cod_country {
 
 	public void setIndvali(String indvali) {
 		this.indvali = indvali;
+	}
+
+	public String getIndforeign() {
+		return indforeign;
+	}
+
+	public void setIndforeign(String indforeign) {
+		this.indforeign = indforeign;
+	}
+
+	public String getInddefault() {
+		return inddefault;
+	}
+
+	public void setInddefault(String inddefault) {
+		this.inddefault = inddefault;
 	}
 
 }

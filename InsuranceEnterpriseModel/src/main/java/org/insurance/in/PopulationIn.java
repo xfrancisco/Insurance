@@ -10,6 +10,7 @@ public class PopulationIn {
 	private boolean isExpert;
 	private boolean isBeneficiary;
 	private boolean isThirdParty;
+	private boolean isAgency;
 
 	public boolean isClient() {
 		return isClient;
@@ -73,6 +74,14 @@ public class PopulationIn {
 
 	public void setThirdParty(boolean isThirdParty) {
 		this.isThirdParty = isThirdParty;
+	}
+
+	public boolean isAgency() {
+		return isAgency;
+	}
+
+	public void setAgency(boolean isAgency) {
+		this.isAgency = isAgency;
 	}
 
 }

@@ -19,6 +19,10 @@ public class Cod_postal implements Serializable {
 	@Id
 	private String ccountry;
 
+	public Cod_postal() {
+
+	}
+
 	public Cod_postal(String cpostal, String city, String ccountry) {
 		this.cpostal = cpostal;
 		this.city = city;
@@ -49,6 +53,14 @@ public class Cod_postal implements Serializable {
 
 	public void setIndvali(String indvali) {
 		this.indvali = indvali;
+	}
+
+	public String getCpostal() {
+		return cpostal;
+	}
+
+	public void setCpostal(String cpostal) {
+		this.cpostal = cpostal;
 	}
 
 }

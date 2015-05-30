@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 import org.insurance.conf.Cod_address;
+import org.insurance.conf.Cod_country;
 import org.insurance.conf.Cod_email;
 import org.insurance.conf.Cod_phone;
 import org.insurance.conf.Cod_postal;
@@ -49,6 +50,14 @@ public class ContactCheck extends ServiceCore implements IContactCheck {
 		Cod_phone result = contactInfo.getDefaultPhoneType();
 		if (result == null)
 			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_PHONE_UNKNOWN_DEFAULT_PHONE);
+		return result;
+	}
+
+	@Override
+	public Cod_country checkAndGetDefaultCountry() throws ContactException {
+		Cod_country result = contactInfo.getDefaultCountry();
+		if (result == null)
+			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_ADDRESS_UNKNOWN_DEFAULT_COUNTRY);
 		return result;
 	}
 

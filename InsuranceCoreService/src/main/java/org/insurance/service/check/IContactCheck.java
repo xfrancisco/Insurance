@@ -3,6 +3,7 @@ package org.insurance.service.check;
 import java.util.List;
 
 import org.insurance.conf.Cod_address;
+import org.insurance.conf.Cod_country;
 import org.insurance.conf.Cod_email;
 import org.insurance.conf.Cod_phone;
 import org.insurance.data.Cli_address;
@@ -29,4 +30,6 @@ public interface IContactCheck {
 	void checkEmails(List<Cli_email> emails) throws ContactException;
 
 	void checkPhones(List<Cli_phone> phones) throws ContactException;
+
+	Cod_country checkAndGetDefaultCountry() throws ContactException;;
 }

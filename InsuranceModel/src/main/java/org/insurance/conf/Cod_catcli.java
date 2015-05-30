@@ -20,6 +20,7 @@ public class Cod_catcli {
 	private String indbenef;
 	private String indtiers;
 	private String indlawyer;
+	private String indagency;
 
 	public String getCcatcli() {
 		return ccatcli;
@@ -107,6 +108,14 @@ public class Cod_catcli {
 
 	public void setIndlawyer(String indlawyer) {
 		this.indlawyer = indlawyer;
+	}
+
+	public String getIndagency() {
+		return indagency;
+	}
+
+	public void setIndagency(String indagency) {
+		this.indagency = indagency;
 	}
 
 }

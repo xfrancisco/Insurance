@@ -3,6 +3,7 @@ package org.insurance.service.info;
 import java.util.List;
 
 import org.insurance.conf.Cod_address;
+import org.insurance.conf.Cod_country;
 import org.insurance.conf.Cod_email;
 import org.insurance.conf.Cod_phone;
 import org.insurance.conf.Cod_postal;
@@ -41,4 +42,6 @@ public interface IContactInfo {
 	Cod_phone getPhoneType(String cphone);
 
 	Cod_email getEmailType(String cemail);
+
+	Cod_country getDefaultCountry();
 }

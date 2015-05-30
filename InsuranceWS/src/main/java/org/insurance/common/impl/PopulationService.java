@@ -51,6 +51,8 @@ public class PopulationService implements IPopulationService {
 				clients.addAll(populationInfo.getBeneficiaries());
 			if (populationIn.isThirdParty())
 				clients.addAll(populationInfo.getThirdParties());
+			if (populationIn.isAgency())
+				clients.addAll(populationInfo.getAgencies());
 		}
 		return PersonMapping.populatePersonOut(clients);
 	}
@@ -101,5 +103,11 @@ public class PopulationService implements IPopulationService {
 	public List<PersonOut> getThirdParties(String userId) throws UserException {
 		userCheck.checkUser(userId);
 		return PersonMapping.populatePersonOut(populationInfo.getThirdParties());
+	}
+
+	@Override
+	public List<PersonOut> getAgencies(String userId) throws UserException {
+		userCheck.checkUser(userId);
+		return PersonMapping.populatePersonOut(populationInfo.getAgencies());
 	}
 }
