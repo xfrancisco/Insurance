@@ -3,6 +3,7 @@ package org.insurance.service.info.impl;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.insurance.conf.Cod_address;
@@ -171,4 +172,19 @@ public class ContactInfo extends ServiceCore implements IContactInfo {
 		return genericDao.getFirstByCriteria(criteria);
 	}
 
+	@Override
+	public List<Cod_postal> getZipCodesByZipCode(String cpostal, String ccountry) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_postal.class);
+		criteria.add(Restrictions.ilike("cpostal", cpostal, MatchMode.ANYWHERE));
+		criteria.add(Restrictions.eq("ccountry", ccountry));
+		return genericDao.getByCriteria(criteria);
+	}
+
+	@Override
+	public List<Cod_postal> getZipCodesByCity(String city, String ccountry) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_postal.class);
+		criteria.add(Restrictions.ilike("city", city, MatchMode.ANYWHERE));
+		criteria.add(Restrictions.eq("ccountry", ccountry));
+		return genericDao.getByCriteria(criteria);
+	}
 }

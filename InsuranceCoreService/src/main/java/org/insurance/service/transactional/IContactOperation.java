@@ -2,6 +2,7 @@ package org.insurance.service.transactional;
 
 import java.util.List;
 
+import org.insurance.conf.Cod_postal;
 import org.insurance.data.Cli_address;
 import org.insurance.data.Cli_email;
 import org.insurance.data.Cli_phone;
@@ -19,5 +20,7 @@ public interface IContactOperation {
 	void updatePhones(Long numcli, List<Cli_phone> phones, String cuser);
 
 	void updateEmails(Long numcli, List<Cli_email> emails, String cuser);
+
+	void createZipCode(Cod_postal codPostal);
 
 }

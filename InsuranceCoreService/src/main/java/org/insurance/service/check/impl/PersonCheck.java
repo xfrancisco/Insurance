@@ -33,8 +33,9 @@ public class PersonCheck extends ServiceCore implements IPersonCheck {
 	public void checkName(final String name, final String companyname, final String companyid) throws PersonException {
 		if (Strings.isNullOrEmpty(name) && Strings.isNullOrEmpty(companyname))
 			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_MANDATORY_NAME_OR_COMPANYNAME);
-		if (!Strings.isNullOrEmpty(companyname) && Strings.isNullOrEmpty(companyid))
-			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_MANDATORY_COMPANYID);
+		// XFR : A la demande de LCO on retire ce contrôle
+		/*if (!Strings.isNullOrEmpty(companyname) && Strings.isNullOrEmpty(companyid))
+			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_MANDATORY_COMPANYID);*/
 	}
 
 	@Override

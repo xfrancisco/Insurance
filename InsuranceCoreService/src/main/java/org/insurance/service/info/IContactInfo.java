@@ -44,4 +44,8 @@ public interface IContactInfo {
 	Cod_email getEmailType(String cemail);
 
 	Cod_country getDefaultCountry();
+
+	List<Cod_postal> getZipCodesByZipCode(String cpostal, String ccountry);
+
+	List<Cod_postal> getZipCodesByCity(String city, String ccountry);
 }

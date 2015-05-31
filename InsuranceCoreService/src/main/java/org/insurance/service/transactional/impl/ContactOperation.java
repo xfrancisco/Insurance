@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.insurance.conf.Cod_postal;
 import org.insurance.data.Cli_address;
 import org.insurance.data.Cli_email;
 import org.insurance.data.Cli_phone;
@@ -102,7 +103,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 	public void insertEmails(long numcli, List<Cli_email> emails, String cuser) {
 		for (Cli_email cliEmail : emails) {
 			if (!Strings.isNullOrEmpty(cliEmail.getEmail()))
-			insertEmail(numcli, cliEmail, cuser);
+				insertEmail(numcli, cliEmail, cuser);
 		}
 
 	}
@@ -227,5 +228,10 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 				continue;
 			}
 		}
+	}
+
+	@Override
+	public void createZipCode(final Cod_postal codPostal) {
+		genericDao.save(codPostal);
 	}
 }
