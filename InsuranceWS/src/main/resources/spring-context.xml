@@ -52,6 +52,7 @@
 				<value>org.insurance.conf.Cod_duration</value>
 				<value>org.insurance.conf.Cod_table</value>
 				
+				
 				<value>org.insurance.conf.Cod_branch</value>
 				<value>org.insurance.conf.Cod_category</value>
 				<value>org.insurance.conf.Cod_section</value>
@@ -72,6 +73,7 @@
 				<value>org.insurance.data.Cli_guarantee</value>
 				<value>org.insurance.data.Cli_movement</value>
 				<value>org.insurance.data.Cli_movementdet</value>
+				<value>org.insurance.data.Cli_quote</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
