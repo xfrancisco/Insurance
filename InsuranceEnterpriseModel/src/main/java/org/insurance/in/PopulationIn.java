@@ -12,7 +12,7 @@ public class PopulationIn {
 	private boolean isThirdParty;
 	private boolean isAgency;
 
-	public boolean isClient() {
+	public boolean getIsClient() {
 		return isClient;
 	}
 
@@ -20,7 +20,7 @@ public class PopulationIn {
 		this.isClient = isClient;
 	}
 
-	public boolean isInsurer() {
+	public boolean getIsInsurer() {
 		return isInsurer;
 	}
 
@@ -28,7 +28,7 @@ public class PopulationIn {
 		this.isInsurer = isInsurer;
 	}
 
-	public boolean isBroker() {
+	public boolean getIsBroker() {
 		return isBroker;
 	}
 
@@ -36,7 +36,7 @@ public class PopulationIn {
 		this.isBroker = isBroker;
 	}
 
-	public boolean isReinsurer() {
+	public boolean getIsReinsurer() {
 		return isReinsurer;
 	}
 
@@ -44,7 +44,7 @@ public class PopulationIn {
 		this.isReinsurer = isReinsurer;
 	}
 
-	public boolean isLawyer() {
+	public boolean getIsLawyer() {
 		return isLawyer;
 	}
 
@@ -52,7 +52,7 @@ public class PopulationIn {
 		this.isLawyer = isLawyer;
 	}
 
-	public boolean isExpert() {
+	public boolean getIsExpert() {
 		return isExpert;
 	}
 
@@ -60,7 +60,7 @@ public class PopulationIn {
 		this.isExpert = isExpert;
 	}
 
-	public boolean isBeneficiary() {
+	public boolean getIsBeneficiary() {
 		return isBeneficiary;
 	}
 
@@ -68,7 +68,7 @@ public class PopulationIn {
 		this.isBeneficiary = isBeneficiary;
 	}
 
-	public boolean isThirdParty() {
+	public boolean getIsThirdParty() {
 		return isThirdParty;
 	}
 
@@ -76,7 +76,7 @@ public class PopulationIn {
 		this.isThirdParty = isThirdParty;
 	}
 
-	public boolean isAgency() {
+	public boolean getIsAgency() {
 		return isAgency;
 	}
 

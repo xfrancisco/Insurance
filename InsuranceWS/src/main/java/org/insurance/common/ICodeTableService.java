@@ -3,8 +3,10 @@ package org.insurance.common;
 import java.util.List;
 
 import org.insurance.exception.InsuranceException;
+import org.insurance.out.AllCodeTableOut;
 import org.insurance.out.CodeTableOut;
 import org.insurance.out.EntityOut;
+import org.insurance.out.QuoteStatusOut;
 import org.insurance.out.VersionOut;
 
 public interface ICodeTableService {
@@ -23,6 +25,8 @@ public interface ICodeTableService {
 
 	List<EntityOut> getPremiums(final String userId, String guaranteeId) throws InsuranceException;
 
-	List<String> getAllCodes();
+	List<AllCodeTableOut> getAllCodes(final String userId) throws InsuranceException;
+
+	List<QuoteStatusOut> getQuoteStatus(final String userId) throws InsuranceException;
 
 }

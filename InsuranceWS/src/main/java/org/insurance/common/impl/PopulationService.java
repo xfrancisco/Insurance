@@ -35,23 +35,23 @@ public class PopulationService implements IPopulationService {
 		userCheck.checkUser(userId);
 		Set<Cli_client> clients = new HashSet<Cli_client>();
 		if (populationIn != null) {
-			if (populationIn.isClient())
+			if (populationIn.getIsClient())
 				clients.addAll(populationInfo.getClients());
-			if (populationIn.isBroker())
+			if (populationIn.getIsBroker())
 				clients.addAll(populationInfo.getBrokers());
-			if (populationIn.isInsurer())
+			if (populationIn.getIsInsurer())
 				clients.addAll(populationInfo.getInsurers());
-			if (populationIn.isReinsurer())
+			if (populationIn.getIsReinsurer())
 				clients.addAll(populationInfo.getReinsurers());
-			if (populationIn.isExpert())
+			if (populationIn.getIsExpert())
 				clients.addAll(populationInfo.getExperts());
-			if (populationIn.isLawyer())
+			if (populationIn.getIsLawyer())
 				clients.addAll(populationInfo.getLawyers());
-			if (populationIn.isBeneficiary())
+			if (populationIn.getIsBeneficiary())
 				clients.addAll(populationInfo.getBeneficiaries());
-			if (populationIn.isThirdParty())
+			if (populationIn.getIsThirdParty())
 				clients.addAll(populationInfo.getThirdParties());
-			if (populationIn.isAgency())
+			if (populationIn.getIsAgency())
 				clients.addAll(populationInfo.getAgencies());
 		}
 		return PersonMapping.populatePersonOut(clients);

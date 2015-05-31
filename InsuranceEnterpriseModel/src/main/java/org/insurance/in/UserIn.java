@@ -20,7 +20,7 @@ public class UserIn {
 	private String profile;
 
 	public String getUserId() {
-		return Strings.nullToEmpty(userId).toUpperCase();
+		return Strings.nullToEmpty(userId).toUpperCase().trim();
 	}
 
 	public void setUserId(String userId) {
@@ -28,7 +28,7 @@ public class UserIn {
 	}
 
 	public String getUserName() {
-		return Strings.nullToEmpty(userName).toUpperCase();
+		return Strings.nullToEmpty(userName).toUpperCase().trim();
 	}
 
 	public void setUserName(String userName) {
@@ -36,7 +36,7 @@ public class UserIn {
 	}
 
 	public String getProfile() {
-		return Strings.nullToEmpty(profile).toUpperCase();
+		return Strings.nullToEmpty(profile).toUpperCase().trim();
 	}
 
 	public void setProfile(String profile) {

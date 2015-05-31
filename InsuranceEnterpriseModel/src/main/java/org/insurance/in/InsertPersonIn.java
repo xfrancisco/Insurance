@@ -44,7 +44,7 @@ public class InsertPersonIn {
 	private AddressIn address;
 
 	public String getCompanyId() {
-		return Strings.nullToEmpty(companyId).toUpperCase();
+		return Strings.nullToEmpty(companyId).toUpperCase().trim();
 	}
 
 	public void setCompanyId(String companyId) {
@@ -52,7 +52,7 @@ public class InsertPersonIn {
 	}
 
 	public String getLastName() {
-		return Strings.nullToEmpty(lastName).toUpperCase();
+		return Strings.nullToEmpty(lastName).toUpperCase().trim();
 	}
 
 	public void setLastName(String lastName) {
@@ -60,7 +60,7 @@ public class InsertPersonIn {
 	}
 
 	public String getFirstName() {
-		return Strings.nullToEmpty(firstName).toUpperCase();
+		return Strings.nullToEmpty(firstName).toUpperCase().trim();
 	}
 
 	public void setFirstName(String firstName) {
@@ -68,7 +68,7 @@ public class InsertPersonIn {
 	}
 
 	public String getCompanyName() {
-		return Strings.nullToEmpty(companyName).toUpperCase();
+		return Strings.nullToEmpty(companyName).toUpperCase().trim();
 	}
 
 	public void setCompanyName(String companyName) {
@@ -84,7 +84,7 @@ public class InsertPersonIn {
 	}
 
 	public String getCivility() {
-		return Strings.nullToEmpty(civility).toUpperCase();
+		return Strings.nullToEmpty(civility).toUpperCase().trim();
 	}
 
 	public void setCivility(String civility) {
@@ -92,7 +92,7 @@ public class InsertPersonIn {
 	}
 
 	public String getEmail() {
-		return email;
+		return Strings.nullToEmpty(email).toUpperCase().trim();
 	}
 
 	public void setEmail(String email) {
@@ -100,7 +100,7 @@ public class InsertPersonIn {
 	}
 
 	public String getMobile() {
-		return mobile;
+		return Strings.nullToEmpty(mobile).toUpperCase().trim();
 	}
 
 	public void setMobile(String mobile) {
@@ -108,7 +108,7 @@ public class InsertPersonIn {
 	}
 
 	public String getPhone() {
-		return phone;
+		return Strings.nullToEmpty(phone).toUpperCase().trim();
 	}
 
 	public void setPhone(String phone) {

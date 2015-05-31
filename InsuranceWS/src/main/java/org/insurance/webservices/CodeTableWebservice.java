@@ -9,8 +9,10 @@ import javax.ws.rs.QueryParam;
 
 import org.insurance.common.ICodeTableService;
 import org.insurance.exception.InsuranceException;
+import org.insurance.out.AllCodeTableOut;
 import org.insurance.out.CodeTableOut;
 import org.insurance.out.EntityOut;
+import org.insurance.out.QuoteStatusOut;
 import org.insurance.out.VersionOut;
 import org.springframework.stereotype.Controller;
 
@@ -39,10 +41,11 @@ public class CodeTableWebservice extends AbstractWebservice {
 	@GET
 	@Path("/codeTable/all")
 	@ApiOperation(value = "Liste des codes table")
-	public ResponseWrapper<List<String>> getAllCodes(
-			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId) {
-		ResponseWrapper<List<String>> responseWrapper = new ResponseWrapper<List<String>>();
-		responseWrapper.setData(codeTableService.getAllCodes());
+	public ResponseWrapper<List<AllCodeTableOut>> getAllCodes(
+			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
+			throws InsuranceException {
+		ResponseWrapper<List<AllCodeTableOut>> responseWrapper = new ResponseWrapper<List<AllCodeTableOut>>();
+		responseWrapper.setData(codeTableService.getAllCodes(userId));
 		return responseWrapper;
 	}
 
@@ -154,6 +157,17 @@ public class CodeTableWebservice extends AbstractWebservice {
 			throws InsuranceException {
 		ResponseWrapper<List<EntityOut>> responseWrapper = new ResponseWrapper<List<EntityOut>>();
 		responseWrapper.setData(codeTableService.getPremiums(userId, null));
+		return responseWrapper;
+	}
+
+	@GET
+	@Path("/quotestatus")
+	@ApiOperation(value = "Liste des statuts des devis")
+	public ResponseWrapper<List<QuoteStatusOut>> getQuoteStatus(
+			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
+			throws InsuranceException {
+		ResponseWrapper<List<QuoteStatusOut>> responseWrapper = new ResponseWrapper<List<QuoteStatusOut>>();
+		responseWrapper.setData(codeTableService.getQuoteStatus(userId));
 		return responseWrapper;
 	}
 

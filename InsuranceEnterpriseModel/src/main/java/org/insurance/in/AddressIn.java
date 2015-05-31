@@ -33,7 +33,7 @@ public class AddressIn {
 	private String country;
 
 	public String getStreet1() {
-		return Strings.nullToEmpty(street1).toUpperCase();
+		return Strings.nullToEmpty(street1).toUpperCase().trim();
 	}
 
 	public void setStreet1(String street1) {
@@ -41,7 +41,7 @@ public class AddressIn {
 	}
 
 	public String getStreet2() {
-		return Strings.nullToEmpty(street2).toUpperCase();
+		return Strings.nullToEmpty(street2).toUpperCase().trim();
 	}
 
 	public void setStreet2(String street2) {
@@ -49,7 +49,7 @@ public class AddressIn {
 	}
 
 	public String getStreet3() {
-		return Strings.nullToEmpty(street3).toUpperCase();
+		return Strings.nullToEmpty(street3).toUpperCase().trim();
 	}
 
 	public void setStreet3(String street3) {
@@ -57,7 +57,7 @@ public class AddressIn {
 	}
 
 	public String getStreet4() {
-		return Strings.nullToEmpty(street4).toUpperCase();
+		return Strings.nullToEmpty(street4).toUpperCase().trim();
 	}
 
 	public void setStreet4(String street4) {
@@ -65,7 +65,7 @@ public class AddressIn {
 	}
 
 	public String getZipCode() {
-		return Strings.nullToEmpty(zipCode).toUpperCase();
+		return Strings.nullToEmpty(zipCode).toUpperCase().trim();
 	}
 
 	public void setZipCode(String zipCode) {
@@ -73,7 +73,7 @@ public class AddressIn {
 	}
 
 	public String getCity() {
-		return Strings.nullToEmpty(city).toUpperCase();
+		return Strings.nullToEmpty(city).toUpperCase().trim();
 	}
 
 	public void setCity(String city) {
@@ -81,7 +81,7 @@ public class AddressIn {
 	}
 
 	public String getCountry() {
-		return Strings.nullToEmpty(country).toUpperCase();
+		return Strings.nullToEmpty(country).toUpperCase().trim();
 	}
 
 	public void setCountry(String country) {

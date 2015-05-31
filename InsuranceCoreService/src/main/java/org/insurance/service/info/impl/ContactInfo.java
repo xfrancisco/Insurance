@@ -175,7 +175,7 @@ public class ContactInfo extends ServiceCore implements IContactInfo {
 	@Override
 	public List<Cod_postal> getZipCodesByZipCode(String cpostal, String ccountry) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_postal.class);
-		criteria.add(Restrictions.ilike("cpostal", cpostal, MatchMode.ANYWHERE));
+		criteria.add(Restrictions.ilike("cpostal", cpostal, MatchMode.START));
 		criteria.add(Restrictions.eq("ccountry", ccountry));
 		return genericDao.getByCriteria(criteria);
 	}

@@ -9,7 +9,7 @@ import com.wordnik.swagger.annotations.Api;
 
 @Controller
 @Path("/quote")
-@Api(value = "quote", description = "Devis")
+@Api(value = "quote", description = "Propositions")
 @Validated
 public class QuoteWebservice extends AbstractWebservice {
 

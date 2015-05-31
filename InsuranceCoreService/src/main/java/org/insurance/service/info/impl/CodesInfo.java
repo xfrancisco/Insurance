@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.insurance.conf.Cod_table;
 import org.insurance.conf.Cod_version;
 import org.insurance.service.ServiceCore;
 import org.insurance.service.info.ICodesInfo;
@@ -38,6 +40,19 @@ public class CodesInfo extends ServiceCore implements ICodesInfo {
 	public Cod_version getCurrentVersion() {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_version.class);
 		criteria.addOrder(Order.desc("versionDate"));
+		return genericDao.getFirstByCriteria(criteria);
+	}
+
+	@Override
+	public List<Cod_table> getCodeTables() {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_table.class);
+		return genericDao.getByCriteria(criteria);
+	}
+
+	@Override
+	public Cod_table getCodeTable(String ctable) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_table.class);
+		criteria.add(Restrictions.eq("ctable", ctable));
 		return genericDao.getFirstByCriteria(criteria);
 	}
 

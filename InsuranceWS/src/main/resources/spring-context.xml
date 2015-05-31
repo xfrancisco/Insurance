@@ -48,6 +48,9 @@
 				<value>org.insurance.conf.Cod_address</value>
 				<value>org.insurance.conf.Cod_phone</value>
 				<value>org.insurance.conf.Cod_email</value>
+				<value>org.insurance.conf.Cod_quotestatus</value>
+				<value>org.insurance.conf.Cod_duration</value>
+				<value>org.insurance.conf.Cod_table</value>
 				
 				<value>org.insurance.conf.Cod_branch</value>
 				<value>org.insurance.conf.Cod_category</value>
@@ -88,7 +91,6 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<util:properties id="codeTables" location="classpath:org/insurance/codeTables.properties" />
 	<context:property-placeholder location="classpath:org/insurance/database.properties" />
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<aop:aspectj-autoproxy />

@@ -1,14 +1,12 @@
 package org.insurance.common.impl;
 
-import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.insurance.common.ICodeTableService;
 import org.insurance.conf.Cod_branch;
@@ -16,27 +14,26 @@ import org.insurance.conf.Cod_category;
 import org.insurance.conf.Cod_guarantee;
 import org.insurance.conf.Cod_premium;
 import org.insurance.conf.Cod_section;
+import org.insurance.conf.Cod_table;
 import org.insurance.conf.Cod_version;
 import org.insurance.exception.CodesException;
 import org.insurance.exception.InsuranceException;
-import org.insurance.exception.TechnicalException;
-import org.insurance.exception.TechnicalException.ErrorCode;
+import org.insurance.out.AllCodeTableOut;
 import org.insurance.out.CodeTableOut;
 import org.insurance.out.EntityOut;
+import org.insurance.out.QuoteStatusOut;
 import org.insurance.out.VersionOut;
 import org.insurance.service.check.IUserCheck;
 import org.insurance.service.info.ICodesInfo;
 import org.insurance.service.info.IPremiumInfo;
+import org.insurance.service.info.IQuoteInfo;
 import org.insurance.util.MappingUtils;
 import org.insurance.utils.mapping.PremiumMapping;
+import org.insurance.utils.mapping.QuoteMapping;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 
 @Service
 @Transactional(rollbackFor = Exception.class, readOnly = true)
@@ -46,34 +43,33 @@ public class CodeTableService implements ICodeTableService {
 	private ICodesInfo codesInfo;
 
 	@Inject
+	private IQuoteInfo quoteInfo;
+
+	@Inject
 	private IPremiumInfo premiumInfo;
 
 	@Inject
 	private IUserCheck userCheck;
 
-	@Resource(name = "codeTables")
-	private Properties codeTablesProperties;
-
 	static final Logger logger = Logger.getLogger(CodeTableService.class);
 
-	private static final String QUERY_SUFFIX = ".query";
-	private static final String CODE_SUFFIX = ".code";
-	private static final String LABEL_SUFFIX = ".label";
+	final String request = "SELECT {0}, {1}, indvali from {2}";
 
 	@Override
 	public List<CodeTableOut> getCodeTable(final String userId, final String codeTableName, final boolean allValues) throws InsuranceException {
 		userCheck.checkUser(userId);
-		String tablename = codeTableName;
-		String query = codeTablesProperties.getProperty(tablename + QUERY_SUFFIX);
-		if (query == null) {
-			tablename = codeTableName.toLowerCase();
-			query = codeTablesProperties.getProperty(tablename + QUERY_SUFFIX);
-		}
-		if (Strings.isNullOrEmpty(query)) {
+		Cod_table codTable = codesInfo.getCodeTable(codeTableName);
+		if (codTable == null) {
 			throw new CodesException(CodesException.ErrorCode.ERR_BIZ_CODES_UNKNOWN_TABLE, codeTableName);
 		}
+
+		String tablename = codTable.getTablename();
+		String code = codTable.getTablecode();
+		String label = codTable.getTablelabel();
+		String query = MessageFormat.format(request, code, label, tablename);
+
 		List<?> codeTableDatabaseList = codesInfo.getCodeTableList(query.trim(), allValues);
-		return populate(codeTableDatabaseList, tablename);
+		return populate(codeTableDatabaseList, codTable);
 	}
 
 	@Override
@@ -91,23 +87,17 @@ public class CodeTableService implements ICodeTableService {
 
 	}
 
-	private List<CodeTableOut> populate(List<?> codeTableDatabaseList, String codeTableName) throws InsuranceException {
+	private List<CodeTableOut> populate(List<?> codeTableDatabaseList, Cod_table codTable) throws InsuranceException {
 		List<CodeTableOut> codeTableListToReturn = new ArrayList<CodeTableOut>();
-		for (Object obj : codeTableDatabaseList) {
+		Iterator<?> iter = codeTableDatabaseList.iterator();
+		while (iter.hasNext()) {
+			Object[] object = (Object[]) iter.next();
 			CodeTableOut elem = new CodeTableOut();
-			try {
-				elem.setId(BeanUtils.getProperty(obj, codeTablesProperties.getProperty(codeTableName + CODE_SUFFIX)));
-				elem.setLabel(BeanUtils.getProperty(obj, codeTablesProperties.getProperty(codeTableName + LABEL_SUFFIX)));
-			} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-				throw new TechnicalException(ErrorCode.ERR_TECH_CODETABLE, e);
-			}
+			elem.setId((String) object[0]);
+			elem.setLabel((String) object[1]);
 
-			try {
-				String indvali = BeanUtils.getProperty(obj, "indvali");
-				elem.setIsValid(MappingUtils.toBoolean(indvali));
-			} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-				elem.setIsValid(true);
-			}
+			String indvali = (String) object[2];
+			elem.setIsValid(MappingUtils.toBoolean(indvali));
 
 			codeTableListToReturn.add(elem);
 		}
@@ -166,36 +156,37 @@ public class CodeTableService implements ICodeTableService {
 	}
 
 	@Override
-	public List<String> getAllCodes() {
-		List<String> codeTableValuePropertyNames = new ArrayList<>(codeTablesProperties.stringPropertyNames());
+	public List<AllCodeTableOut> getAllCodes(final String userId) throws InsuranceException {
+		userCheck.checkUser(userId);
+		List<AllCodeTableOut> result = new ArrayList<AllCodeTableOut>();
+		List<Cod_table> codTables = codesInfo.getCodeTables();
 
-		List<String> filteredCodeTableValuePropertyNames = CodeTableValuesComputing
-				.filterCodeTableValuePropertyNamesByQuerySuffix(codeTableValuePropertyNames);
+		for (Cod_table codTable : codTables) {
+			AllCodeTableOut tmp = new AllCodeTableOut();
+			tmp.setId(codTable.getCtable());
+			tmp.setLabel(codTable.getLtable());
+			tmp.setValid(MappingUtils.toBoolean(codTable.getIndvali()));
 
-		return CodeTableValuesComputing.transformCodeTableValuePropertyNames(filteredCodeTableValuePropertyNames);
+			String tablename = codTable.getTablename();
+			String code = codTable.getTablecode();
+			String label = codTable.getTablelabel();
+			String query = MessageFormat.format(request, code, label, tablename);
+
+			List<?> codeTableDatabaseList = codesInfo.getCodeTableList(query.trim(), true);
+			tmp.setDetail(populate(codeTableDatabaseList, codTable));
+			result.add(tmp);
+		}
+
+		AllCodeTableOut allCodeTableOut = new AllCodeTableOut(null, "QUOTESTATUS", true, getQuoteStatus(userId));
+		result.add(allCodeTableOut);
+
+		return result;
 	}
 
-	private static class CodeTableValuesComputing {
-
-		private static List<String> filterCodeTableValuePropertyNamesByQuerySuffix(List<String> codeTableValuePropertyNames) {
-			return Lists.newArrayList(Iterables.filter(codeTableValuePropertyNames, new Predicate<String>() {
-
-				@Override
-				public boolean apply(String input) {
-					return input != null && input.endsWith(QUERY_SUFFIX);
-				}
-			}));
-		}
-
-		private static List<String> transformCodeTableValuePropertyNames(List<String> filteredCodeTableValuePropertyNames) {
-			return Lists.transform(filteredCodeTableValuePropertyNames, new Function<String, String>() {
-
-				@Override
-				public String apply(String input) {
-					return (input != null) ? input.substring(0, input.indexOf(QUERY_SUFFIX)) : null;
-				}
-			});
-		}
+	@Override
+	public List<QuoteStatusOut> getQuoteStatus(String userId) throws InsuranceException {
+		userCheck.checkUser(userId);
+		return QuoteMapping.populateQuoteStatusOut(quoteInfo.getQuoteStatus());
 	}
 
 }

@@ -19,6 +19,8 @@ public class Cod_postal implements Serializable {
 	@Id
 	private String ccountry;
 
+	private String indvali;
+
 	public Cod_postal() {
 
 	}
@@ -36,8 +38,6 @@ public class Cod_postal implements Serializable {
 	public void setCcountry(String ccountry) {
 		this.ccountry = ccountry;
 	}
-
-	private String indvali;
 
 	public String getCity() {
 		return city;
