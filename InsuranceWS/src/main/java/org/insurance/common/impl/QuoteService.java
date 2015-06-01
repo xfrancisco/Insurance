@@ -8,8 +8,11 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.insurance.common.IQuoteService;
 import org.insurance.data.Cli_quote;
+import org.insurance.exception.InsuranceException;
 import org.insurance.in.NewQuoteIn;
+import org.insurance.in.UpdateQuoteIn;
 import org.insurance.out.QuoteOut;
+import org.insurance.service.check.IUserCheck;
 import org.insurance.service.info.IQuoteInfo;
 import org.insurance.service.manager.IQuoteManager;
 import org.insurance.util.DateUtils;
@@ -26,10 +29,14 @@ public class QuoteService implements IQuoteService {
 	@Inject
 	private IQuoteInfo quoteInfo;
 
+	@Inject
+	private IUserCheck usercheck;
+
 	static final Logger logger = Logger.getLogger(QuoteService.class);
 
 	@Override
-	public QuoteOut insertQuote(String userId, NewQuoteIn newQuoteIn) {
+	public QuoteOut insertQuote(String userId, NewQuoteIn newQuoteIn) throws InsuranceException {
+		usercheck.checkUser(userId);
 		Cli_quote quote = populateQuote(newQuoteIn);
 		int numquote = quoteManager.insertQuote(newQuoteIn.getPersonId(), userId, quote);
 		return getQuote(userId, newQuoteIn.getPersonId(), numquote);
@@ -57,13 +64,15 @@ public class QuoteService implements IQuoteService {
 	}
 
 	@Override
-	public QuoteOut getQuote(String userId, Long personId, Integer quoteId) {
+	public QuoteOut getQuote(String userId, Long personId, Integer quoteId) throws InsuranceException {
+		usercheck.checkUser(userId);
 		Cli_quote quote = quoteInfo.getQuote(personId, quoteId);
 		return populateQuote(personId, quote);
 	}
 
 	@Override
-	public List<QuoteOut> getQuotes(String userId, Long personId) {
+	public List<QuoteOut> getQuotes(String userId, Long personId) throws InsuranceException {
+		usercheck.checkUser(userId);
 		List<Cli_quote> quotes = quoteInfo.getQuotes(personId);
 		return populateQuotes(personId, quotes);
 	}
@@ -97,6 +106,13 @@ public class QuoteService implements IQuoteService {
 			result.add(populateQuote(personId, cliQuote));
 		}
 		return result;
+	}
+
+	@Override
+	public QuoteOut updateQuote(String userId, UpdateQuoteIn updateQuoteIn) throws InsuranceException {
+		// TODO Auto-generated method stub
+		usercheck.checkUser(userId);
+		return null;
 	}
 
 }

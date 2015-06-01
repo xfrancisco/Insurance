@@ -12,6 +12,7 @@ import javax.ws.rs.QueryParam;
 import org.insurance.common.IQuoteService;
 import org.insurance.exception.InsuranceException;
 import org.insurance.in.NewQuoteIn;
+import org.insurance.in.UpdateQuoteIn;
 import org.insurance.out.QuoteOut;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -36,6 +37,17 @@ public class QuoteWebservice extends AbstractWebservice {
 			@Valid NewQuoteIn newQuoteIn) throws InsuranceException {
 		ResponseWrapper<QuoteOut> responseWrapper = new ResponseWrapper<QuoteOut>();
 		responseWrapper.setData(quoteService.insertQuote(userId, newQuoteIn));
+		return responseWrapper;
+	}
+
+	@POST
+	@Path("/update")
+	@ApiOperation(value = "Mise à jour d'une proposition")
+	public ResponseWrapper<QuoteOut> updateQuote(
+			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
+			@Valid UpdateQuoteIn updateQuoteIn) throws InsuranceException {
+		ResponseWrapper<QuoteOut> responseWrapper = new ResponseWrapper<QuoteOut>();
+		responseWrapper.setData(quoteService.updateQuote(userId, updateQuoteIn));
 		return responseWrapper;
 	}
 

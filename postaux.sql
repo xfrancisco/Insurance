@@ -1,6 +1,3 @@
-prompt Importing table cod_postal...
-set feedback off
-set define off
 insert into cod_postal (CPOSTAL, CITY, CCOUNTRY, INDVALI)
 values ('25190', 'FEULE', 'FRA', '1');
 
@@ -111172,4 +111169,4 @@ values ('71000', 'SANCE', 'FRA', '1');
 insert into cod_postal (CPOSTAL, CITY, CCOUNTRY, INDVALI)
 values ('81440', 'MONTDRAGON', 'FRA', '1');
 
-prompt Done.
+

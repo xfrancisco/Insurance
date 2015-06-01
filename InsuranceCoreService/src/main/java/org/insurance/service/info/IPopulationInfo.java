@@ -24,4 +24,22 @@ public interface IPopulationInfo {
 
 	List<Cli_client> getAgencies();
 
+	List<Cli_client> getClientsByName(String name);
+
+	List<Cli_client> getBrokersByName(String name);
+
+	List<Cli_client> getInsurersByName(String name);
+
+	List<Cli_client> getReinsurersByName(String name);
+
+	List<Cli_client> getExpertsByName(String name);
+
+	List<Cli_client> getLawyersByName(String name);
+
+	List<Cli_client> getBeneficiariesByName(String name);
+
+	List<Cli_client> getThirdPartiesByName(String name);
+
+	List<Cli_client> getAgenciesByName(String name);
+
 }
