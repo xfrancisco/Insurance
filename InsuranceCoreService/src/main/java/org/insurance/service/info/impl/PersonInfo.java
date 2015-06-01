@@ -1,5 +1,9 @@
 package org.insurance.service.info.impl;
 
+import static org.hibernate.criterion.Projections.property;
+import static org.hibernate.criterion.Restrictions.eq;
+import static org.hibernate.criterion.Subqueries.propertyIn;
+
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -41,6 +45,17 @@ public class PersonInfo extends ServiceCore implements IPersonInfo {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_catcli.class);
 		criteria.add(Restrictions.eq("numcli", numcli));
 		return genericDao.getByCriteria(criteria);
+	}
+
+	@Override
+	public Cli_client getBroker(long numcli) {
+		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
+		subQuery.add(eq("indbroker", "1")).setProjection(property("ccatcli"));
+
+		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_catcli.class);
+		mainQuery.add(Restrictions.eq("numcli", numcli));
+		mainQuery.add(propertyIn("ccatcli", subQuery));
+		return genericDao.getFirstByCriteria(mainQuery);
 	}
 
 }

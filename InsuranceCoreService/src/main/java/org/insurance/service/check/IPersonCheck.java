@@ -17,4 +17,8 @@ public interface IPersonCheck {
 
 	void checkCategories(List<Cli_catcli> categories) throws PersonException;
 
+	Cli_client checkBroker(long numclibroker) throws PersonException;
+
+	Cli_client checkLeader(long numclileader) throws PersonException;
+
 }

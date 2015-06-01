@@ -26,7 +26,7 @@ import org.insurance.out.VersionOut;
 import org.insurance.service.check.IUserCheck;
 import org.insurance.service.info.ICodesInfo;
 import org.insurance.service.info.IPremiumInfo;
-import org.insurance.service.info.IQuoteInfo;
+import org.insurance.service.info.IQuoteAndContractInfo;
 import org.insurance.util.MappingUtils;
 import org.insurance.utils.mapping.PremiumMapping;
 import org.insurance.utils.mapping.QuoteMapping;
@@ -43,7 +43,7 @@ public class CodeTableService implements ICodeTableService {
 	private ICodesInfo codesInfo;
 
 	@Inject
-	private IQuoteInfo quoteInfo;
+	private IQuoteAndContractInfo quoteInfo;
 
 	@Inject
 	private IPremiumInfo premiumInfo;

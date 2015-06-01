@@ -16,4 +16,6 @@ public interface IPersonInfo {
 	Cod_catcli getCategory(String ccatcli);
 
 	List<Cli_catcli> getCategories(long numcli);
+
+	Cli_client getBroker(long numcli);
 }

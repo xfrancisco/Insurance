@@ -47,10 +47,10 @@ public class PersonCheck extends ServiceCore implements IPersonCheck {
 	}
 
 	@Override
-	public Cli_client checkAndGetPerson(long personId) throws PersonException {
-		Cli_client client = personInfo.getPerson(personId);
+	public Cli_client checkAndGetPerson(long numcli) throws PersonException {
+		Cli_client client = personInfo.getPerson(numcli);
 		if (client == null)
-			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_PERSON, personId);
+			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_PERSON, numcli);
 		return client;
 	}
 
@@ -59,5 +59,19 @@ public class PersonCheck extends ServiceCore implements IPersonCheck {
 		for (Cli_catcli cliCatcli : categories) {
 			checkCategory(cliCatcli.getCcatcli());
 		}
+	}
+
+	@Override
+	public Cli_client checkBroker(long numclibroker) throws PersonException {
+		Cli_client broker = personInfo.getBroker(numclibroker);
+		if (broker == null)
+			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_BROKER, numclibroker);
+		return broker;
+	}
+
+	@Override
+	public Cli_client checkLeader(long numclileader) throws PersonException {
+		throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_LEADER, numclileader);
+
 	}
 }

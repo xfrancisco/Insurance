@@ -28,27 +28,27 @@ public class PremiumInfo extends ServiceCore implements IPremiumInfo {
 	}
 
 	@Override
-	public Cod_branch getBranch(String cbranch) {
+	public Cod_branch getBranch(final String cbranch) {
 		return genericDao.get(Cod_branch.class, cbranch);
 	}
 
 	@Override
-	public Cod_category getCategory(String ccategory) {
+	public Cod_category getCategory(final String ccategory) {
 		return genericDao.get(Cod_category.class, ccategory);
 	}
 
 	@Override
-	public Cod_section getSection(String csection) {
+	public Cod_section getSection(final String csection) {
 		return genericDao.get(Cod_section.class, csection);
 	}
 
 	@Override
-	public Cod_guarantee getGuarantee(String cguarantee) {
+	public Cod_guarantee getGuarantee(final String cguarantee) {
 		return genericDao.get(Cod_guarantee.class, cguarantee);
 	}
 
 	@Override
-	public Cod_premium getPremium(String cpremium) {
+	public Cod_premium getPremium(final String cpremium) {
 		return genericDao.get(Cod_premium.class, cpremium);
 	}
 
@@ -113,6 +113,12 @@ public class PremiumInfo extends ServiceCore implements IPremiumInfo {
 			mainQuery.add(propertyIn("cpremium", subQuery));
 			return genericDao.getByCriteria(mainQuery);
 		}
+	}
+
+	@Override
+	public Cod_category getCategory(String cbranch, String ccategory) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

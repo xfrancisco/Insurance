@@ -13,7 +13,7 @@ import org.insurance.in.NewQuoteIn;
 import org.insurance.in.UpdateQuoteIn;
 import org.insurance.out.QuoteOut;
 import org.insurance.service.check.IUserCheck;
-import org.insurance.service.info.IQuoteInfo;
+import org.insurance.service.info.IQuoteAndContractInfo;
 import org.insurance.service.manager.IQuoteManager;
 import org.insurance.util.DateUtils;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class QuoteService implements IQuoteService {
 	private IQuoteManager quoteManager;
 
 	@Inject
-	private IQuoteInfo quoteInfo;
+	private IQuoteAndContractInfo quoteInfo;
 
 	@Inject
 	private IUserCheck usercheck;
