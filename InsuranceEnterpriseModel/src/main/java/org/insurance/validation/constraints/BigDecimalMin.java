@@ -1,5 +1,6 @@
 package org.insurance.validation.constraints;
 
+import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -10,14 +11,14 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import org.insurance.validation.constraints.impl.EmailValidator;
+import org.insurance.validation.constraints.impl.BigDecimalMinValidator;
 
-@Target({ METHOD, FIELD })
+@Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
-@Constraint(validatedBy = EmailValidator.class)
-public @interface Email {
+@Constraint(validatedBy = BigDecimalMinValidator.class)
+public @interface BigDecimalMin {
 
-	String message() default "ERR_CLI_INVALID_EMAIL";
+	String message() default "ERR_CLI_BIGDECIMALMIN_FIELD";
 
 	Class<?>[] groups() default {};
 

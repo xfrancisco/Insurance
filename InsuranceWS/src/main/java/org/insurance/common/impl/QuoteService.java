@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.insurance.common.IQuoteService;
 import org.insurance.data.Cli_quote;
+import org.insurance.exception.CommonException;
 import org.insurance.exception.InsuranceException;
 import org.insurance.in.NewQuoteIn;
 import org.insurance.in.UpdateQuoteIn;
@@ -16,6 +17,7 @@ import org.insurance.service.check.IUserCheck;
 import org.insurance.service.info.IQuoteAndContractInfo;
 import org.insurance.service.manager.IQuoteManager;
 import org.insurance.util.DateUtils;
+import org.insurance.util.MappingUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +44,7 @@ public class QuoteService implements IQuoteService {
 		return getQuote(userId, newQuoteIn.getPersonId(), numquote);
 	}
 
-	private Cli_quote populateQuote(NewQuoteIn quoteIn) {
+	private Cli_quote populateQuote(NewQuoteIn quoteIn) throws CommonException {
 		Cli_quote result = new Cli_quote();
 		if (quoteIn != null) {
 			result.setAcceptancedate(DateUtils.parseStringToSqlDate(quoteIn.getAcceptanceDate()));
@@ -52,12 +54,12 @@ public class QuoteService implements IQuoteService {
 			result.setCquotestatus(quoteIn.getQuoteStatusId());
 			result.setCuseruw(quoteIn.getUnderwriterId());
 			result.setEndval(DateUtils.parseStringToSqlDate(quoteIn.getValidityEndDate()));
-			result.setGuaranteedamount(quoteIn.getGuaranteedAmount());
+			result.setGuaranteedamount(MappingUtils.toBigDecimal(quoteIn.getGuaranteedAmount()));
 			result.setNumclibroker(quoteIn.getBrokerId());
 			result.setNumclileader(quoteIn.getLeaderId());
-			result.setPremiumamount(quoteIn.getPremiumAmount());
+			result.setPremiumamount(MappingUtils.toBigDecimal(quoteIn.getPremiumAmount()));
 			result.setReceptiondate(DateUtils.parseStringToSqlDate(quoteIn.getReceptionDate()));
-			result.setSharepart(quoteIn.getShare());
+			result.setSharepart(MappingUtils.toBigDecimal(quoteIn.getShare()));
 			result.setStartval(DateUtils.parseStringToSqlDate(quoteIn.getWorkingDate()));
 		}
 		return result;
@@ -96,6 +98,9 @@ public class QuoteService implements IQuoteService {
 			result.setUnderwriterId(quote.getCuseruw());
 			result.setValidityEndDate(DateUtils.formatDate(quote.getEndval()));
 			result.setWorkingDate(DateUtils.formatDate(quote.getStartval()));
+			result.setCancellationDate(DateUtils.formatDate(quote.getCancelDate()));
+			result.setCancellationUser(quote.getCusercancel());
+
 		}
 		return result;
 	}
@@ -110,9 +115,10 @@ public class QuoteService implements IQuoteService {
 
 	@Override
 	public QuoteOut updateQuote(String userId, UpdateQuoteIn updateQuoteIn) throws InsuranceException {
-		// TODO Auto-generated method stub
 		usercheck.checkUser(userId);
-		return null;
+		Cli_quote cliQuote = populateQuote(updateQuoteIn);
+		quoteManager.updateQuote(updateQuoteIn.getPersonId(), updateQuoteIn.getQuoteId(), userId, cliQuote);
+		return getQuote(userId, updateQuoteIn.getPersonId(), updateQuoteIn.getQuoteId());
 	}
 
 }

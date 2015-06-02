@@ -7,7 +7,8 @@ public class CommonException extends InsuranceException {
 	public static enum ErrorCode {
 		ERR_BIZ_COMMON_INVALID_AMOUNT,
 		ERR_BIZ_COMMON_INVALID_PERCENTAGE,
-		ERR_BIZ_COMMON_INVALID_PERIOD
+		ERR_BIZ_COMMON_INVALID_PERIOD,
+		ERR_BIZ_COMMON_INVALID_NUMBER
 	}
 
 	public CommonException(ErrorCode errorCode) {

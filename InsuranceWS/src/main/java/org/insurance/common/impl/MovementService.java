@@ -51,7 +51,7 @@ public class MovementService implements IMovementService {
 	@Override
 	public List<MovementOut> getMovements(String userId, long personId, Integer contractId) throws InsuranceException {
 		userCheck.checkUser(userId);
-		personCheck.checkAndGetPerson(personId);
+		personCheck.checkPerson(personId);
 		//TODO XFR Contrôle du contrat
 		List<MovementDto> movements = movementInfo.getMovements(personId, contractId);
 		return MovementMapping.populateMovements(movements);

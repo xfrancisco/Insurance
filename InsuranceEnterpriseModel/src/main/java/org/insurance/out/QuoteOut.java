@@ -34,6 +34,10 @@ public class QuoteOut {
 
 	private String acceptanceDate;
 
+	private String cancellationDate;
+
+	private String cancellationUser;
+
 	private BigDecimal share;
 
 	public long getPersonId() {
@@ -162,6 +166,22 @@ public class QuoteOut {
 
 	public void setShare(BigDecimal share) {
 		this.share = share;
+	}
+
+	public String getCancellationDate() {
+		return cancellationDate;
+	}
+
+	public void setCancellationDate(String cancellationDate) {
+		this.cancellationDate = cancellationDate;
+	}
+
+	public String getCancellationUser() {
+		return cancellationUser;
+	}
+
+	public void setCancellationUser(String cancellationUser) {
+		this.cancellationUser = cancellationUser;
 	}
 
 }

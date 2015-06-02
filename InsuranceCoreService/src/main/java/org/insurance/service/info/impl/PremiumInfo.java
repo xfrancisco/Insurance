@@ -117,7 +117,13 @@ public class PremiumInfo extends ServiceCore implements IPremiumInfo {
 
 	@Override
 	public Cod_category getCategory(String cbranch, String ccategory) {
-		// TODO Auto-generated method stub
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_premiumconfig.class);
+		criteria.add(eq("cbranch", cbranch));
+		criteria.add(eq("ccategory", ccategory));
+		Cod_premiumconfig codPremiumConfig = genericDao.getFirstByCriteria(criteria);
+		if (codPremiumConfig != null) {
+			return getCategory(ccategory);
+		}
 		return null;
 	}
 

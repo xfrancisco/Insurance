@@ -18,4 +18,6 @@ public interface IPersonInfo {
 	List<Cli_catcli> getCategories(long numcli);
 
 	Cli_client getBroker(long numcli);
+
+	Cli_client getLeader(long numcli);
 }

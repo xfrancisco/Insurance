@@ -6,6 +6,7 @@ import org.insurance.conf.Cod_address;
 import org.insurance.conf.Cod_country;
 import org.insurance.conf.Cod_email;
 import org.insurance.conf.Cod_phone;
+import org.insurance.conf.Cod_postal;
 import org.insurance.data.Cli_address;
 import org.insurance.data.Cli_email;
 import org.insurance.data.Cli_phone;
@@ -13,17 +14,17 @@ import org.insurance.exception.ContactException;
 
 public interface IContactCheck {
 
-	void checkPostalCode(String cpostal, String city, String ccountry) throws ContactException;
+	Cod_postal checkPostalCode(String cpostal, String city, String ccountry) throws ContactException;
 
 	void checkStreets(String street2) throws ContactException;
 
-	Cod_phone checkAndGetDefaultPhoneType() throws ContactException;
+	Cod_phone checkDefaultPhoneType() throws ContactException;
 
-	Cod_phone checkAndGetDefaultMobilePhoneType() throws ContactException;
+	Cod_phone checkDefaultMobilePhoneType() throws ContactException;
 
-	Cod_email checkAndGetDefaultEmailType() throws ContactException;
+	Cod_email checkDefaultEmailType() throws ContactException;
 
-	Cod_address checkAndGetDefaultAddressType() throws ContactException;
+	Cod_address checkDefaultAddressType() throws ContactException;
 
 	void checkAddresses(List<Cli_address> addresses) throws ContactException;
 
@@ -31,5 +32,5 @@ public interface IContactCheck {
 
 	void checkPhones(List<Cli_phone> phones) throws ContactException;
 
-	Cod_country checkAndGetDefaultCountry() throws ContactException;;
+	Cod_country checkDefaultCountry() throws ContactException;;
 }

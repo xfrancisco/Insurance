@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import org.insurance.conf.Cod_duration;
 import org.insurance.conf.Cod_quotestatus;
+import org.insurance.data.Cli_quote;
 import org.insurance.exception.QuoteAndContractException;
 import org.insurance.exception.QuoteAndContractException.ErrorCode;
 import org.insurance.service.ServiceCore;
@@ -35,6 +36,14 @@ public class QuoteAndContractCheck extends ServiceCore implements IQuoteAndContr
 			throw new QuoteAndContractException(ErrorCode.ERR_BIZ_QUOTECONTRACT_FORBIDDEN_QUOTE_STATUS, cquotestatus);
 
 		return codQuotestatus;
+	}
+
+	@Override
+	public Cli_quote checkQuote(long numcli, int numquote) throws QuoteAndContractException {
+		Cli_quote cliQuote = quoteInfo.getQuote(numcli, numquote);
+		if (cliQuote == null)
+			throw new QuoteAndContractException(ErrorCode.ERR_BIZ_QUOTECONTRACT_UNKNOWN_QUOTE, numcli, numquote);
+		return cliQuote;
 	}
 
 }

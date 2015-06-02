@@ -26,9 +26,13 @@ public class PremiumCheck extends ServiceCore implements IPremiumCheck {
 
 	@Override
 	public Cod_category checkCategory(final String cbranch, final String ccategory) throws PremiumException {
-		Cod_category codCategory = premiumInfo.getCategory(cbranch, ccategory);
+		Cod_category codCategory = premiumInfo.getCategory(ccategory);
 		if (codCategory == null)
-			throw new PremiumException(ErrorCode.ERR_BIZ_PREMIUM_UNKNWOWN_CATEGORY, cbranch, ccategory);
+			throw new PremiumException(ErrorCode.ERR_BIZ_PREMIUM_UNKNWOWN_CATEGORY, ccategory);
+
+		codCategory = premiumInfo.getCategory(cbranch, ccategory);
+		if (codCategory == null)
+			throw new PremiumException(ErrorCode.ERR_BIZ_PREMIUM_UNKNWOWN_BRANCH_CATEGORY, cbranch, ccategory);
 		return codCategory;
 
 	}

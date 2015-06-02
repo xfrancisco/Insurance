@@ -22,11 +22,12 @@ public class PersonCheck extends ServiceCore implements IPersonCheck {
 	private IPersonInfo personInfo;
 
 	@Override
-	public void checkCivility(final String ccivil) throws PersonException {
+	public Cod_civility checkCivility(final String ccivil) throws PersonException {
 		Cod_civility codCivility = personInfo.getCivility(ccivil);
 		if (codCivility == null) {
 			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_CIVILITY, ccivil);
 		}
+		return codCivility;
 	}
 
 	@Override
@@ -39,15 +40,16 @@ public class PersonCheck extends ServiceCore implements IPersonCheck {
 	}
 
 	@Override
-	public void checkCategory(String ccatcli) throws PersonException {
+	public Cod_catcli checkCategory(final String ccatcli) throws PersonException {
 		Cod_catcli codCatcli = personInfo.getCategory(ccatcli);
 		if (codCatcli == null) {
 			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_CATEGORY, ccatcli);
 		}
+		return codCatcli;
 	}
 
 	@Override
-	public Cli_client checkAndGetPerson(long numcli) throws PersonException {
+	public Cli_client checkPerson(final long numcli) throws PersonException {
 		Cli_client client = personInfo.getPerson(numcli);
 		if (client == null)
 			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_PERSON, numcli);
@@ -55,14 +57,14 @@ public class PersonCheck extends ServiceCore implements IPersonCheck {
 	}
 
 	@Override
-	public void checkCategories(List<Cli_catcli> categories) throws PersonException {
+	public void checkCategories(final List<Cli_catcli> categories) throws PersonException {
 		for (Cli_catcli cliCatcli : categories) {
 			checkCategory(cliCatcli.getCcatcli());
 		}
 	}
 
 	@Override
-	public Cli_client checkBroker(long numclibroker) throws PersonException {
+	public Cli_client checkBroker(final long numclibroker) throws PersonException {
 		Cli_client broker = personInfo.getBroker(numclibroker);
 		if (broker == null)
 			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_BROKER, numclibroker);
@@ -70,8 +72,11 @@ public class PersonCheck extends ServiceCore implements IPersonCheck {
 	}
 
 	@Override
-	public Cli_client checkLeader(long numclileader) throws PersonException {
-		throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_LEADER, numclileader);
+	public Cli_client checkLeader(final long numclileader) throws PersonException {
+		Cli_client leader = personInfo.getLeader(numclileader);
+		if (leader == null)
+			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_LEADER, numclileader);
+		return leader;
 
 	}
 }

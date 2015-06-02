@@ -1,13 +1,17 @@
 package org.insurance.util;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
+import org.insurance.exception.CommonException;
 import org.insurance.exception.TechnicalException;
 import org.insurance.exception.TechnicalException.ErrorCode;
+
+import com.google.common.base.Strings;
 
 public final class MappingUtils {
 
@@ -47,6 +51,18 @@ public final class MappingUtils {
 		}
 
 		return encodedUrl;
+	}
+
+	public static BigDecimal toBigDecimal(final String value) throws CommonException {
+		try {
+			if (Strings.isNullOrEmpty(value))
+				return null;
+			BigDecimal result = new BigDecimal(value);
+			return result;
+		} catch (Exception e) {
+			throw new CommonException(CommonException.ErrorCode.ERR_BIZ_COMMON_INVALID_NUMBER, value);
+		}
+
 	}
 
 }

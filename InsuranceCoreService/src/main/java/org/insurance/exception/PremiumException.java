@@ -6,7 +6,10 @@ public class PremiumException extends InsuranceException {
 
 	public static enum ErrorCode {
 		ERR_BIZ_PREMIUM_UNKNWOWN_BRANCH,
-		ERR_BIZ_PREMIUM_UNKNWOWN_CATEGORY
+		ERR_BIZ_PREMIUM_UNKNWOWN_CATEGORY,
+		ERR_BIZ_PREMIUM_UNKNWOWN_BRANCH_CATEGORY,
+		ERR_BIZ_PREMIUM_INVALID_BRANCH,
+		ERR_BIZ_PREMIUM_INVALID_CATEGORY;
 	}
 
 	public PremiumException(ErrorCode errorCode) {

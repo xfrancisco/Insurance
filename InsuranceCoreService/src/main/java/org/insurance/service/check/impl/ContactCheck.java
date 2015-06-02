@@ -27,7 +27,7 @@ public class ContactCheck extends ServiceCore implements IContactCheck {
 	private IContactInfo contactInfo;
 
 	@Override
-	public void checkPostalCode(String cpostal, String city, String ccountry) throws ContactException {
+	public Cod_postal checkPostalCode(final String cpostal, final String city, final String ccountry) throws ContactException {
 		if (Strings.isNullOrEmpty(cpostal) || Strings.isNullOrEmpty(city) || Strings.isNullOrEmpty(ccountry)) {
 			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_ADDRESS_MANDATORY_CITY_POSTAL_COUNTRY);
 		}
@@ -35,18 +35,19 @@ public class ContactCheck extends ServiceCore implements IContactCheck {
 		if (codPostal == null) {
 			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_ADDRESS_UNKNOWN_CITY_POSTAL_COUNTRY, cpostal, city, ccountry);
 		}
+		return codPostal;
 
 	}
 
 	@Override
-	public void checkStreets(String street2) throws ContactException {
+	public void checkStreets(final String street2) throws ContactException {
 		if (Strings.isNullOrEmpty(street2))
 			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_ADDRESS_MANDATORY_STREET2);
 
 	}
 
 	@Override
-	public Cod_phone checkAndGetDefaultPhoneType() throws ContactException {
+	public Cod_phone checkDefaultPhoneType() throws ContactException {
 		Cod_phone result = contactInfo.getDefaultPhoneType();
 		if (result == null)
 			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_PHONE_UNKNOWN_DEFAULT_PHONE);
@@ -54,7 +55,7 @@ public class ContactCheck extends ServiceCore implements IContactCheck {
 	}
 
 	@Override
-	public Cod_country checkAndGetDefaultCountry() throws ContactException {
+	public Cod_country checkDefaultCountry() throws ContactException {
 		Cod_country result = contactInfo.getDefaultCountry();
 		if (result == null)
 			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_ADDRESS_UNKNOWN_DEFAULT_COUNTRY);
@@ -62,7 +63,7 @@ public class ContactCheck extends ServiceCore implements IContactCheck {
 	}
 
 	@Override
-	public Cod_phone checkAndGetDefaultMobilePhoneType() throws ContactException {
+	public Cod_phone checkDefaultMobilePhoneType() throws ContactException {
 		Cod_phone result = contactInfo.getDefaultMobilePhoneType();
 		if (result == null)
 			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_PHONE_UNKNOWN_DEFAULT_MOBILE);
@@ -70,7 +71,7 @@ public class ContactCheck extends ServiceCore implements IContactCheck {
 	}
 
 	@Override
-	public Cod_email checkAndGetDefaultEmailType() throws ContactException {
+	public Cod_email checkDefaultEmailType() throws ContactException {
 		Cod_email result = contactInfo.getDefaultEmailType();
 		if (result == null)
 			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_EMAIL_UNKNOWN_DEFAULT_EMAIL);
@@ -78,7 +79,7 @@ public class ContactCheck extends ServiceCore implements IContactCheck {
 	}
 
 	@Override
-	public Cod_address checkAndGetDefaultAddressType() throws ContactException {
+	public Cod_address checkDefaultAddressType() throws ContactException {
 		Cod_address result = contactInfo.getDefaultAddressType();
 		if (result == null)
 			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_ADDRESS_UNKNOWN_DEFAULT_ADDRESS);
@@ -86,7 +87,7 @@ public class ContactCheck extends ServiceCore implements IContactCheck {
 	}
 
 	@Override
-	public void checkAddresses(List<Cli_address> addresses) throws ContactException {
+	public void checkAddresses(final List<Cli_address> addresses) throws ContactException {
 		for (Cli_address address : addresses) {
 			checkPostalCode(address.getCpostal(), address.getCity(), address.getCcountry());
 			checkStreets(address.getStreet2());
@@ -94,20 +95,20 @@ public class ContactCheck extends ServiceCore implements IContactCheck {
 	}
 
 	@Override
-	public void checkEmails(List<Cli_email> emails) throws ContactException {
+	public void checkEmails(final List<Cli_email> emails) throws ContactException {
 		for (Cli_email cli_email : emails) {
 			checkEmail(cli_email);
 		}
 	}
 
 	@Override
-	public void checkPhones(List<Cli_phone> phones) throws ContactException {
+	public void checkPhones(final List<Cli_phone> phones) throws ContactException {
 		for (Cli_phone phone : phones) {
 			checkPhone(phone);
 		}
 	}
 
-	private void checkEmail(Cli_email email) throws ContactException {
+	private void checkEmail(final Cli_email email) throws ContactException {
 		Cod_email codEmail = contactInfo.getEmailType(email.getCemail());
 		if (codEmail == null)
 			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_EMAIL_UNKNOWN_TYPE, email.getCemail());
@@ -119,7 +120,7 @@ public class ContactCheck extends ServiceCore implements IContactCheck {
 		}
 	}
 
-	private void checkPhone(Cli_phone phone) throws ContactException {
+	private void checkPhone(final Cli_phone phone) throws ContactException {
 		Cod_phone codPhone = contactInfo.getPhoneType(phone.getCphone());
 		if (codPhone == null)
 			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_PHONE_UNKNOWN_TYPE, phone.getCphone());

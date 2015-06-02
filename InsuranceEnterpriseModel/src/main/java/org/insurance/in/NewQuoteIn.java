@@ -1,24 +1,31 @@
 package org.insurance.in;
 
-import java.math.BigDecimal;
-
+import org.insurance.validation.constraints.BigDecimalMin;
+import org.insurance.validation.constraints.EnterpriseModelEnum;
+import org.insurance.validation.constraints.Length;
 import org.insurance.validation.constraints.Mandatory;
+import org.insurance.validation.constraints.Percentage;
 
 public class NewQuoteIn {
 
 	@Mandatory
+	@Length(max = EnterpriseModelEnum.PERSONID)
 	private long personId;
 
 	@Mandatory
+	@Length(max = EnterpriseModelEnum.PERSONID)
 	private long brokerId;
 
 	@Mandatory
+	@Length(max = EnterpriseModelEnum.PERSONID)
 	private long leaderId;
 
 	@Mandatory
+	@Length(max = EnterpriseModelEnum.BRANCH)
 	private String branchId;
 
 	@Mandatory
+	@Length(max = EnterpriseModelEnum.CATEGORY)
 	private String categoryId;
 
 	@Mandatory
@@ -28,22 +35,28 @@ public class NewQuoteIn {
 	private String receptionDate;
 
 	@Mandatory
+	@Length(max = EnterpriseModelEnum.USERID)
 	private String underwriterId;
 
 	@Mandatory
+	@Length(max = EnterpriseModelEnum.QUOTESTATUS)
 	private String quoteStatusId;
 
+	@Length(max = EnterpriseModelEnum.DURATION)
 	private String durationId;
 
-	private BigDecimal guaranteedAmount;
+	@BigDecimalMin
+	private String guaranteedAmount;
 
-	private BigDecimal premiumAmount;
+	@BigDecimalMin
+	private String premiumAmount;
 
 	private String validityEndDate;
 
 	private String acceptanceDate;
 
-	private BigDecimal share;
+	@Percentage
+	private String share;
 
 	public long getPersonId() {
 		return personId;
@@ -125,22 +138,6 @@ public class NewQuoteIn {
 		this.durationId = durationId;
 	}
 
-	public BigDecimal getGuaranteedAmount() {
-		return guaranteedAmount;
-	}
-
-	public void setGuaranteedAmount(BigDecimal guaranteedAmount) {
-		this.guaranteedAmount = guaranteedAmount;
-	}
-
-	public BigDecimal getPremiumAmount() {
-		return premiumAmount;
-	}
-
-	public void setPremiumAmount(BigDecimal premiumAmount) {
-		this.premiumAmount = premiumAmount;
-	}
-
 	public String getValidityEndDate() {
 		return validityEndDate;
 	}
@@ -157,11 +154,27 @@ public class NewQuoteIn {
 		this.acceptanceDate = acceptanceDate;
 	}
 
-	public BigDecimal getShare() {
+	public String getGuaranteedAmount() {
+		return guaranteedAmount;
+	}
+
+	public void setGuaranteedAmount(String guaranteedAmount) {
+		this.guaranteedAmount = guaranteedAmount;
+	}
+
+	public String getPremiumAmount() {
+		return premiumAmount;
+	}
+
+	public void setPremiumAmount(String premiumAmount) {
+		this.premiumAmount = premiumAmount;
+	}
+
+	public String getShare() {
 		return share;
 	}
 
-	public void setShare(BigDecimal share) {
+	public void setShare(String share) {
 		this.share = share;
 	}
 

@@ -46,7 +46,7 @@ public class ZipCodeService implements IZipCodeService {
 	public List<ZipCodeOut> getZipCodesByZipCode(String userId, String zipCode, String country) throws InsuranceException {
 		userCheck.checkUser(userId);
 		if (country == null) {
-			Cod_country codCountry = contactCheck.checkAndGetDefaultCountry();
+			Cod_country codCountry = contactCheck.checkDefaultCountry();
 			country = codCountry.getCcountry();
 		}
 		return populateZipCodeOut(contactInfo.getZipCodesByZipCode(zipCode, country));
@@ -56,7 +56,7 @@ public class ZipCodeService implements IZipCodeService {
 	public List<ZipCodeOut> getZipCodesByCity(String userId, String city, String country) throws InsuranceException {
 		userCheck.checkUser(userId);
 		if (country == null) {
-			Cod_country codCountry = contactCheck.checkAndGetDefaultCountry();
+			Cod_country codCountry = contactCheck.checkDefaultCountry();
 			country = codCountry.getCcountry();
 		}
 		return populateZipCodeOut(contactInfo.getZipCodesByCity(city, country));
@@ -87,7 +87,7 @@ public class ZipCodeService implements IZipCodeService {
 		String cpostal = zipCodeIn.getZipCode();
 		String city = zipCodeIn.getCity();
 		if (Strings.isNullOrEmpty(ccountry))
-			ccountry = contactCheck.checkAndGetDefaultCountry().getCcountry();
+			ccountry = contactCheck.checkDefaultCountry().getCcountry();
 		Cod_postal codPostal = contactInfo.getZipCode(cpostal, city, ccountry);
 		if (codPostal != null) {
 			throw new ContactException(ErrorCode.ERR_BIZ_CONTACT_ADDRESS_EXISTING_ZIPCODE);

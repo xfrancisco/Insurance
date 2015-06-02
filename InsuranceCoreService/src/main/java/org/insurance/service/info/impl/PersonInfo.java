@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class PersonInfo extends ServiceCore implements IPersonInfo {
 
 	@Override
-	public Cli_client getPerson(long numcli) {
+	public Cli_client getPerson(final long numcli) {
 		return genericDao.get(Cli_client.class, numcli);
 	}
 
@@ -41,21 +41,38 @@ public class PersonInfo extends ServiceCore implements IPersonInfo {
 	}
 
 	@Override
-	public List<Cli_catcli> getCategories(long numcli) {
+	public List<Cli_catcli> getCategories(final long numcli) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_catcli.class);
 		criteria.add(Restrictions.eq("numcli", numcli));
 		return genericDao.getByCriteria(criteria);
 	}
 
 	@Override
-	public Cli_client getBroker(long numcli) {
+	public Cli_client getBroker(final long numcli) {
 		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
 		subQuery.add(eq("indbroker", "1")).setProjection(property("ccatcli"));
 
-		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_catcli.class);
-		mainQuery.add(Restrictions.eq("numcli", numcli));
-		mainQuery.add(propertyIn("ccatcli", subQuery));
+		final DetachedCriteria subQuery2 = DetachedCriteria.forClass(Cli_catcli.class);
+		subQuery2.add(propertyIn("ccatcli", subQuery)).setProjection(property("numcli"));
+
+		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_client.class);
+		mainQuery.add(propertyIn("numcli", subQuery2));
+
 		return genericDao.getFirstByCriteria(mainQuery);
 	}
 
+	@Override
+	public Cli_client getLeader(final long numcli) {
+		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
+		subQuery.add(eq("indinsurance", "1")).setProjection(property("ccatcli"));
+
+		final DetachedCriteria subQuery2 = DetachedCriteria.forClass(Cli_catcli.class);
+		subQuery2.add(propertyIn("ccatcli", subQuery));
+		subQuery2.add(eq("numcli", numcli)).setProjection(property("numcli"));
+
+		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_client.class);
+		mainQuery.add(propertyIn("numcli", subQuery2));
+
+		return genericDao.getFirstByCriteria(mainQuery);
+	}
 }
