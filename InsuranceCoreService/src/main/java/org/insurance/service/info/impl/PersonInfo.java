@@ -75,4 +75,19 @@ public class PersonInfo extends ServiceCore implements IPersonInfo {
 
 		return genericDao.getFirstByCriteria(mainQuery);
 	}
+
+	@Override
+	public Cli_client getClient(final long numcli) {
+		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
+		subQuery.add(eq("indclient", "1")).setProjection(property("ccatcli"));
+
+		final DetachedCriteria subQuery2 = DetachedCriteria.forClass(Cli_catcli.class);
+		subQuery2.add(propertyIn("ccatcli", subQuery));
+		subQuery2.add(eq("numcli", numcli)).setProjection(property("numcli"));
+
+		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cli_client.class);
+		mainQuery.add(propertyIn("numcli", subQuery2));
+
+		return genericDao.getFirstByCriteria(mainQuery);
+	}
 }

@@ -49,7 +49,7 @@ public class QuoteManager extends ServiceCore implements IQuoteManager {
 
 	@Override
 	public int insertQuote(long numcli, String cuser, Cli_quote cliQuote) throws InsuranceException {
-		personCheck.checkPerson(numcli);
+		personCheck.checkClient(numcli);
 		personCheck.checkBroker(cliQuote.getNumclibroker());
 		personCheck.checkLeader(cliQuote.getNumclileader());
 
@@ -93,7 +93,7 @@ public class QuoteManager extends ServiceCore implements IQuoteManager {
 
 	@Override
 	public void updateQuote(long numcli, int numquote, String cuser, Cli_quote cliQuote) throws InsuranceException {
-		personCheck.checkPerson(numcli);
+		personCheck.checkClient(numcli);
 		Cli_quote oldQuote = quoteContractCheck.checkQuote(numcli, numquote);
 		personCheck.checkBroker(cliQuote.getNumclibroker());
 		personCheck.checkLeader(cliQuote.getNumclileader());

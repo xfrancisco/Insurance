@@ -11,7 +11,7 @@ public interface IQuoteService {
 
 	QuoteOut insertQuote(String userId, NewQuoteIn newQuoteIn) throws InsuranceException;
 
-	QuoteOut getQuote(String userId, Long personId, Integer quoteId) throws InsuranceException;
+	QuoteOut getQuote(String userId, Long personId, Integer quoteId, boolean withComment) throws InsuranceException;
 
 	List<QuoteOut> getQuotes(String userId, Long personId) throws InsuranceException;
 

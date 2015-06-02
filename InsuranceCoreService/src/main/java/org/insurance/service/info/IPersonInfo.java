@@ -20,4 +20,6 @@ public interface IPersonInfo {
 	Cli_client getBroker(long numcli);
 
 	Cli_client getLeader(long numcli);
+
+	Cli_client getClient(long numcli);
 }

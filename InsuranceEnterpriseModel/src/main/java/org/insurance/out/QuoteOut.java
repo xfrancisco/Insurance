@@ -40,6 +40,8 @@ public class QuoteOut {
 
 	private BigDecimal share;
 
+	private String comment;
+
 	public long getPersonId() {
 		return personId;
 	}
@@ -182,6 +184,14 @@ public class QuoteOut {
 
 	public void setCancellationUser(String cancellationUser) {
 		this.cancellationUser = cancellationUser;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 }

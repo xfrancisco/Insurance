@@ -28,7 +28,8 @@ public enum EnterpriseModelEnum {
 	BRANCH(6, "COD_BRANCH", "CBRANCH"),
 	CATEGORY(6, "COD_CATEGORY", "CCATEGORY"),
 	QUOTESTATUS(6, "COD_QUOTESTATUS", "CQUOTESTATUS"),
-	DURATION(6, "COD_DURATION", "CDURATION");
+	DURATION(6, "COD_DURATION", "CDURATION"),
+	COMMENT(4000, "CLI_QUOTE", "COMMENTARY");
 
 	public final int length;
 	public final String table;

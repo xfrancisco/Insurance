@@ -58,6 +58,9 @@ public class NewQuoteIn {
 	@Percentage
 	private String share;
 
+	@Length(max = EnterpriseModelEnum.COMMENT)
+	private String comment;
+
 	public long getPersonId() {
 		return personId;
 	}
@@ -176,6 +179,14 @@ public class NewQuoteIn {
 
 	public void setShare(String share) {
 		this.share = share;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 }

@@ -21,6 +21,8 @@ public interface IPersonCheck {
 
 	Cli_client checkBroker(long numclibroker) throws PersonException;
 
+	Cli_client checkClient(long numcli) throws PersonException;
+
 	Cli_client checkLeader(long numclileader) throws PersonException;
 
 }

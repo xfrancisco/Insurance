@@ -79,4 +79,13 @@ public class PersonCheck extends ServiceCore implements IPersonCheck {
 		return leader;
 
 	}
+
+	@Override
+	public Cli_client checkClient(final long numcli) throws PersonException {
+		Cli_client client = personInfo.getClient(numcli);
+		if (client == null)
+			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_CLIENT, numcli);
+		return client;
+
+	}
 }

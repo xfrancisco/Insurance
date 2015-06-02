@@ -41,7 +41,7 @@ public class QuoteService implements IQuoteService {
 		usercheck.checkUser(userId);
 		Cli_quote quote = populateQuote(newQuoteIn);
 		int numquote = quoteManager.insertQuote(newQuoteIn.getPersonId(), userId, quote);
-		return getQuote(userId, newQuoteIn.getPersonId(), numquote);
+		return getQuote(userId, newQuoteIn.getPersonId(), numquote, false);
 	}
 
 	private Cli_quote populateQuote(NewQuoteIn quoteIn) throws CommonException {
@@ -61,15 +61,16 @@ public class QuoteService implements IQuoteService {
 			result.setReceptiondate(DateUtils.parseStringToSqlDate(quoteIn.getReceptionDate()));
 			result.setSharepart(MappingUtils.toBigDecimal(quoteIn.getShare()));
 			result.setStartval(DateUtils.parseStringToSqlDate(quoteIn.getWorkingDate()));
+			result.setCommentary(quoteIn.getComment());
 		}
 		return result;
 	}
 
 	@Override
-	public QuoteOut getQuote(String userId, Long personId, Integer quoteId) throws InsuranceException {
+	public QuoteOut getQuote(String userId, Long personId, Integer quoteId, boolean withComment) throws InsuranceException {
 		usercheck.checkUser(userId);
 		Cli_quote quote = quoteInfo.getQuote(personId, quoteId);
-		return populateQuote(personId, quote);
+		return populateQuote(personId, quote, withComment);
 	}
 
 	@Override
@@ -79,7 +80,7 @@ public class QuoteService implements IQuoteService {
 		return populateQuotes(personId, quotes);
 	}
 
-	private QuoteOut populateQuote(Long personId, Cli_quote quote) {
+	private QuoteOut populateQuote(Long personId, Cli_quote quote, boolean withComment) {
 		QuoteOut result = new QuoteOut();
 		if (quote != null) {
 			result.setPersonId(personId);
@@ -100,6 +101,8 @@ public class QuoteService implements IQuoteService {
 			result.setWorkingDate(DateUtils.formatDate(quote.getStartval()));
 			result.setCancellationDate(DateUtils.formatDate(quote.getCancelDate()));
 			result.setCancellationUser(quote.getCusercancel());
+			if (withComment)
+				result.setComment(quote.getCommentary());
 
 		}
 		return result;
@@ -108,7 +111,7 @@ public class QuoteService implements IQuoteService {
 	private List<QuoteOut> populateQuotes(Long personId, List<Cli_quote> quote) {
 		List<QuoteOut> result = new ArrayList<QuoteOut>();
 		for (Cli_quote cliQuote : quote) {
-			result.add(populateQuote(personId, cliQuote));
+			result.add(populateQuote(personId, cliQuote, false));
 		}
 		return result;
 	}
@@ -118,7 +121,7 @@ public class QuoteService implements IQuoteService {
 		usercheck.checkUser(userId);
 		Cli_quote cliQuote = populateQuote(updateQuoteIn);
 		quoteManager.updateQuote(updateQuoteIn.getPersonId(), updateQuoteIn.getQuoteId(), userId, cliQuote);
-		return getQuote(userId, updateQuoteIn.getPersonId(), updateQuoteIn.getQuoteId());
+		return getQuote(userId, updateQuoteIn.getPersonId(), updateQuoteIn.getQuoteId(), false);
 	}
 
 }

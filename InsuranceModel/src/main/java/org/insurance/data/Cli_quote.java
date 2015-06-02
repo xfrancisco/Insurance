@@ -34,6 +34,7 @@ public class Cli_quote implements Serializable {
 	private BigDecimal guaranteedamount;
 	private BigDecimal premiumamount;
 	private BigDecimal sharepart;
+	private String commentary;
 
 	private String cusercre;
 	private String cusermod;
@@ -61,19 +62,21 @@ public class Cli_quote implements Serializable {
 			return false;
 		if (this.getEndval() != null && !this.getEndval().equals(quote.getEndval()))
 			return false;
-		if (this.getGuaranteedamount() != null && !this.getGuaranteedamount().equals(quote.getGuaranteedamount()))
+		if (this.getGuaranteedamount() != null && this.getGuaranteedamount().compareTo(quote.getGuaranteedamount()) != 0)
 			return false;
 		if (this.getNumclibroker() != null && !this.getNumclibroker().equals(quote.getNumclibroker()))
 			return false;
 		if (this.getNumclileader() != null && !this.getNumclileader().equals(quote.getNumclileader()))
 			return false;
-		if (this.getPremiumamount() != null && !this.getPremiumamount().equals(quote.getPremiumamount()))
+		if (this.getPremiumamount() != null && this.getPremiumamount().compareTo(quote.getPremiumamount()) != 0)
 			return false;
 		if (this.getReceptiondate() != null && !this.getReceptiondate().equals(quote.getReceptiondate()))
 			return false;
-		if (this.getSharepart() != null && !this.getSharepart().equals(quote.getSharepart()))
+		if (this.getSharepart() != null && this.getSharepart().compareTo(quote.getSharepart()) != 0)
 			return false;
 		if (this.getStartval() != null && !this.getStartval().equals(quote.getStartval()))
+			return false;
+		if (this.getCommentary() != null && !this.getCommentary().equals(quote.getCommentary()))
 			return false;
 		return true;
 
@@ -261,6 +264,14 @@ public class Cli_quote implements Serializable {
 
 	public void setSharepart(BigDecimal sharepart) {
 		this.sharepart = sharepart;
+	}
+
+	public String getCommentary() {
+		return commentary;
+	}
+
+	public void setCommentary(String commentary) {
+		this.commentary = commentary;
 	}
 
 }
