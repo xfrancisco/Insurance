@@ -3,13 +3,13 @@ package org.insurance.common;
 import java.util.List;
 
 import org.insurance.exception.InsuranceException;
-import org.insurance.in.NewQuoteIn;
+import org.insurance.in.QuoteIn;
 import org.insurance.in.UpdateQuoteIn;
 import org.insurance.out.QuoteOut;
 
 public interface IQuoteService {
 
-	QuoteOut insertQuote(String userId, NewQuoteIn newQuoteIn) throws InsuranceException;
+	QuoteOut insertQuote(String userId, QuoteIn newQuoteIn) throws InsuranceException;
 
 	QuoteOut getQuote(String userId, Long personId, Integer quoteId, boolean withComment) throws InsuranceException;
 

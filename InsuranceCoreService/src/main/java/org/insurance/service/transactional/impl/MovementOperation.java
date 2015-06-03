@@ -32,7 +32,7 @@ public class MovementOperation extends ServiceCore implements IMovementOperation
 		cliMouvmt.setMovementDate(dbHelper.getNow());
 		cliMouvmt.setNumcli(numcli);
 		cliMouvmt.setNumcon(numcon);
-		cliMouvmt.setNumcon(numquote);
+		cliMouvmt.setNumquote(numquote);
 		Long nummovement = (Long) genericDao.save(cliMouvmt);
 
 		//Insert dans abo_mouvmtdet

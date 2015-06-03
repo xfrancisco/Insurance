@@ -2,7 +2,7 @@ package org.insurance.in;
 
 import org.insurance.validation.constraints.Mandatory;
 
-public class UpdateQuoteIn extends NewQuoteIn {
+public class UpdateQuoteIn extends QuoteIn {
 
 	@Mandatory
 	private int quoteId;

@@ -108,7 +108,7 @@ insert into COD_EMAIL(CEMAIL, LEMAIL, PATTERN, INDDEFAULT, INDVALI) values ('TWI
 comment on table COD_EMAIL is 'Table des types d''email';
 comment on column COD_EMAIL.CEMAIL is 'Code du type';
 comment on column COD_EMAIL.LEMAIL is 'Libelle du type';
-comment on column COD_EMAIL.PATTERN is 'Pattern du format du type. Utile pour les contrôles de surface';
+comment on column COD_EMAIL.PATTERN is 'Pattern du format du type. Utile pour les controles de surface';
 comment on column COD_EMAIL.INDDEFAULT is 'Indicateur de type par defaut. Si a 1 alors type par defaut';
 comment on column COD_EMAIL.INDVALI is 'Indicateur de validite de l''enregistrement. Si a 1 alors valide';
 
@@ -132,7 +132,7 @@ INSERT INTO COD_PHONE(CPHONE, LPHONE, PATTERN, INDMOBILE, INDDEFAULT, INDVALI) v
 comment on table COD_PHONE is 'Table des types de telephones';
 comment on column COD_PHONE.CPHONE is 'Code du type';
 comment on column COD_PHONE.LPHONE is 'Libelle du type';
-comment on column COD_PHONE.PATTERN is 'Pattern du format du type. Utile pour les contrôles de surface';
+comment on column COD_PHONE.PATTERN is 'Pattern du format du type. Utile pour les controles de surface';
 comment on column COD_PHONE.INDMOBILE is 'Indicateur telephone portable. Si a 1 alors telephone portable';
 comment on column COD_PHONE.INDDEFAULT is 'Indicateur de type par defaut. Si a 1 alors type par defaut';
 comment on column COD_PHONE.INDVALI is 'Indicateur de validite de l''enregistrement. Si a 1 alors valide';
@@ -260,9 +260,9 @@ INSERT INTO COD_MOVEMENT(CMOVEMENT, LMOVEMENT, INDVALI) values ('NEWADDRESS', 'N
 INSERT INTO COD_MOVEMENT(CMOVEMENT, LMOVEMENT, INDVALI) values ('MODADDRESS', 'MODIFICATION ADRESSE', '1');
 INSERT INTO COD_MOVEMENT(CMOVEMENT, LMOVEMENT, INDVALI) values ('NEWCATCLI', 'NOUVELLE CATEGORIE INDIVIDU', '1');
 INSERT INTO COD_MOVEMENT(CMOVEMENT, LMOVEMENT, INDVALI) values ('DELCATCLI', 'RETRAIT CATEGORIE INDIVIDU', '1');
-INSERT INTO COD_MOVEMENT(CMOVEMENT, LMOVEMENT, INDVALI) values ('NEWPHONE', 'AJOUT D''UN N° DE TELEPHONE', '1');
-INSERT INTO COD_MOVEMENT(CMOVEMENT, LMOVEMENT, INDVALI) values ('DELPHONE', 'RETRAIT D''UN N° DE TELEPHONE', '1');
-INSERT INTO COD_MOVEMENT(CMOVEMENT, LMOVEMENT, INDVALI) values ('MODPHONE', 'MODIFICATION D''UN N° DE TELEPHONE', '1');
+INSERT INTO COD_MOVEMENT(CMOVEMENT, LMOVEMENT, INDVALI) values ('NEWPHONE', 'AJOUT D''UN NUMERO DE TELEPHONE', '1');
+INSERT INTO COD_MOVEMENT(CMOVEMENT, LMOVEMENT, INDVALI) values ('DELPHONE', 'RETRAIT D''UN NUMERO DE TELEPHONE', '1');
+INSERT INTO COD_MOVEMENT(CMOVEMENT, LMOVEMENT, INDVALI) values ('MODPHONE', 'MODIFICATION D''UN NUMERO DE TELEPHONE', '1');
 INSERT INTO COD_MOVEMENT(CMOVEMENT, LMOVEMENT, INDVALI) values ('NEWMAIL', 'AJOUT D''UN EMAIL', '1');
 INSERT INTO COD_MOVEMENT(CMOVEMENT, LMOVEMENT, INDVALI) values ('DELMAIL', 'RETRAIT D''UN EMAIL', '1');
 INSERT INTO COD_MOVEMENT(CMOVEMENT, LMOVEMENT, INDVALI) values ('MODMAIL', 'MODIFICATION D''UN EMAIL', '1');
@@ -304,8 +304,8 @@ INSERT INTO COD_MOVEMENTDET(CCOLUMN, LABEL, VALUETABLE, VALUECOLUMN) values ('CA
 comment on table COD_MOVEMENTDET is 'Table des details de mouvements';
 comment on column COD_MOVEMENTDET.CCOLUMN is 'Cle';
 comment on column COD_MOVEMENTDET.LABEL is 'Libelle';
-comment on column COD_MOVEMENTDET.VALUETABLE is 'Table où trouver le libelle de la valeur de la cle';
-comment on column COD_MOVEMENTDET.VALUECOLUMN is 'Colonne où trouver le libelle de la valeur de la cle';
+comment on column COD_MOVEMENTDET.VALUETABLE is 'Table ou trouver le libelle de la valeur de la cle';
+comment on column COD_MOVEMENTDET.VALUECOLUMN is 'Colonne ou trouver le libelle de la valeur de la cle';
 
 
 /*****************************************************************************************************************************************************************/
@@ -357,7 +357,7 @@ CREATE TABLE COD_SECTION
   CONSTRAINT CODSECTION_PK PRIMARY KEY (CSECTION)
 );
 
-INSERT INTO COD_SECTION(CSECTION, LSECTION, INDVALI) values ('PEFI', 'PERTE FINANCIÈRE', '1');
+INSERT INTO COD_SECTION(CSECTION, LSECTION, INDVALI) values ('PEFI', 'PERTE FINANCIERE', '1');
 INSERT INTO COD_SECTION(CSECTION, LSECTION, INDVALI) values ('DOMM', 'DOMMAGE', '1');
 
 comment on table COD_SECTION is 'Table des sections';
@@ -373,12 +373,12 @@ CREATE TABLE COD_GUARANTEE
   CONSTRAINT CODGUARANTEE_PK PRIMARY KEY (CGUARANTEE)
 );
 
-INSERT INTO COD_GUARANTEE(CGUARANTEE, LGUARANTEE, INDVALI) values ('DCG', 'DECÈS GROUPE', '1');
+INSERT INTO COD_GUARANTEE(CGUARANTEE, LGUARANTEE, INDVALI) values ('DCG', 'DECES GROUPE', '1');
 INSERT INTO COD_GUARANTEE(CGUARANTEE, LGUARANTEE, INDVALI) values ('IPG', 'I.P. GROUPE', '1');
 INSERT INTO COD_GUARANTEE(CGUARANTEE, LGUARANTEE, INDVALI) values ('ASS', 'ASSISTANCE', '1');
 INSERT INTO COD_GUARANTEE(CGUARANTEE, LGUARANTEE, INDVALI) values ('TRB', 'BAGAGES', '1');
 INSERT INTO COD_GUARANTEE(CGUARANTEE, LGUARANTEE, INDVALI) values ('RCVP', 'RESPONSABILITE CIVILE VIE PRIVEE', '1');
-INSERT INTO COD_GUARANTEE(CGUARANTEE, LGUARANTEE, INDVALI) values ('DCP', 'DECÈS PARTICULIER', '1');
+INSERT INTO COD_GUARANTEE(CGUARANTEE, LGUARANTEE, INDVALI) values ('DCP', 'DECES PARTICULIER', '1');
 INSERT INTO COD_GUARANTEE(CGUARANTEE, LGUARANTEE, INDVALI) values ('IPP', 'I.P. PARTICULIER', '1');
 INSERT INTO COD_GUARANTEE(CGUARANTEE, LGUARANTEE, INDVALI) values ('ANN', 'ANNULATION', '1');
 INSERT INTO COD_GUARANTEE(CGUARANTEE, LGUARANTEE, INDVALI) values ('TRE', 'TOUS RISQUES EXPOSITION', '1');
@@ -419,8 +419,8 @@ CREATE TABLE COD_PREMIUM
 );
 alter table COD_PREMIUM ADD CONSTRAINT FK_PREMIUMTAX FOREIGN KEY (CTAX) REFERENCES COD_TAX(CTAX);
 
-INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('DCG00', 'DECÈS GROUPE 0%', '00', '1');
-INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('DCG09', 'DECÈS GROUPE 9%', '09', '1');
+INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('DCG00', 'DECES GROUPE 0%', '00', '1');
+INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('DCG09', 'DECES GROUPE 9%', '09', '1');
 INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('IPG00', 'I.P. GROUPE 0%', '00', '1');
 INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('IPG09', 'I.P. GROUPE 9%', '09', '1');
 INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('ASS00', 'ASSISTANCE 0%', '00', '1');
@@ -429,8 +429,8 @@ INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('TRB00', 'BAG
 INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('TRB09', 'BAGAGES 9%', '09', '1');
 INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('RCVP00', 'RESPONSABILITE CIVILE VIE PRIVEE 0%', '00', '1');
 INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('RCVP09', 'RESPONSABILITE CIVILE VIE PRIVEE 9%', '09', '1');
-INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('DCP00', 'DECÈS PARTICULIER 0%', '00', '1');
-INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('DCP09', 'DECÈS PARTICULIER 9%', '09', '1');
+INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('DCP00', 'DECES PARTICULIER 0%', '00', '1');
+INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('DCP09', 'DECES PARTICULIER 9%', '09', '1');
 INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('IPP00', 'I.P. PARTICULIER 0%', '00', '1');
 INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('IPP09', 'I.P. PARTICULIER 9%', '09', '1');
 INSERT INTO COD_PREMIUM(CPREMIUM, LPREMIUM, CTAX, INDVALI) values ('ANN00', 'ANNULATION 0%', '00', '1');
@@ -512,7 +512,7 @@ CREATE TABLE USR_ROLE
 
 INSERT INTO USR_ROLE(CROLE, LROLE, INDVALI) VALUES ('ADMIN', 'ADMINISTRATEUR MFI', '1');
 
-comment on table USR_ROLE is 'Table des rôles';
+comment on table USR_ROLE is 'Table des roles';
 comment on column USR_ROLE.CROLE is 'Code';
 comment on column USR_ROLE.LROLE is 'Libelle';
 comment on column USR_ROLE.INDVALI is 'Indicateur de validite de l''enregistrement. Si a 1 alors valide';
@@ -533,7 +533,7 @@ CREATE TABLE USR_USER
 comment on table USR_USER is 'Table des utilisateurs';
 comment on column USR_USER.CUSER is 'Code';
 comment on column USR_USER.LUSER is 'Libelle';
-comment on column USR_USER.CROLE is 'Rôle associe';
+comment on column USR_USER.CROLE is 'Role associe';
 comment on column USR_USER.INDVALI is 'Indicateur. Si a 1 alors non valide.';
 comment on column USR_USER.CUSERCRE is 'Utilisateur de creation';
 comment on column USR_USER.CREATIONDATE is 'Date de creation';
