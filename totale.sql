@@ -530,6 +530,7 @@ comment on table USR_USER is 'Table des utilisateurs';
 comment on column USR_USER.CUSER is 'Code';
 comment on column USR_USER.LUSER is 'Libellé';
 comment on column USR_USER.CROLE is 'Rôle associé';
+comment on column USR_USER.INDVALI is 'Indicateur. Si à 1 alors non valide.';
 comment on column USR_USER.CUSERCRE is 'Utilisateur de création';
 comment on column USR_USER.CREATIONDATE is 'Date de création';
 comment on column USR_USER.CUSERMOD is 'Utilisateur de mise à jour';
@@ -603,7 +604,7 @@ CREATE TABLE COD_CANCEL
   CONSTRAINT CODCANCEL_PK PRIMARY KEY (CCANCEL)
 );
 
-comment on table COD_CANCEL is 'Table des motifs de résilisation';
+comment on table COD_CANCEL is 'Table des motifs de résiliation';
 comment on column COD_CANCEL.CCANCEL is 'Code';
 comment on column COD_CANCEL.LCANCEL is 'Libellé';
 comment on column COD_CANCEL.INDVALI is 'Indicateur de validité de l''enregistrement. Si à 1 alors valide';
@@ -1016,7 +1017,6 @@ alter table CLI_QUOTE ADD CONSTRAINT FK_QUOTEUSERUW FOREIGN KEY (CUSERUW) REFERE
 alter table CLI_QUOTE ADD CONSTRAINT FK_QUOTEUSERCRE FOREIGN KEY (CUSERCRE) REFERENCES USR_USER(CUSER);
 alter table CLI_QUOTE ADD CONSTRAINT FK_QUOTEUSERMOD FOREIGN KEY (CUSERMOD) REFERENCES USR_USER(CUSER);
 
-
 ---
 
 INSERT INTO COD_MOVEMENT(CMOVEMENT, LMOVEMENT, INDVALI) values ('NEWQUOTE', 'Nouvelle proposition', '1');
@@ -1037,6 +1037,45 @@ INSERT INTO COD_MOVEMENTDET(CCOLUMN, LABEL, VALUETABLE, VALUECOLUMN) VALUES ('PR
 INSERT INTO COD_MOVEMENTDET(CCOLUMN, LABEL, VALUETABLE, VALUECOLUMN) VALUES ('RECEPTIONDATE', 'DATE DE RÉCEPTION', NULL, NULL);
 INSERT INTO COD_MOVEMENTDET(CCOLUMN, LABEL, VALUETABLE, VALUECOLUMN) VALUES ('SHAREPART', 'PART', NULL, NULL);
 INSERT INTO COD_MOVEMENTDET(CCOLUMN, LABEL, VALUETABLE, VALUECOLUMN) VALUES ('STARTVAL', 'DÉBUT DE VALIDITÉ', NULL, NULL);
+
+ALTER TABLE CLI_QUOTE ADD COMMENTARY VARCHAR2(4000);
+comment on column CLI_QUOTE.COMMENTARY is 'Commentaire';
+
+
+---- 03/06/2015
+
+
+ALTER TABLE CLI_MOVEMENT ADD NUMQUOTE NUMBER(3);
+comment on column CLI_MOVEMENT.NUMQUOTE is 'Identifiant de la proposition';
+
+comment on table CLI_QUOTE is 'Table des propositions';
+comment on column CLI_QUOTE.NUMCLI is 'Identifiant du client. Référence CLI_CLIENT';
+comment on column CLI_QUOTE.NUMQUOTE is 'Identifiant de la proposition.';
+comment on column CLI_QUOTE.NUMCON is 'Identifiant du contrat. Renseigné quand la proposition devient contrat. Référence CLI_CONTRACT';
+comment on column CLI_QUOTE.CBRANCH is 'Identifiant de la branche. Référence COD_BRANCH';
+comment on column CLI_QUOTE.CCATEGORY  is 'Identifiant de la catégorie. Référence COD_CATEGORY';
+comment on column CLI_QUOTE.NUMCLIBROKER  is 'Identifiant du courtier. Référence CLI_CLIENT';
+comment on column CLI_QUOTE.NUMCLILEADER  is 'Identifiant de l''apériteur. Référence CLI_CLIENT';
+comment on column CLI_QUOTE.STARTVAL is 'Début de validité';
+comment on column CLI_QUOTE.ENDVAL is 'Fin de validité';
+comment on column CLI_QUOTE.RECEPTIONDATE is 'Date de réception';
+comment on column CLI_QUOTE.ACCEPTANCEDATE is 'Date d''acceptation';
+comment on column CLI_QUOTE.CQUOTESTATUS is 'Statut de la proposition. Référence COD_QUOTESTATUS';
+comment on column CLI_QUOTE.CDURATION is 'Durée. Référence COD_DURATION';
+comment on column CLI_QUOTE.CUSERUW is 'Identifiant souscripteur. Référence USR_USER';
+comment on column CLI_QUOTE.GUARANTEEDAMOUNT is 'Montant garanti';
+comment on column CLI_QUOTE.PREMIUMAMOUNT is 'Montant de la prime';
+comment on column CLI_QUOTE.SHAREPART is 'Part du risque prise en charge';
+comment on column CLI_QUOTE.CUSERCRE is 'Utilisateur de création';
+comment on column CLI_QUOTE.CREATIONDATE is 'Date de création';
+comment on column CLI_QUOTE.CUSERMOD is 'Utilisateur de modification';
+comment on column CLI_QUOTE.MODIFDATE is 'Date de modification';
+comment on column CLI_QUOTE.CUSERCANCEL is 'Utilisateur de résilisation';
+comment on column CLI_QUOTE.CANCELDATE is 'Date de résilisation';
+
+CREATE INDEX IDX_MVTCONTRAT ON CLI_MOVEMENT (NUMCLI, NUMCON);
+CREATE INDEX IDX_MVTQUOTE ON CLI_MOVEMENT (NUMCLI, NUMQUOTE);
+
 
 commit;
 

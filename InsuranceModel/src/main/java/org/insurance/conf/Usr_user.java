@@ -1,8 +1,6 @@
 package org.insurance.conf;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -88,20 +86,28 @@ public class Usr_user {
 		this.modifDate = modifDate;
 	}
 
-	public List<String> getChanges(Usr_user oldUser) {
-		List<String> result = new ArrayList<String>();
+	@Override
+	public boolean equals(Object o) {
+		if (o == null)
+			return false;
+		Usr_user oldUser = (Usr_user) o;
 		if (!Strings.nullToEmpty(this.crole).equals(Strings.nullToEmpty(oldUser.getCrole()))) {
-			result.add("CROLE");
+			return false;
 		}
 
 		if (!Strings.nullToEmpty(this.cuser).equals(Strings.nullToEmpty(oldUser.getCuser()))) {
-			result.add("CUSER");
+			return false;
 		}
 
 		if (!Strings.nullToEmpty(this.luser).equals(Strings.nullToEmpty(oldUser.getLuser()))) {
-			result.add("LUSER");
+			return false;
 		}
-		return result;
+
+		if (!Strings.nullToEmpty(this.indvali).equals(Strings.nullToEmpty(oldUser.getIndvali()))) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

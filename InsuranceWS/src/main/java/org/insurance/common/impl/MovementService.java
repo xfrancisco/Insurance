@@ -15,6 +15,7 @@ import org.insurance.exception.MovementException.ErrorCode;
 import org.insurance.out.movements.MovementDetailsOut;
 import org.insurance.out.movements.MovementOut;
 import org.insurance.service.check.IPersonCheck;
+import org.insurance.service.check.IQuoteAndContractCheck;
 import org.insurance.service.check.IUserCheck;
 import org.insurance.service.info.IMovementInfo;
 import org.insurance.utils.mapping.MovementMapping;
@@ -36,8 +37,11 @@ public class MovementService implements IMovementService {
 	@Inject
 	private IPersonCheck personCheck;
 
+	@Inject
+	private IQuoteAndContractCheck quoteAndContractCheck;
+
 	@Override
-	public MovementDetailsOut getMovement(String userId, long movementId) throws InsuranceException {
+	public MovementDetailsOut getMovement(final String userId, final long movementId) throws InsuranceException {
 		MovementDetailsOut details = null;
 		userCheck.checkUser(userId);
 		Cli_movement cliMovement = movementInfo.getMovement(movementId);
@@ -49,11 +53,18 @@ public class MovementService implements IMovementService {
 	}
 
 	@Override
-	public List<MovementOut> getMovements(String userId, long personId, Integer contractId) throws InsuranceException {
+	public List<MovementOut> getMovements(final String userId, final long personId, final Integer contractId, final Integer quoteId)
+			throws InsuranceException {
 		userCheck.checkUser(userId);
 		personCheck.checkPerson(personId);
-		//TODO XFR Contrôle du contrat
-		List<MovementDto> movements = movementInfo.getMovements(personId, contractId);
+		if (contractId != null && quoteId != null)
+			throw new MovementException(ErrorCode.ERR_BIZ_MOVEMENT_SEARCH_CONTRAT_OR_QUOTE, contractId, quoteId);
+		if (contractId != null)
+			quoteAndContractCheck.checkContract(personId, contractId);
+		if (quoteId != null)
+			quoteAndContractCheck.checkQuote(personId, contractId);
+
+		List<MovementDto> movements = movementInfo.getMovements(personId, contractId, quoteId);
 		return MovementMapping.populateMovements(movements);
 	}
 

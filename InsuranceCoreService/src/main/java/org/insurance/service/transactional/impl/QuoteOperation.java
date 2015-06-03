@@ -25,7 +25,7 @@ public class QuoteOperation extends ServiceCore implements IQuoteOperation {
 		cliQuote.setNumquote(numquote);
 		genericDao.save(cliQuote);
 
-		movementOperation.insertMovement(numcli, null, cuser, populateQuoteMovement(cliQuote, true));
+		movementOperation.insertMovement(numcli, null, numquote, cuser, populateQuoteMovement(cliQuote, true));
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class QuoteOperation extends ServiceCore implements IQuoteOperation {
 			cliQuote.setCusermod(cuser);
 			cliQuote.setModifDate(dbHelper.getNow());
 			genericDao.merge(cliQuote);
-			movementOperation.insertMovement(numcli, null, cuser, populateQuoteMovement(cliQuote, false));
+			movementOperation.insertMovement(numcli, null, numquote, cuser, populateQuoteMovement(cliQuote, false));
 		}
 	}
 

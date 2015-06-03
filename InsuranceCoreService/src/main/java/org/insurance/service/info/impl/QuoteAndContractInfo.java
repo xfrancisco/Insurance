@@ -7,6 +7,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.insurance.conf.Cod_duration;
 import org.insurance.conf.Cod_quotestatus;
+import org.insurance.data.Cli_contract;
 import org.insurance.data.Cli_quote;
 import org.insurance.service.ServiceCore;
 import org.insurance.service.info.IQuoteAndContractInfo;
@@ -62,6 +63,14 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_quotestatus.class);
 		criteria.add(Restrictions.eq("cquotestatus", cquotestatus));
 		criteria.add(Restrictions.eq("indvali", "1"));
+		return genericDao.getFirstByCriteria(criteria);
+	}
+
+	@Override
+	public Cli_contract getContract(long numcli, int numcon) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_contract.class);
+		criteria.add(Restrictions.eq("numcli", numcli));
+		criteria.add(Restrictions.eq("numcon", numcon));
 		return genericDao.getFirstByCriteria(criteria);
 	}
 

@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import org.insurance.conf.Cod_duration;
 import org.insurance.conf.Cod_quotestatus;
+import org.insurance.data.Cli_contract;
 import org.insurance.data.Cli_quote;
 import org.insurance.exception.QuoteAndContractException;
 import org.insurance.exception.QuoteAndContractException.ErrorCode;
@@ -15,11 +16,11 @@ import org.insurance.util.MappingUtils;
 public class QuoteAndContractCheck extends ServiceCore implements IQuoteAndContractCheck {
 
 	@Inject
-	private IQuoteAndContractInfo quoteInfo;
+	private IQuoteAndContractInfo quoteAndContractInfo;
 
 	@Override
 	public Cod_duration checkDuration(final String cduration) throws QuoteAndContractException {
-		Cod_duration codDuration = quoteInfo.getDuration(cduration);
+		Cod_duration codDuration = quoteAndContractInfo.getDuration(cduration);
 		if (codDuration == null) {
 			throw new QuoteAndContractException(ErrorCode.ERR_BIZ_QUOTECONTRACT_UNKNOWN_DURATION, cduration);
 		}
@@ -28,7 +29,7 @@ public class QuoteAndContractCheck extends ServiceCore implements IQuoteAndContr
 
 	@Override
 	public Cod_quotestatus checkQuoteStatus(final String cquotestatus) throws QuoteAndContractException {
-		Cod_quotestatus codQuotestatus = quoteInfo.getQuoteStatus(cquotestatus);
+		Cod_quotestatus codQuotestatus = quoteAndContractInfo.getQuoteStatus(cquotestatus);
 		if (codQuotestatus == null) {
 			throw new QuoteAndContractException(ErrorCode.ERR_BIZ_QUOTECONTRACT_UNKNOWN_QUOTE_STATUS, cquotestatus);
 		}
@@ -39,11 +40,19 @@ public class QuoteAndContractCheck extends ServiceCore implements IQuoteAndContr
 	}
 
 	@Override
-	public Cli_quote checkQuote(long numcli, int numquote) throws QuoteAndContractException {
-		Cli_quote cliQuote = quoteInfo.getQuote(numcli, numquote);
+	public Cli_quote checkQuote(final long numcli, final int numquote) throws QuoteAndContractException {
+		Cli_quote cliQuote = quoteAndContractInfo.getQuote(numcli, numquote);
 		if (cliQuote == null)
 			throw new QuoteAndContractException(ErrorCode.ERR_BIZ_QUOTECONTRACT_UNKNOWN_QUOTE, numcli, numquote);
 		return cliQuote;
+	}
+
+	@Override
+	public Cli_contract checkContract(final long numcli, final int numcon) throws QuoteAndContractException {
+		Cli_contract cliContract = quoteAndContractInfo.getContract(numcli, numcon);
+		if (cliContract == null)
+			throw new QuoteAndContractException(ErrorCode.ERR_BIZ_QUOTECONTRACT_UNKNOWN_CONTRACT, numcli, numcon);
+		return cliContract;
 	}
 
 }

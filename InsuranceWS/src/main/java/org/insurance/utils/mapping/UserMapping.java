@@ -16,7 +16,7 @@ public final class UserMapping {
 			result.setCuser(userIn.getUserId());
 			result.setCrole(userIn.getProfile());
 			result.setLuser(userIn.getUserName());
-			result.setIndvali("1");
+			result.setIndvali(MappingUtils.boolToString(userIn.getIsValid()));
 		}
 		return result;
 	}

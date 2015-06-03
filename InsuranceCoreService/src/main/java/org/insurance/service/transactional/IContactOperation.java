@@ -17,9 +17,9 @@ public interface IContactOperation {
 
 	void insertEmails(long numcli, List<Cli_email> emails, String cuser);
 
-	void updatePhones(Long numcli, List<Cli_phone> phones, String cuser);
+	void updatePhones(long numcli, List<Cli_phone> phones, String cuser);
 
-	void updateEmails(Long numcli, List<Cli_email> emails, String cuser);
+	void updateEmails(long numcli, List<Cli_email> emails, String cuser);
 
 	void createZipCode(Cod_postal codPostal);
 

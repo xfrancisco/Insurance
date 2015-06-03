@@ -6,6 +6,8 @@ import org.insurance.validation.constraints.Length;
 import org.insurance.validation.constraints.Mandatory;
 import org.insurance.validation.constraints.Percentage;
 
+import com.google.common.base.Strings;
+
 public class NewQuoteIn {
 
 	@Mandatory
@@ -86,7 +88,7 @@ public class NewQuoteIn {
 	}
 
 	public String getBranchId() {
-		return branchId;
+		return Strings.nullToEmpty(branchId).toUpperCase().trim();
 	}
 
 	public void setBranchId(String branchId) {
@@ -94,7 +96,7 @@ public class NewQuoteIn {
 	}
 
 	public String getCategoryId() {
-		return categoryId;
+		return Strings.nullToEmpty(categoryId).toUpperCase().trim();
 	}
 
 	public void setCategoryId(String categoryId) {
@@ -102,7 +104,7 @@ public class NewQuoteIn {
 	}
 
 	public String getWorkingDate() {
-		return workingDate;
+		return Strings.nullToEmpty(workingDate).toUpperCase().trim();
 	}
 
 	public void setWorkingDate(String workingDate) {
@@ -110,7 +112,7 @@ public class NewQuoteIn {
 	}
 
 	public String getReceptionDate() {
-		return receptionDate;
+		return Strings.nullToEmpty(receptionDate).toUpperCase().trim();
 	}
 
 	public void setReceptionDate(String receptionDate) {
@@ -118,7 +120,7 @@ public class NewQuoteIn {
 	}
 
 	public String getUnderwriterId() {
-		return underwriterId;
+		return Strings.nullToEmpty(underwriterId).toUpperCase().trim();
 	}
 
 	public void setUnderwriterId(String underwriterId) {
@@ -126,7 +128,7 @@ public class NewQuoteIn {
 	}
 
 	public String getQuoteStatusId() {
-		return quoteStatusId;
+		return Strings.nullToEmpty(quoteStatusId).toUpperCase().trim();
 	}
 
 	public void setQuoteStatusId(String quoteStatusId) {
@@ -134,7 +136,7 @@ public class NewQuoteIn {
 	}
 
 	public String getDurationId() {
-		return durationId;
+		return Strings.nullToEmpty(durationId).toUpperCase().trim();
 	}
 
 	public void setDurationId(String durationId) {
@@ -142,7 +144,7 @@ public class NewQuoteIn {
 	}
 
 	public String getValidityEndDate() {
-		return validityEndDate;
+		return Strings.nullToEmpty(validityEndDate).toUpperCase().trim();
 	}
 
 	public void setValidityEndDate(String validityEndDate) {
@@ -150,7 +152,7 @@ public class NewQuoteIn {
 	}
 
 	public String getAcceptanceDate() {
-		return acceptanceDate;
+		return Strings.nullToEmpty(acceptanceDate).toUpperCase().trim();
 	}
 
 	public void setAcceptanceDate(String acceptanceDate) {
@@ -158,7 +160,7 @@ public class NewQuoteIn {
 	}
 
 	public String getGuaranteedAmount() {
-		return guaranteedAmount;
+		return Strings.nullToEmpty(guaranteedAmount).toUpperCase().trim();
 	}
 
 	public void setGuaranteedAmount(String guaranteedAmount) {
@@ -166,7 +168,7 @@ public class NewQuoteIn {
 	}
 
 	public String getPremiumAmount() {
-		return premiumAmount;
+		return Strings.nullToEmpty(premiumAmount).toUpperCase().trim();
 	}
 
 	public void setPremiumAmount(String premiumAmount) {
@@ -174,7 +176,7 @@ public class NewQuoteIn {
 	}
 
 	public String getShare() {
-		return share;
+		return Strings.nullToEmpty(share).toUpperCase().trim();
 	}
 
 	public void setShare(String share) {
@@ -182,7 +184,7 @@ public class NewQuoteIn {
 	}
 
 	public String getComment() {
-		return comment;
+		return Strings.nullToEmpty(comment).toUpperCase().trim();
 	}
 
 	public void setComment(String comment) {

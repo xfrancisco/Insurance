@@ -45,10 +45,11 @@ public class MovementWebservice extends AbstractWebservice {
 	public ResponseWrapper<List<MovementOut>> getMovements(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(value = "Numéro de client", name = PERSON_ID, required = true) @QueryParam(value = PERSON_ID) Long personId,
-			@ApiParam(value = "Numéro de contrat", name = CONTRACT_ID, required = false) @QueryParam(value = CONTRACT_ID) Integer contractId)
+			@ApiParam(value = "Numéro de contrat", name = CONTRACT_ID, required = false) @QueryParam(value = CONTRACT_ID) Integer contractId,
+			@ApiParam(value = "Numéro de proposition", name = QUOTE_ID, required = false) @QueryParam(value = QUOTE_ID) Integer quoteId)
 			throws InsuranceException {
 		ResponseWrapper<List<MovementOut>> responseWrapper = new ResponseWrapper<List<MovementOut>>();
-		responseWrapper.setData(movementService.getMovements(userId, personId, contractId));
+		responseWrapper.setData(movementService.getMovements(userId, personId, contractId, quoteId));
 		return responseWrapper;
 	}
 

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MovementOperation extends ServiceCore implements IMovementOperation {
 
-	private void addMovementDetails(long nummovement, Enum<?> key, String value, String oldvalue) {
+	private void addMovementDetails(final long nummovement, final Enum<?> key, String value, final String oldvalue) {
 		Cli_movementdet cliMovementdet = new Cli_movementdet();
 		cliMovementdet.setNummovement(nummovement);
 		cliMovementdet.setCcolumn(key.name());
@@ -24,7 +24,7 @@ public class MovementOperation extends ServiceCore implements IMovementOperation
 	}
 
 	@Override
-	public long insertMovement(long numcli, Integer numcon, String cuser, Movement movement) {
+	public long insertMovement(final long numcli, final Integer numcon, final Integer numquote, final String cuser, final Movement movement) {
 
 		Cli_movement cliMouvmt = new Cli_movement();
 		cliMouvmt.setCmovement(movement.getCmovement());
@@ -32,6 +32,7 @@ public class MovementOperation extends ServiceCore implements IMovementOperation
 		cliMouvmt.setMovementDate(dbHelper.getNow());
 		cliMouvmt.setNumcli(numcli);
 		cliMouvmt.setNumcon(numcon);
+		cliMouvmt.setNumcon(numquote);
 		Long nummovement = (Long) genericDao.save(cliMouvmt);
 
 		//Insert dans abo_mouvmtdet

@@ -3,6 +3,7 @@ package org.insurance.common;
 import java.util.List;
 
 import org.insurance.exception.InsuranceException;
+import org.insurance.in.CodeTableIn;
 import org.insurance.out.AllCodeTableOut;
 import org.insurance.out.CodeTableOut;
 import org.insurance.out.EntityOut;
@@ -28,5 +29,7 @@ public interface ICodeTableService {
 	List<AllCodeTableOut> getAllCodes(final String userId) throws InsuranceException;
 
 	List<QuoteStatusOut> getQuoteStatus(final String userId) throws InsuranceException;
+
+	List<AllCodeTableOut> updateCodeTables(final String userId, final List<CodeTableIn> codeIn) throws InsuranceException;
 
 }

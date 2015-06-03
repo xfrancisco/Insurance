@@ -5,7 +5,7 @@ import org.insurance.conf.Usr_user;
 import org.insurance.exception.UserException;
 
 public interface IUserCheck {
-	Usr_user checkUser(String cuser) throws UserException;
+	Usr_user checkUser(final String cuser) throws UserException;
 
-	Usr_role checkRole(String crole) throws UserException;
+	Usr_role checkRole(final String crole) throws UserException;
 }

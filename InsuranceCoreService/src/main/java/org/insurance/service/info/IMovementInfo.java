@@ -12,5 +12,5 @@ public interface IMovementInfo {
 
 	MovementChangeDto getMovementDetails(long nummovement);
 
-	List<MovementDto> getMovements(long numcli, Integer numcon);
+	List<MovementDto> getMovements(long numcli, Integer numcon, Integer numquote);
 }

@@ -19,6 +19,9 @@ public class UserIn {
 	@Length(max = EnterpriseModelEnum.USERPROFILE)
 	private String profile;
 
+	@Mandatory
+	private boolean isValid;
+
 	public String getUserId() {
 		return Strings.nullToEmpty(userId).toUpperCase().trim();
 	}
@@ -41,6 +44,14 @@ public class UserIn {
 
 	public void setProfile(String profile) {
 		this.profile = profile;
+	}
+
+	public boolean getIsValid() {
+		return isValid;
+	}
+
+	public void setIsValid(boolean isValid) {
+		this.isValid = isValid;
 	}
 
 }

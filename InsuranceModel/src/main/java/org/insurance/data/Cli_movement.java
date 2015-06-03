@@ -18,6 +18,7 @@ public class Cli_movement {
 	private Long nummovement;
 	private Long numcli;
 	private Integer numcon;
+	private Integer numquote;
 	private String cmovement;
 	private String cusermovement;
 	private Date movementDate;
@@ -68,6 +69,14 @@ public class Cli_movement {
 
 	public void setMovementDate(Date movementDate) {
 		this.movementDate = movementDate;
+	}
+
+	public Integer getNumquote() {
+		return numquote;
+	}
+
+	public void setNumquote(Integer numquote) {
+		this.numquote = numquote;
 	}
 
 }

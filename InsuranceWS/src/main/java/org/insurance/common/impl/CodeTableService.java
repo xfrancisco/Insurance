@@ -18,15 +18,18 @@ import org.insurance.conf.Cod_table;
 import org.insurance.conf.Cod_version;
 import org.insurance.exception.CodesException;
 import org.insurance.exception.InsuranceException;
+import org.insurance.in.CodeTableIn;
 import org.insurance.out.AllCodeTableOut;
 import org.insurance.out.CodeTableOut;
 import org.insurance.out.EntityOut;
 import org.insurance.out.QuoteStatusOut;
 import org.insurance.out.VersionOut;
+import org.insurance.service.check.ICodesCheck;
 import org.insurance.service.check.IUserCheck;
 import org.insurance.service.info.ICodesInfo;
 import org.insurance.service.info.IPremiumInfo;
 import org.insurance.service.info.IQuoteAndContractInfo;
+import org.insurance.service.transactional.ICodesOperation;
 import org.insurance.util.MappingUtils;
 import org.insurance.utils.mapping.PremiumMapping;
 import org.insurance.utils.mapping.QuoteMapping;
@@ -43,6 +46,9 @@ public class CodeTableService implements ICodeTableService {
 	private ICodesInfo codesInfo;
 
 	@Inject
+	private ICodesCheck codesCheck;
+
+	@Inject
 	private IQuoteAndContractInfo quoteInfo;
 
 	@Inject
@@ -51,9 +57,12 @@ public class CodeTableService implements ICodeTableService {
 	@Inject
 	private IUserCheck userCheck;
 
+	@Inject
+	private ICodesOperation codesOperation;
+
 	static final Logger logger = Logger.getLogger(CodeTableService.class);
 
-	final String request = "SELECT {0}, {1}, indvali from {2}";
+	private static final String request = "SELECT {0}, {1}, indvali from {2}";
 
 	@Override
 	public List<CodeTableOut> getCodeTable(final String userId, final String codeTableName, final boolean allValues) throws InsuranceException {
@@ -184,9 +193,19 @@ public class CodeTableService implements ICodeTableService {
 	}
 
 	@Override
-	public List<QuoteStatusOut> getQuoteStatus(String userId) throws InsuranceException {
+	public List<QuoteStatusOut> getQuoteStatus(final String userId) throws InsuranceException {
 		userCheck.checkUser(userId);
 		return QuoteMapping.populateQuoteStatusOut(quoteInfo.getQuoteStatus());
 	}
 
+	@Override
+	public List<AllCodeTableOut> updateCodeTables(final String userId, final List<CodeTableIn> codeIn) throws InsuranceException {
+		userCheck.checkUser(userId);
+		for (CodeTableIn codeTableIn : codeIn) {
+			Cod_table codTable = codesCheck.checkCodeTable(codeTableIn.getCodeTableId());
+			codesOperation.insertCodeTable(codTable, codeTableIn.getId(), codeTableIn.getLabel(), codeTableIn.getIsValid());
+		}
+
+		return getAllCodes(userId);
+	}
 }

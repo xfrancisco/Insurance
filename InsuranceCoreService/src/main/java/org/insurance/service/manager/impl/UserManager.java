@@ -36,7 +36,8 @@ public class UserManager extends ServiceCore implements IUserManager {
 	public void updateUser(String cuser, Usr_user usrUser) throws UserException {
 		userCheck.checkUser(usrUser.getCuser());
 		userCheck.checkRole(usrUser.getCrole());
-		if (userInfo.hasUserChanged(usrUser))
+		Usr_user oldUser = userInfo.getUser(usrUser.getCuser());
+		if (!oldUser.equals(usrUser))
 			userOperation.updateUser(cuser, usrUser);
 
 	}

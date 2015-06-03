@@ -2,6 +2,7 @@ package org.insurance.service.check;
 
 import org.insurance.conf.Cod_duration;
 import org.insurance.conf.Cod_quotestatus;
+import org.insurance.data.Cli_contract;
 import org.insurance.data.Cli_quote;
 import org.insurance.exception.QuoteAndContractException;
 
@@ -12,5 +13,7 @@ public interface IQuoteAndContractCheck {
 	Cod_quotestatus checkQuoteStatus(String cquotestatus) throws QuoteAndContractException;
 
 	Cli_quote checkQuote(long numcli, int numquote) throws QuoteAndContractException;
+
+	Cli_contract checkContract(long numcli, int numcon) throws QuoteAndContractException;
 
 }

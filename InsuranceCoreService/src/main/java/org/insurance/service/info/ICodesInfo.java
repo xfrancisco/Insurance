@@ -14,4 +14,5 @@ public interface ICodesInfo {
 	Cod_version getCurrentVersion();
 
 	List<Cod_table> getCodeTables();
+
 }

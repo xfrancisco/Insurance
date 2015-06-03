@@ -35,13 +35,13 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 	private IContactInfo contactInfo;
 
 	@Override
-	public void insertAddresses(long numcli, final String cuser, List<Cli_address> addresses) {
+	public void insertAddresses(final long numcli, final String cuser, List<Cli_address> addresses) {
 		for (Cli_address address : addresses) {
 			insertAddress(numcli, cuser, address);
 		}
 	}
 
-	private void insertAddress(long numcli, final String cuser, Cli_address address) {
+	private void insertAddress(final long numcli, final String cuser, Cli_address address) {
 		address.setNumcli(numcli);
 		address.setCusercre(cuser);
 		address.setCreationDate(dbHelper.getNow());
@@ -49,7 +49,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 		genericDao.save(address);
 		NewAddressMovement movement = new NewAddressMovement(address.getCaddress(), address.getStreet1(), address.getStreet2(), address.getStreet3(),
 				address.getStreet4(), address.getCpostal(), address.getCity(), address.getCcountry());
-		movementOperation.insertMovement(address.getNumcli(), null, cuser, movement);
+		movementOperation.insertMovement(address.getNumcli(), null, null, cuser, movement);
 	}
 
 	@Override
@@ -75,32 +75,32 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 				address.setModifDate(dbHelper.getNow());
 				genericDao.save(address);
 
-				movementOperation.insertMovement(numcli, null, cuser, movement);
+				movementOperation.insertMovement(numcli, null, null, cuser, movement);
 			}
 		}
 
 	}
 
 	@Override
-	public void insertPhones(long numcli, List<Cli_phone> phones, String cuser) {
+	public void insertPhones(final long numcli, List<Cli_phone> phones, final String cuser) {
 		for (Cli_phone cliPhone : phones) {
 			if (!Strings.isNullOrEmpty(cliPhone.getPhonenumber()))
 				insertPhone(numcli, cliPhone, cuser);
 		}
 	}
 
-	private void insertPhone(long numcli, Cli_phone cliPhone, String cuser) {
+	private void insertPhone(final long numcli, Cli_phone cliPhone, final String cuser) {
 		cliPhone.setCreationDate(dbHelper.getNow());
 		cliPhone.setCusercre(cuser);
 		cliPhone.setStartval(DateUtils.convertUtilDateToSqlDate(dbHelper.getToday()));
 		cliPhone.setNumcli(numcli);
 		genericDao.save(cliPhone);
 		NewPhoneMovement movement = new NewPhoneMovement(cliPhone.getCphone(), cliPhone.getPhonenumber());
-		movementOperation.insertMovement(numcli, null, cuser, movement);
+		movementOperation.insertMovement(numcli, null, null, cuser, movement);
 	}
 
 	@Override
-	public void insertEmails(long numcli, List<Cli_email> emails, String cuser) {
+	public void insertEmails(final long numcli, List<Cli_email> emails, final String cuser) {
 		for (Cli_email cliEmail : emails) {
 			if (!Strings.isNullOrEmpty(cliEmail.getEmail()))
 				insertEmail(numcli, cliEmail, cuser);
@@ -108,17 +108,17 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 
 	}
 
-	private void insertEmail(long numcli, Cli_email cliEmail, String cuser) {
+	private void insertEmail(final long numcli, Cli_email cliEmail, final String cuser) {
 		cliEmail.setCreationDate(dbHelper.getNow());
 		cliEmail.setCusercre(cuser);
 		cliEmail.setStartval(DateUtils.convertUtilDateToSqlDate(dbHelper.getToday()));
 		cliEmail.setNumcli(numcli);
 		genericDao.save(cliEmail);
 		NewMailMovement movement = new NewMailMovement(cliEmail.getCemail(), cliEmail.getEmail());
-		movementOperation.insertMovement(numcli, null, cuser, movement);
+		movementOperation.insertMovement(numcli, null, null, cuser, movement);
 	}
 
-	private void deleteEmail(long numcli, Cli_email cliEmail, String cuser) {
+	private void deleteEmail(final long numcli, Cli_email cliEmail, final String cuser) {
 		cliEmail.setNumcli(numcli);
 		cliEmail.setModifDate(dbHelper.getNow());
 		cliEmail.setCusermod(cuser);
@@ -126,10 +126,10 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 		genericDao.merge(cliEmail);
 		DelMailMovement movement = new DelMailMovement();
 		movement.setOldValues(cliEmail.getCemail(), cliEmail.getEmail());
-		movementOperation.insertMovement(numcli, null, cuser, movement);
+		movementOperation.insertMovement(numcli, null, null, cuser, movement);
 	}
 
-	private void deletePhone(long numcli, Cli_phone cliPhone, String cuser) {
+	private void deletePhone(final long numcli, Cli_phone cliPhone, final String cuser) {
 		cliPhone.setNumcli(numcli);
 		cliPhone.setModifDate(dbHelper.getNow());
 		cliPhone.setCusermod(cuser);
@@ -137,11 +137,11 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 		genericDao.merge(cliPhone);
 		DelPhoneMovement movement = new DelPhoneMovement();
 		movement.setOldValues(cliPhone.getCphone(), cliPhone.getPhonenumber());
-		movementOperation.insertMovement(numcli, null, cuser, movement);
+		movementOperation.insertMovement(numcli, null, null, cuser, movement);
 	}
 
 	@Override
-	public void updateEmails(Long numcli, List<Cli_email> emails, String cuser) {
+	public void updateEmails(final long numcli, List<Cli_email> emails, final String cuser) {
 		for (Cli_email cliEmail : emails) {
 			Cli_email oldEmail = contactInfo.getEmailByType(numcli, cliEmail.getCemail());
 			if (oldEmail == null) {
@@ -166,7 +166,7 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 		}
 	}
 
-	private void updateEmail(Long numcli, Cli_email oldEmail, Cli_email newMail, String cuser) {
+	private void updateEmail(final long numcli, Cli_email oldEmail, Cli_email newMail, final String cuser) {
 		oldEmail.setEndval(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
 		oldEmail.setModifDate(dbHelper.getNow());
 		oldEmail.setCusermod(cuser);
@@ -182,10 +182,10 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 
 		ModMailMovement movement = new ModMailMovement(newMail.getCemail(), newMail.getEmail());
 		movement.setOldValues(oldEmail.getCemail(), oldEmail.getEmail());
-		movementOperation.insertMovement(numcli, null, cuser, movement);
+		movementOperation.insertMovement(numcli, null, null, cuser, movement);
 	}
 
-	private void updatePhone(Long numcli, Cli_phone oldPhone, Cli_phone newPhone, String cuser) {
+	private void updatePhone(final long numcli, Cli_phone oldPhone, Cli_phone newPhone, final String cuser) {
 		oldPhone.setEndval(DateUtils.convertUtilDateToSqlDate(DateUtils.addToDate(dbHelper.getToday(), -1, TimePeriod.DAY)));
 		oldPhone.setModifDate(dbHelper.getNow());
 		oldPhone.setCusermod(cuser);
@@ -201,11 +201,11 @@ public class ContactOperation extends ServiceCore implements IContactOperation {
 
 		ModPhoneMovement movement = new ModPhoneMovement(newPhone.getCphone(), newPhone.getPhonenumber());
 		movement.setOldValues(oldPhone.getCphone(), oldPhone.getPhonenumber());
-		movementOperation.insertMovement(numcli, null, cuser, movement);
+		movementOperation.insertMovement(numcli, null, null, cuser, movement);
 	}
 
 	@Override
-	public void updatePhones(Long numcli, List<Cli_phone> phones, String cuser) {
+	public void updatePhones(final long numcli, List<Cli_phone> phones, final String cuser) {
 		for (Cli_phone cliPhone : phones) {
 			Cli_phone oldPhone = contactInfo.getPhoneByType(numcli, cliPhone.getCphone());
 			if (oldPhone == null) {

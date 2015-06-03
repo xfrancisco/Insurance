@@ -32,7 +32,7 @@ public class PersonOperation extends ServiceCore implements IPersonOperation {
 		Long numcli = (Long) genericDao.save(client);
 		NewPersonMovement movement = new NewPersonMovement(client.getCcivil(), client.getName(), client.getFirstname(), client.getCompanyname(),
 				client.getCompanyid());
-		movementOperation.insertMovement(numcli, null, cuser, movement);
+		movementOperation.insertMovement(numcli, null, null, cuser, movement);
 		return numcli;
 	}
 
@@ -50,7 +50,7 @@ public class PersonOperation extends ServiceCore implements IPersonOperation {
 					client.getCompanyid());
 			movement.setOldValues(oldClient.getCcivil(), oldClient.getName(), oldClient.getFirstname(), oldClient.getCompanyname(),
 					oldClient.getCompanyid());
-			nummouvmt = movementOperation.insertMovement(numcli, null, cuser, movement);
+			nummouvmt = movementOperation.insertMovement(numcli, null, null, cuser, movement);
 			genericDao.merge(client);
 		}
 		return nummouvmt;
@@ -62,7 +62,7 @@ public class PersonOperation extends ServiceCore implements IPersonOperation {
 			cliCatcli.setNumcli(numcli);
 			genericDao.save(cliCatcli);
 			NewCategoryMovement movement = new NewCategoryMovement(cliCatcli.getCcatcli());
-			movementOperation.insertMovement(cliCatcli.getNumcli(), null, cuser, movement);
+			movementOperation.insertMovement(cliCatcli.getNumcli(), null, null, cuser, movement);
 		}
 
 	}
@@ -86,12 +86,12 @@ public class PersonOperation extends ServiceCore implements IPersonOperation {
 		for (Cli_catcli cliCatcli : addedCategories) {
 			genericDao.save(cliCatcli);
 			NewCategoryMovement movement = new NewCategoryMovement(cliCatcli.getCcatcli());
-			movementOperation.insertMovement(cliCatcli.getNumcli(), null, cuser, movement);
+			movementOperation.insertMovement(cliCatcli.getNumcli(), null, null, cuser, movement);
 		}
 
 		for (Cli_catcli cliCatcli : removedCategories) {
 			DelCategoryMovement movement = new DelCategoryMovement(cliCatcli.getCcatcli());
-			movementOperation.insertMovement(cliCatcli.getNumcli(), null, cuser, movement);
+			movementOperation.insertMovement(cliCatcli.getNumcli(), null, null, cuser, movement);
 			genericDao.delete(cliCatcli);
 		}
 	}

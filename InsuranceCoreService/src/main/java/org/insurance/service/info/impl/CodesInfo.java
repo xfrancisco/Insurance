@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class CodesInfo extends ServiceCore implements ICodesInfo {
 
+	private final static String packagepath = "org.insurance.conf.";
+
 	@Override
-	public <T> List<T> getCodeTableList(String queryString, boolean allValues) {
+	public <T> List<T> getCodeTableList(final String queryString, final boolean allValues) {
 		List<T> tmp = genericDao.getListByHQLQuery(queryString);
 		List<T> result = new ArrayList<T>();
 		if (!allValues) {
@@ -50,7 +52,7 @@ public class CodesInfo extends ServiceCore implements ICodesInfo {
 	}
 
 	@Override
-	public Cod_table getCodeTable(String ctable) {
+	public Cod_table getCodeTable(final String ctable) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_table.class);
 		criteria.add(Restrictions.eq("ctable", ctable));
 		return genericDao.getFirstByCriteria(criteria);

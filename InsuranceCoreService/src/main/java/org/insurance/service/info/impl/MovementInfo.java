@@ -37,12 +37,12 @@ public class MovementInfo extends ServiceCore implements IMovementInfo {
 	private IDBServiceHelper dbServiceHelper;
 
 	@Override
-	public Cli_movement getMovement(long nummovement) {
+	public Cli_movement getMovement(final long nummovement) {
 		return genericDao.get(Cli_movement.class, nummovement);
 	}
 
 	@Override
-	public MovementChangeDto getMovementDetails(long nummovement) {
+	public MovementChangeDto getMovementDetails(final long nummovement) {
 		DetachedCriteria crit = DetachedCriteria.forClass(Cli_movementdet.class, "mvtd");
 		crit.add(Restrictions.eq("mvtd.nummovement", nummovement));
 		List<Cli_movementdet> mouvmtDets = genericDao.getByCriteria(crit);
@@ -73,7 +73,7 @@ public class MovementInfo extends ServiceCore implements IMovementInfo {
 		return getMovementDetails(oldValues, newValues);
 	}
 
-	private MovementChangeDto getMovementDetails(Map<String, List<String>> oldValues, Map<String, List<String>> newValues) {
+	private MovementChangeDto getMovementDetails(final Map<String, List<String>> oldValues, final Map<String, List<String>> newValues) {
 		MovementChangeDto result = new MovementChangeDto();
 		Set<Entry<String, List<String>>> entrySet = oldValues.entrySet();
 		Iterator<Entry<String, List<String>>> iter = entrySet.iterator();
@@ -101,7 +101,7 @@ public class MovementInfo extends ServiceCore implements IMovementInfo {
 		return result;
 	}
 
-	private MovementDetailDto populateMvtDetail(String ccolumn, String value) {
+	private MovementDetailDto populateMvtDetail(final String ccolumn, final String value) {
 		// Ce traitement est un traitement récursif basé sur du paramétrage.
 		// L'erreur étant humaine, on va utiliser une map permettant d'éviter dans des boucles infinies.
 		// D'où ce nom savamment choisi : infiniteLoopPreventer
@@ -148,13 +148,13 @@ public class MovementInfo extends ServiceCore implements IMovementInfo {
 		return result;
 	}
 
-	private Cod_movementdet getMovementDetailConfiguration(String ccolumn) {
+	private Cod_movementdet getMovementDetailConfiguration(final String ccolumn) {
 		DetachedCriteria crit = DetachedCriteria.forClass(Cod_movementdet.class, "mdet");
 		crit.add(Restrictions.eq("mdet.ccolumn", ccolumn));
 		return genericDao.getFirstByCriteria(crit);
 	}
 
-	private List<MovementDetailDetailsDto> getDetails(String mainTable, String mainCode, String mainValue, String column,
+	private List<MovementDetailDetailsDto> getDetails(final String mainTable, final String mainCode, final String mainValue, final String column,
 			Map<String, Boolean> infiniteLoopPreventer) {
 		Cod_movementdet cmouvmtdet = getMovementDetailConfiguration(column);
 		List<MovementDetailDetailsDto> result = new ArrayList<MovementDetailDetailsDto>();
@@ -183,7 +183,7 @@ public class MovementInfo extends ServiceCore implements IMovementInfo {
 		return result;
 	}
 
-	private boolean isEligibleForDetails(Cod_movementdet cmouvmtdet, Map<String, Boolean> infiniteLoopPreventer) {
+	private boolean isEligibleForDetails(final Cod_movementdet cmouvmtdet, Map<String, Boolean> infiniteLoopPreventer) {
 		if (cmouvmtdet != null && !Strings.isNullOrEmpty(cmouvmtdet.getValuetable())) {
 			Boolean isAlreadyUsed = infiniteLoopPreventer.get(cmouvmtdet.getCcolumn());
 			if (isAlreadyUsed != null) {
@@ -196,7 +196,7 @@ public class MovementInfo extends ServiceCore implements IMovementInfo {
 		return false;
 	}
 
-	private String getValueFromTable(String table, String columnForValue, String columnForCode, String value) {
+	private String getValueFromTable(final String table, final String columnForValue, final String columnForCode, final String value) {
 		if (!Strings.isNullOrEmpty(columnForValue) && !Strings.isNullOrEmpty(table)) {
 			Map<String, Object> params = new HashMap<String, Object>();
 			StringBuffer queryBuffer = new StringBuffer();
@@ -226,11 +226,14 @@ public class MovementInfo extends ServiceCore implements IMovementInfo {
 	}
 
 	@Override
-	public List<MovementDto> getMovements(long numcli, Integer numcon) {
+	public List<MovementDto> getMovements(final long numcli, final Integer numcon, final Integer numquote) {
 		DetachedCriteria crit = DetachedCriteria.forClass(Cli_movement.class);
 		if (numcon != null) {
 			crit.add(Restrictions.eq("numcli", numcli));
 			crit.add(Restrictions.eq("numcon", numcon));
+		} else if (numquote != null) {
+			crit.add(Restrictions.eq("numcli", numcli));
+			crit.add(Restrictions.eq("numquote", numquote));
 		} else {
 			crit.add(Restrictions.eq("numcli", numcli));
 			crit.add(Restrictions.isNull("numcon"));

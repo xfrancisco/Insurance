@@ -8,7 +8,7 @@ import org.insurance.out.movements.MovementOut;
 
 public interface IMovementService {
 
-	List<MovementOut> getMovements(String userId, long personId, Integer contractId) throws InsuranceException;
+	List<MovementOut> getMovements(String userId, long personId, Integer contractId, Integer quoteId) throws InsuranceException;
 
 	MovementDetailsOut getMovement(String userId, long movementId) throws InsuranceException;
 

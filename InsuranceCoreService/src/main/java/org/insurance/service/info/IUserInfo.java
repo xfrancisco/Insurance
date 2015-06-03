@@ -13,5 +13,4 @@ public interface IUserInfo {
 
 	List<Usr_user> getUsers();
 
-	boolean hasUserChanged(Usr_user usrUser);
 }

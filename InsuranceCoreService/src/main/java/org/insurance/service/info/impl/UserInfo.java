@@ -36,13 +36,4 @@ public class UserInfo extends ServiceCore implements IUserInfo {
 
 	}
 
-	@Override
-	public boolean hasUserChanged(Usr_user usrUser) {
-		Usr_user oldUser = getUser(usrUser.getCuser());
-		List<String> changes = usrUser.getChanges(oldUser);
-		usrUser.setCreationDate(oldUser.getCreationDate());
-		usrUser.setCusercre(oldUser.getCusercre());
-		return !changes.isEmpty();
-	}
-
 }

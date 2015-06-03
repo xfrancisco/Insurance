@@ -3,12 +3,15 @@ package org.insurance.webservices;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 import org.insurance.common.ICodeTableService;
 import org.insurance.exception.InsuranceException;
+import org.insurance.in.CodeTableIn;
 import org.insurance.out.AllCodeTableOut;
 import org.insurance.out.CodeTableOut;
 import org.insurance.out.EntityOut;
@@ -168,6 +171,17 @@ public class CodeTableWebservice extends AbstractWebservice {
 			throws InsuranceException {
 		ResponseWrapper<List<QuoteStatusOut>> responseWrapper = new ResponseWrapper<List<QuoteStatusOut>>();
 		responseWrapper.setData(codeTableService.getQuoteStatus(userId));
+		return responseWrapper;
+	}
+
+	@POST
+	@Path("/codeTable/edit")
+	@ApiOperation(value = "Paramétrage des codes simples (code/libellé/validité)")
+	public ResponseWrapper<List<AllCodeTableOut>> edit(
+			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
+			@Valid List<CodeTableIn> codeIn) throws InsuranceException {
+		ResponseWrapper<List<AllCodeTableOut>> responseWrapper = new ResponseWrapper<List<AllCodeTableOut>>();
+		responseWrapper.setData(codeTableService.updateCodeTables(userId, codeIn));
 		return responseWrapper;
 	}
 
