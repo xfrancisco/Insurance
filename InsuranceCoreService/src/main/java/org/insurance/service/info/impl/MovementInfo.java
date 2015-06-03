@@ -237,6 +237,7 @@ public class MovementInfo extends ServiceCore implements IMovementInfo {
 		} else {
 			crit.add(Restrictions.eq("numcli", numcli));
 			crit.add(Restrictions.isNull("numcon"));
+			crit.add(Restrictions.isNull("numcli"));
 		}
 		List<Cli_movement> movements = genericDao.getByCriteria(crit);
 		List<MovementDto> result = new ArrayList<MovementDto>();

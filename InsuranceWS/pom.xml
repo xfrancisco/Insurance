@@ -274,7 +274,8 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 				<configuration>
 					<webXml>src\main\webapp\WEB-INF\web.xml</webXml>
 					<packagingExcludes>**/web.xml</packagingExcludes>
-					<outputDirectory>C:\applis\apache-tomcat-7.0.61\webapps</outputDirectory>
+					<outputDirectory>/Users/Xavier/MFI</outputDirectory>
+					<!--  <outputDirectory>C:\applis\apache-tomcat-7.0.61\webapps</outputDirectory>-->
 				</configuration>
 
 			</plugin>

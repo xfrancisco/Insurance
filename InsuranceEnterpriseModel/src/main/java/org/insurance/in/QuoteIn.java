@@ -8,7 +8,7 @@ import org.insurance.validation.constraints.Percentage;
 
 import com.google.common.base.Strings;
 
-public class NewQuoteIn {
+public class QuoteIn {
 
 	@Mandatory
 	@Length(max = EnterpriseModelEnum.PERSONID)

@@ -16,8 +16,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CodesInfo extends ServiceCore implements ICodesInfo {
 
-	private final static String packagepath = "org.insurance.conf.";
-
 	@Override
 	public <T> List<T> getCodeTableList(final String queryString, final boolean allValues) {
 		List<T> tmp = genericDao.getListByHQLQuery(queryString);

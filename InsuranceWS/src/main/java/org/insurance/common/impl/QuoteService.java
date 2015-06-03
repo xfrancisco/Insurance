@@ -10,7 +10,7 @@ import org.insurance.common.IQuoteService;
 import org.insurance.data.Cli_quote;
 import org.insurance.exception.CommonException;
 import org.insurance.exception.InsuranceException;
-import org.insurance.in.NewQuoteIn;
+import org.insurance.in.QuoteIn;
 import org.insurance.in.UpdateQuoteIn;
 import org.insurance.out.QuoteOut;
 import org.insurance.service.check.IUserCheck;
@@ -37,14 +37,14 @@ public class QuoteService implements IQuoteService {
 	static final Logger logger = Logger.getLogger(QuoteService.class);
 
 	@Override
-	public QuoteOut insertQuote(String userId, NewQuoteIn newQuoteIn) throws InsuranceException {
+	public QuoteOut insertQuote(String userId, QuoteIn newQuoteIn) throws InsuranceException {
 		usercheck.checkUser(userId);
 		Cli_quote quote = populateQuote(newQuoteIn);
 		int numquote = quoteManager.insertQuote(newQuoteIn.getPersonId(), userId, quote);
 		return getQuote(userId, newQuoteIn.getPersonId(), numquote, false);
 	}
 
-	private Cli_quote populateQuote(NewQuoteIn quoteIn) throws CommonException {
+	private Cli_quote populateQuote(QuoteIn quoteIn) throws CommonException {
 		Cli_quote result = new Cli_quote();
 		if (quoteIn != null) {
 			result.setAcceptancedate(DateUtils.parseStringToSqlDate(quoteIn.getAcceptanceDate()));

@@ -42,11 +42,11 @@ public class CodeTableWebservice extends AbstractWebservice {
 	}
 
 	@GET
-	@Path("/codeTable/all")
+	@Path("/list")
 	@ApiOperation(value = "Liste des codes table")
 	public ResponseWrapper<List<AllCodeTableOut>> getAllCodes(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<AllCodeTableOut>> responseWrapper = new ResponseWrapper<List<AllCodeTableOut>>();
 		responseWrapper.setData(codeTableService.getAllCodes(userId));
 		return responseWrapper;
@@ -57,7 +57,7 @@ public class CodeTableWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Version")
 	public ResponseWrapper<VersionOut> getVersion(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<VersionOut> responseWrapper = new ResponseWrapper<VersionOut>();
 		VersionOut out = codeTableService.getVersion(userId);
 		responseWrapper.setData(out);
@@ -69,7 +69,7 @@ public class CodeTableWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste complète des branches")
 	public ResponseWrapper<List<EntityOut>> getCodeTable(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<EntityOut>> responseWrapper = new ResponseWrapper<List<EntityOut>>();
 		responseWrapper.setData(codeTableService.getBranches(userId));
 		return responseWrapper;
@@ -124,7 +124,7 @@ public class CodeTableWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste complète des catégories")
 	public ResponseWrapper<List<EntityOut>> getAllCategories(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<EntityOut>> responseWrapper = new ResponseWrapper<List<EntityOut>>();
 		responseWrapper.setData(codeTableService.getCategories(userId, null));
 		return responseWrapper;
@@ -135,7 +135,7 @@ public class CodeTableWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste complète des sections")
 	public ResponseWrapper<List<EntityOut>> getAllSections(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<EntityOut>> responseWrapper = new ResponseWrapper<List<EntityOut>>();
 		responseWrapper.setData(codeTableService.getSections(userId, null));
 		return responseWrapper;
@@ -146,7 +146,7 @@ public class CodeTableWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste complète des garanties")
 	public ResponseWrapper<List<EntityOut>> getAllGuarantees(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<EntityOut>> responseWrapper = new ResponseWrapper<List<EntityOut>>();
 		responseWrapper.setData(codeTableService.getGuarantees(userId, null));
 		return responseWrapper;
@@ -157,7 +157,7 @@ public class CodeTableWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste complète des primes")
 	public ResponseWrapper<List<EntityOut>> getAllPremiums(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<EntityOut>> responseWrapper = new ResponseWrapper<List<EntityOut>>();
 		responseWrapper.setData(codeTableService.getPremiums(userId, null));
 		return responseWrapper;
@@ -168,14 +168,14 @@ public class CodeTableWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des statuts des devis")
 	public ResponseWrapper<List<QuoteStatusOut>> getQuoteStatus(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<QuoteStatusOut>> responseWrapper = new ResponseWrapper<List<QuoteStatusOut>>();
 		responseWrapper.setData(codeTableService.getQuoteStatus(userId));
 		return responseWrapper;
 	}
 
 	@POST
-	@Path("/codeTable/edit")
+	@Path("/edit")
 	@ApiOperation(value = "Paramétrage des codes simples (code/libellé/validité)")
 	public ResponseWrapper<List<AllCodeTableOut>> edit(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
