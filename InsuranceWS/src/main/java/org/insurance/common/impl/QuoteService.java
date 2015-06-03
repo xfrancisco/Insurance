@@ -13,6 +13,7 @@ import org.insurance.exception.InsuranceException;
 import org.insurance.in.QuoteIn;
 import org.insurance.in.UpdateQuoteIn;
 import org.insurance.out.QuoteOut;
+import org.insurance.service.check.IPersonCheck;
 import org.insurance.service.check.IUserCheck;
 import org.insurance.service.info.IQuoteAndContractInfo;
 import org.insurance.service.manager.IQuoteManager;
@@ -33,6 +34,9 @@ public class QuoteService implements IQuoteService {
 
 	@Inject
 	private IUserCheck usercheck;
+
+	@Inject
+	private IPersonCheck personCheck;
 
 	static final Logger logger = Logger.getLogger(QuoteService.class);
 
@@ -76,6 +80,7 @@ public class QuoteService implements IQuoteService {
 	@Override
 	public List<QuoteOut> getQuotes(String userId, Long personId) throws InsuranceException {
 		usercheck.checkUser(userId);
+		personCheck.checkClient(personId);
 		List<Cli_quote> quotes = quoteInfo.getQuotes(personId);
 		return populateQuotes(personId, quotes);
 	}

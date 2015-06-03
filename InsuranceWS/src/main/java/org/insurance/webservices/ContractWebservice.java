@@ -6,12 +6,14 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 import org.insurance.common.IContractService;
 import org.insurance.exception.InsuranceException;
 import org.insurance.in.ContractIn;
+import org.insurance.in.UpdateContractIn;
 import org.insurance.out.ContractOut;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -39,12 +41,12 @@ public class ContractWebservice extends AbstractWebservice {
 		return responseWrapper;
 	}
 
-	@POST
+	@PUT
 	@Path("/update")
 	@ApiOperation(value = "Mise à jour d'un contrat")
 	public ResponseWrapper<ContractOut> updateContract(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
-			@Valid ContractIn updateContractIn) throws InsuranceException {
+			@Valid UpdateContractIn updateContractIn) throws InsuranceException {
 		ResponseWrapper<ContractOut> responseWrapper = new ResponseWrapper<ContractOut>();
 		responseWrapper.setData(contractService.updateContract(userId, updateContractIn));
 		return responseWrapper;

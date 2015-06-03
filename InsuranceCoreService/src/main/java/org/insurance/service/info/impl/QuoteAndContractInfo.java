@@ -9,6 +9,7 @@ import org.insurance.conf.Cod_duration;
 import org.insurance.conf.Cod_quotestatus;
 import org.insurance.data.Cli_contract;
 import org.insurance.data.Cli_quote;
+import org.insurance.dto.contract.ContractDto;
 import org.insurance.service.ServiceCore;
 import org.insurance.service.info.IQuoteAndContractInfo;
 import org.springframework.stereotype.Service;
@@ -67,11 +68,18 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 	}
 
 	@Override
-	public Cli_contract getContract(long numcli, int numcon) {
+	public ContractDto getContract(long numcli, int numcon) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_contract.class);
 		criteria.add(Restrictions.eq("numcli", numcli));
 		criteria.add(Restrictions.eq("numcon", numcon));
-		return genericDao.getFirstByCriteria(criteria);
+		genericDao.getFirstByCriteria(criteria);
+		return null;
+	}
+
+	@Override
+	public List<ContractDto> getContracts(long personId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

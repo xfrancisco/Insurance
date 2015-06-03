@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
@@ -40,7 +41,7 @@ public class QuoteWebservice extends AbstractWebservice {
 		return responseWrapper;
 	}
 
-	@POST
+	@PUT
 	@Path("/update")
 	@ApiOperation(value = "Mise à jour d'une proposition")
 	public ResponseWrapper<QuoteOut> updateQuote(
@@ -58,7 +59,7 @@ public class QuoteWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(required = true, value = "Client", name = PERSON_ID) @QueryParam(value = PERSON_ID) Long personId,
 			@ApiParam(required = true, value = "Proposition", name = QUOTE_ID) @QueryParam(value = QUOTE_ID) Integer quoteId)
-					throws InsuranceException {
+			throws InsuranceException {
 		ResponseWrapper<QuoteOut> responseWrapper = new ResponseWrapper<QuoteOut>();
 		responseWrapper.setData(quoteService.getQuote(userId, personId, quoteId, true));
 		return responseWrapper;
