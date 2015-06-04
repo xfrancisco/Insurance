@@ -62,7 +62,7 @@ public class PersonInfo extends ServiceCore implements IPersonInfo {
 	}
 
 	@Override
-	public Cli_client getLeader(final long numcli) {
+	public Cli_client getInsurer(final long numcli) {
 		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_catcli.class);
 		subQuery.add(eq("indinsurance", "1")).setProjection(property("ccatcli"));
 

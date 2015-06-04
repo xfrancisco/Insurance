@@ -74,6 +74,8 @@
 				<value>org.insurance.data.Cli_movement</value>
 				<value>org.insurance.data.Cli_movementdet</value>
 				<value>org.insurance.data.Cli_quote</value>
+				<value>org.insurance.data.Cpt_guarcommi</value>
+				<value>org.insurance.data.Cpt_guardispatch</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

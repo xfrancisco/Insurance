@@ -72,8 +72,8 @@ public class PersonCheck extends ServiceCore implements IPersonCheck {
 	}
 
 	@Override
-	public Cli_client checkLeader(final long numclileader) throws PersonException {
-		Cli_client leader = personInfo.getLeader(numclileader);
+	public Cli_client checkInsurer(final long numclileader) throws PersonException {
+		Cli_client leader = personInfo.getInsurer(numclileader);
 		if (leader == null)
 			throw new PersonException(ErrorCode.ERR_BIZ_PERSON_UNKNOWN_LEADER, numclileader);
 		return leader;

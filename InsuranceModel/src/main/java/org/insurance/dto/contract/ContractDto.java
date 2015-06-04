@@ -2,10 +2,12 @@ package org.insurance.dto.contract;
 
 import java.util.List;
 
+import org.insurance.data.Cli_contract;
+
 public class ContractDto {
 
+	private Cli_contract contract;
 	private List<GuaranteeDto> guarantees;
-	private List<Long> insurers;
 
 	public List<GuaranteeDto> getGuarantees() {
 		return guarantees;
@@ -15,12 +17,12 @@ public class ContractDto {
 		this.guarantees = guarantees;
 	}
 
-	public List<Long> getInsurers() {
-		return insurers;
+	public Cli_contract getContract() {
+		return contract;
 	}
 
-	public void setInsurers(List<Long> insurers) {
-		this.insurers = insurers;
+	public void setContract(Cli_contract contract) {
+		this.contract = contract;
 	}
 
 }

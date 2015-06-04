@@ -15,6 +15,7 @@ import org.insurance.service.check.IQuoteAndContractCheck;
 import org.insurance.service.check.IUserCheck;
 import org.insurance.service.info.IQuoteAndContractInfo;
 import org.insurance.service.manager.IContractManager;
+import org.insurance.utils.mapping.ContractMapping;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +41,7 @@ public class ContractService implements IContractService {
 	@Override
 	public ContractOut insertContract(String userId, ContractIn contractIn) throws InsuranceException {
 		userCheck.checkUser(userId);
-		ContractDto contract = null;
+		ContractDto contract = ContractMapping.populateContractDto(contractIn);
 		contractManager.insertContract(userId, contractIn.getPersonId(), contract);
 		return null;
 	}

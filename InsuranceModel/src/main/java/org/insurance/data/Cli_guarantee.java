@@ -24,13 +24,16 @@ public class Cli_guarantee implements Serializable {
 	private Long numcli;
 	private Integer numcon;
 	private String cguarantee;
-	private BigDecimal amount;
 	private java.sql.Date startval;
 	private java.sql.Date endval;
 	private String cusercre;
 	private String cusermod;
 	private Date creationDate;
 	private Date modifDate;
+	private String csection;
+	private String cpremium;
+	private BigDecimal guaranteeamount;
+	private BigDecimal premiumamount;
 
 	public Long getNumguarantee() {
 		return numguarantee;
@@ -62,14 +65,6 @@ public class Cli_guarantee implements Serializable {
 
 	public void setCguarantee(String cguarantee) {
 		this.cguarantee = cguarantee;
-	}
-
-	public BigDecimal getAmount() {
-		return amount;
-	}
-
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
 	}
 
 	public java.sql.Date getStartval() {
@@ -118,6 +113,38 @@ public class Cli_guarantee implements Serializable {
 
 	public void setModifDate(Date modifDate) {
 		this.modifDate = modifDate;
+	}
+
+	public String getCsection() {
+		return csection;
+	}
+
+	public void setCsection(String csection) {
+		this.csection = csection;
+	}
+
+	public String getCpremium() {
+		return cpremium;
+	}
+
+	public void setCpremium(String cpremium) {
+		this.cpremium = cpremium;
+	}
+
+	public BigDecimal getGuaranteeamount() {
+		return guaranteeamount;
+	}
+
+	public void setGuaranteeamount(BigDecimal guaranteeamount) {
+		this.guaranteeamount = guaranteeamount;
+	}
+
+	public BigDecimal getPremiumamount() {
+		return premiumamount;
+	}
+
+	public void setPremiumamount(BigDecimal premiumamount) {
+		this.premiumamount = premiumamount;
 	}
 
 }

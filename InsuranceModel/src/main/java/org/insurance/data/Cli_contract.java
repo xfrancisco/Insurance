@@ -34,6 +34,11 @@ public class Cli_contract implements Serializable {
 	private Date modifDate;
 	private Date cancelDate;
 
+	private Long numclibroker;
+	private Long numclileader;
+	private String cduration;
+	private String cuseruw;
+
 	public Long getNumcli() {
 		return numcli;
 	}
@@ -136,6 +141,38 @@ public class Cli_contract implements Serializable {
 
 	public void setEndval(java.sql.Date endval) {
 		this.endval = endval;
+	}
+
+	public Long getNumclibroker() {
+		return numclibroker;
+	}
+
+	public void setNumclibroker(Long numclibroker) {
+		this.numclibroker = numclibroker;
+	}
+
+	public Long getNumclileader() {
+		return numclileader;
+	}
+
+	public void setNumclileader(Long numclileader) {
+		this.numclileader = numclileader;
+	}
+
+	public String getCduration() {
+		return cduration;
+	}
+
+	public void setCduration(String cduration) {
+		this.cduration = cduration;
+	}
+
+	public String getCuseruw() {
+		return cuseruw;
+	}
+
+	public void setCuseruw(String cuseruw) {
+		this.cuseruw = cuseruw;
 	}
 
 }

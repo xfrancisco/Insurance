@@ -15,12 +15,14 @@ public class ContractIn {
 	@Mandatory
 	@Length(max = EnterpriseModelEnum.PERSONID)
 	private Long personId;
-	@Mandatory
-	@Length(max = EnterpriseModelEnum.PERSONID)
-	private Long brokerId;
+
 	@Mandatory
 	@Length(max = EnterpriseModelEnum.PERSONID)
 	private Long leaderId;
+
+	@Mandatory
+	@Length(max = EnterpriseModelEnum.PERSONID)
+	private Long brokerId;
 
 	@Length(max = EnterpriseModelEnum.QUOTEID)
 	private int quoteId;
@@ -41,8 +43,10 @@ public class ContractIn {
 	@Length(max = EnterpriseModelEnum.USERID)
 	private String underwriterId;
 
-	@Valid
-	private List<InsurerIn> insurers;
+	@Mandatory
+	private String startDate;
+
+	private String endDate;
 
 	@Valid
 	private List<GuaranteeIn> guarantees;
@@ -77,14 +81,6 @@ public class ContractIn {
 
 	public void setQuoteId(int quoteId) {
 		this.quoteId = quoteId;
-	}
-
-	public List<InsurerIn> getInsurers() {
-		return insurers;
-	}
-
-	public void setInsurers(List<InsurerIn> insurers) {
-		this.insurers = insurers;
 	}
 
 	public List<GuaranteeIn> getGuarantees() {
@@ -125,6 +121,22 @@ public class ContractIn {
 
 	public void setUnderwriterId(String underwriterId) {
 		this.underwriterId = underwriterId;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
 }

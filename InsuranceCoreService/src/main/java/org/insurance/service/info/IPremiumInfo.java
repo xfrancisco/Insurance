@@ -34,4 +34,6 @@ public interface IPremiumInfo {
 	public List<Cod_premium> getPremiums(final String cpremium);
 
 	Cod_category getCategory(String cbranch, String ccategory);
+
+	Cod_premium getPremium(String cbranch, String ccategory, String csection, String cguarantee, String cpremium);
 }

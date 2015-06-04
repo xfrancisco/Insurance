@@ -11,6 +11,7 @@ public class GuaranteeDto {
 
 	private BigDecimal guaranteedAmount;
 	private BigDecimal premiumAmount;
+	private BigDecimal brokerRate;
 
 	private List<DispatchDto> dispatch;
 
@@ -60,5 +61,13 @@ public class GuaranteeDto {
 
 	public void setDispatch(List<DispatchDto> dispatch) {
 		this.dispatch = dispatch;
+	}
+
+	public BigDecimal getBrokerRate() {
+		return brokerRate;
+	}
+
+	public void setBrokerRate(BigDecimal brokerRate) {
+		this.brokerRate = brokerRate;
 	}
 }

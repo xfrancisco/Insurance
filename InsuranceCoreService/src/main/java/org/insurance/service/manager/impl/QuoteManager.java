@@ -51,7 +51,7 @@ public class QuoteManager extends ServiceCore implements IQuoteManager {
 	public int insertQuote(long numcli, String cuser, Cli_quote cliQuote) throws InsuranceException {
 		personCheck.checkClient(numcli);
 		personCheck.checkBroker(cliQuote.getNumclibroker());
-		personCheck.checkLeader(cliQuote.getNumclileader());
+		personCheck.checkInsurer(cliQuote.getNumclileader());
 
 		Cod_branch codBranch = premiumCheck.checkBranch(cliQuote.getCbranch());
 		if (!MappingUtils.toBoolean(codBranch.getIndvali()))
@@ -96,7 +96,7 @@ public class QuoteManager extends ServiceCore implements IQuoteManager {
 		personCheck.checkClient(numcli);
 		Cli_quote oldQuote = quoteContractCheck.checkQuote(numcli, numquote);
 		personCheck.checkBroker(cliQuote.getNumclibroker());
-		personCheck.checkLeader(cliQuote.getNumclileader());
+		personCheck.checkInsurer(cliQuote.getNumclileader());
 
 		premiumCheck.checkBranch(cliQuote.getCbranch());
 		premiumCheck.checkCategory(cliQuote.getCbranch(), cliQuote.getCcategory());

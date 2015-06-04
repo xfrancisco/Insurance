@@ -2,10 +2,13 @@ package org.insurance.in;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.insurance.validation.constraints.BigDecimalMin;
 import org.insurance.validation.constraints.EnterpriseModelEnum;
 import org.insurance.validation.constraints.Length;
 import org.insurance.validation.constraints.Mandatory;
+import org.insurance.validation.constraints.Percentage;
 
 import com.google.common.base.Strings;
 
@@ -29,6 +32,10 @@ public class GuaranteeIn {
 	@BigDecimalMin
 	private String premiumAmount;
 
+	@Percentage
+	private String brokerCommissionRate;
+
+	@Valid
 	private List<DispatchIn> dispatch;
 
 	public String getGuaranteeId() {
@@ -77,6 +84,14 @@ public class GuaranteeIn {
 
 	public void setSectionId(String sectionId) {
 		this.sectionId = sectionId;
+	}
+
+	public String getBrokerCommissionRate() {
+		return brokerCommissionRate;
+	}
+
+	public void setBrokerCommissionRate(String brokerCommissionRate) {
+		this.brokerCommissionRate = brokerCommissionRate;
 	}
 
 }

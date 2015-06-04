@@ -127,4 +127,19 @@ public class PremiumInfo extends ServiceCore implements IPremiumInfo {
 		return null;
 	}
 
+	@Override
+	public Cod_premium getPremium(String cbranch, String ccategory, String csection, String cguarantee, String cpremium) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_premiumconfig.class);
+		criteria.add(eq("cbranch", cbranch));
+		criteria.add(eq("ccategory", ccategory));
+		criteria.add(eq("csection", csection));
+		criteria.add(eq("cguarantee", cguarantee));
+		criteria.add(eq("cpremium", cpremium));
+		Cod_premiumconfig codPremiumConfig = genericDao.getFirstByCriteria(criteria);
+		if (codPremiumConfig != null) {
+			return getPremium(cpremium);
+		}
+		return null;
+	}
+
 }

@@ -1,12 +1,12 @@
 package org.insurance.service.manager;
 
 import org.insurance.dto.contract.ContractDto;
-import org.insurance.exception.QuoteAndContractException;
+import org.insurance.exception.InsuranceException;
 
 public interface IContractManager {
 
-	int insertContract(String userId, long numcli, ContractDto contract) throws QuoteAndContractException;
+	int insertContract(String userId, long numcli, ContractDto contract) throws InsuranceException;
 
-	int updateContract(String userId, Long personId, Integer contractId, ContractDto contract) throws QuoteAndContractException;
+	int updateContract(String userId, Long personId, Integer contractId, ContractDto contract) throws InsuranceException;
 
 }

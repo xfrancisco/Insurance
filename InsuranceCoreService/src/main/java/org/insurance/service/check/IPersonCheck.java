@@ -23,6 +23,6 @@ public interface IPersonCheck {
 
 	Cli_client checkClient(long numcli) throws PersonException;
 
-	Cli_client checkLeader(long numclileader) throws PersonException;
+	Cli_client checkInsurer(long numclileader) throws PersonException;
 
 }
