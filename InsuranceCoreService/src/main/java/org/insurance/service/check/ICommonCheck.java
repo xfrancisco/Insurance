@@ -13,4 +13,6 @@ public interface ICommonCheck {
 
 	void checkPeriod(Date start, Date end) throws CommonException;
 
+	void checkShareOnPremium(final BigDecimal share, final String cpremium) throws CommonException;;
+
 }

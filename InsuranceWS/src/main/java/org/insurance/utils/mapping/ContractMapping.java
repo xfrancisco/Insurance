@@ -20,6 +20,7 @@ public final class ContractMapping {
 		ContractDto result = new ContractDto();
 		result.setContract(populateContract(contractIn));
 		result.setGuarantees(populateGuarantees(contractIn.getGuarantees()));
+		result.setNumquote(contractIn.getQuoteId());
 		return result;
 
 	}
@@ -60,7 +61,6 @@ public final class ContractMapping {
 		List<DispatchDto> result = new ArrayList<DispatchDto>();
 		for (DispatchIn dispatchIn : dispatchesIn) {
 			DispatchDto tmp = new DispatchDto();
-			tmp.setBrokerRate(MappingUtils.toBigDecimal(dispatchIn.getInsurerCommissionRate()));
 			tmp.setInsurerRate(MappingUtils.toBigDecimal(dispatchIn.getInsurerCommissionRate()));
 			tmp.setInsurerShare(MappingUtils.toBigDecimal(dispatchIn.getInsurerShare()));
 			tmp.setNumcliinsurer(dispatchIn.getInsurerId());

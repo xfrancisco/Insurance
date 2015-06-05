@@ -25,7 +25,7 @@ public class ContractIn {
 	private Long brokerId;
 
 	@Length(max = EnterpriseModelEnum.QUOTEID)
-	private int quoteId;
+	private Integer quoteId;
 
 	@Mandatory
 	@Length(max = EnterpriseModelEnum.BRANCH)
@@ -75,11 +75,11 @@ public class ContractIn {
 		this.leaderId = leaderId;
 	}
 
-	public int getQuoteId() {
+	public Integer getQuoteId() {
 		return quoteId;
 	}
 
-	public void setQuoteId(int quoteId) {
+	public void setQuoteId(Integer quoteId) {
 		this.quoteId = quoteId;
 	}
 

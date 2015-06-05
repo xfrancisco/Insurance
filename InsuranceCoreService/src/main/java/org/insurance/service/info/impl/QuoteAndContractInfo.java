@@ -25,7 +25,7 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 	}
 
 	@Override
-	public int getNextNumQuote(long numcli) {
+	public int getNextNumQuote(final long numcli) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_quote.class);
 		criteria.add(Restrictions.eq("numcli", numcli));
 		criteria.setProjection(Projections.max("numquote"));
@@ -37,7 +37,7 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 	}
 
 	@Override
-	public Cli_quote getQuote(long numcli, int numquote) {
+	public Cli_quote getQuote(final long numcli, final int numquote) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_quote.class);
 		criteria.add(Restrictions.eq("numcli", numcli));
 		criteria.add(Restrictions.eq("numquote", numquote));
@@ -45,14 +45,14 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 	}
 
 	@Override
-	public List<Cli_quote> getQuotes(long numcli) {
+	public List<Cli_quote> getQuotes(final long numcli) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_quote.class);
 		criteria.add(Restrictions.eq("numcli", numcli));
 		return genericDao.getByCriteria(criteria);
 	}
 
 	@Override
-	public Cod_duration getDuration(String cduration) {
+	public Cod_duration getDuration(final String cduration) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_duration.class);
 		criteria.add(Restrictions.eq("cduration", cduration));
 		criteria.add(Restrictions.eq("indvali", "1"));
@@ -60,7 +60,7 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 	}
 
 	@Override
-	public Cod_quotestatus getQuoteStatus(String cquotestatus) {
+	public Cod_quotestatus getQuoteStatus(final String cquotestatus) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_quotestatus.class);
 		criteria.add(Restrictions.eq("cquotestatus", cquotestatus));
 		criteria.add(Restrictions.eq("indvali", "1"));
@@ -68,7 +68,7 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 	}
 
 	@Override
-	public ContractDto getContract(long numcli, int numcon) {
+	public ContractDto getContract(final long numcli, final int numcon) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_contract.class);
 		criteria.add(Restrictions.eq("numcli", numcli));
 		criteria.add(Restrictions.eq("numcon", numcon));
@@ -80,6 +80,26 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 	public List<ContractDto> getContracts(long personId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int getNextNumContract(final long numcli) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_contract.class);
+		criteria.add(Restrictions.eq("numcli", numcli));
+		criteria.setProjection(Projections.max("numcon"));
+		Integer result = genericDao.getFirstByCriteria(criteria);
+		if (result == null)
+			return 0;
+		else
+			return result + 1;
+	}
+
+	@Override
+	public Cod_quotestatus getValidatedQuoteStatus() {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_quotestatus.class);
+		criteria.add(Restrictions.eq("indvali", "1"));
+		criteria.add(Restrictions.eq("indvalidated", "1"));
+		return genericDao.getFirstByCriteria(criteria);
 	}
 
 }

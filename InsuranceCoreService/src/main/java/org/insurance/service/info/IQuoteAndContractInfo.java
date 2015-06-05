@@ -25,4 +25,8 @@ public interface IQuoteAndContractInfo {
 
 	List<ContractDto> getContracts(long personId);
 
+	int getNextNumContract(long numcli);
+
+	Cod_quotestatus getValidatedQuoteStatus();
+
 }

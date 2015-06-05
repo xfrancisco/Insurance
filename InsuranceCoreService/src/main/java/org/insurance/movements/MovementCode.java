@@ -14,6 +14,7 @@ import org.insurance.movements.person.NewMailMovement;
 import org.insurance.movements.person.NewPersonMovement;
 import org.insurance.movements.person.NewPhoneMovement;
 import org.insurance.movements.person.NewQuoteMovement;
+import org.insurance.movements.person.ValidQuoteMovement;
 
 public enum MovementCode {
 	//@formatter:off
@@ -25,12 +26,13 @@ public enum MovementCode {
 	MODPHONE(ModPhoneMovement.class),
 	DELPHONE(DelPhoneMovement.class),
 	NEWMAIL(NewMailMovement.class),
-	MODMAIL(ModMailMovement.class), 
+	MODMAIL(ModMailMovement.class),
 	DELMAIL(DelMailMovement.class),
 	NEWCATCLI(NewCategoryMovement.class),
 	DELCATCLI(DelCategoryMovement.class),
 	NEWQUOTE(NewQuoteMovement.class),
-	MODQUOTE(ModQuoteMovement.class);
+	MODQUOTE(ModQuoteMovement.class),
+	VALQUOTE(ValidQuoteMovement.class);
 	//@formatter:on
 	private Class<? extends Movement> mvtClass;
 

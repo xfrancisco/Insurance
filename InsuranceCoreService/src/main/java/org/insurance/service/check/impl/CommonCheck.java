@@ -13,7 +13,7 @@ import org.insurance.util.DateUtils.DatePattern;
 public class CommonCheck extends ServiceCore implements ICommonCheck {
 
 	private static BigDecimal min = new BigDecimal(0);
-	private static BigDecimal maxPourcentage = new BigDecimal(100);
+	private static BigDecimal maxPercentage = new BigDecimal(100);
 
 	@Override
 	public void checkAmount(final BigDecimal amount) throws CommonException {
@@ -24,7 +24,7 @@ public class CommonCheck extends ServiceCore implements ICommonCheck {
 
 	@Override
 	public void checkPercentage(final BigDecimal percentage) throws CommonException {
-		int comparisonResult = percentage.compareTo(maxPourcentage);
+		int comparisonResult = percentage.compareTo(maxPercentage);
 		if (comparisonResult >= 0)
 			throw new CommonException(ErrorCode.ERR_BIZ_COMMON_INVALID_PERCENTAGE, percentage);
 
@@ -37,6 +37,13 @@ public class CommonCheck extends ServiceCore implements ICommonCheck {
 				throw new CommonException(ErrorCode.ERR_BIZ_COMMON_INVALID_PERIOD, DateUtils.formatDate(start, DatePattern.DATE_DD_MM_YYYY),
 						DateUtils.formatDate(end, DatePattern.DATE_DD_MM_YYYY));
 		}
+	}
+
+	@Override
+	public void checkShareOnPremium(final BigDecimal share, final String cpremium) throws CommonException {
+		if (share.compareTo(maxPercentage) != 0)
+			throw new CommonException(ErrorCode.ERR_BIZ_COMMON_INVALID_GLOBAL_SHARE, cpremium, share);
+
 	}
 
 }

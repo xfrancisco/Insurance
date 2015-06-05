@@ -7,6 +7,7 @@ import org.insurance.data.Cli_contract;
 public class ContractDto {
 
 	private Cli_contract contract;
+	private Integer numquote;
 	private List<GuaranteeDto> guarantees;
 
 	public List<GuaranteeDto> getGuarantees() {
@@ -23,6 +24,14 @@ public class ContractDto {
 
 	public void setContract(Cli_contract contract) {
 		this.contract = contract;
+	}
+
+	public Integer getNumquote() {
+		return numquote;
+	}
+
+	public void setNumquote(Integer numquote) {
+		this.numquote = numquote;
 	}
 
 }

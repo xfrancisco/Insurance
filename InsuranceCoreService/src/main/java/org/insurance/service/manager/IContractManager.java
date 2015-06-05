@@ -5,8 +5,8 @@ import org.insurance.exception.InsuranceException;
 
 public interface IContractManager {
 
-	int insertContract(String userId, long numcli, ContractDto contract) throws InsuranceException;
+	int insertContract(String cuser, long numcli, ContractDto contract) throws InsuranceException;
 
-	int updateContract(String userId, Long personId, Integer contractId, ContractDto contract) throws InsuranceException;
+	int updateContract(String cuser, Long personId, Integer contractId, ContractDto contract) throws InsuranceException;
 
 }

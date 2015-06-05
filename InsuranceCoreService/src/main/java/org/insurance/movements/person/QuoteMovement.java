@@ -17,7 +17,6 @@ public class QuoteMovement extends Movement {
 		super(movement);
 		addParameters(Fields.ACCEPTANCEDATE, DateUtils.formatDate(acceptanceDate, DatePattern.DATE_DD_MM_YYYY));
 		addParameters(Fields.CBRANCH, cbranch);
-		addParameters(Fields.CCATEGORY, ccategory);
 		addParameters(Fields.CDURATION, cduration);
 		addParameters(Fields.CQUOTESTATUS, cquotestatus);
 		addParameters(Fields.CUSERUW, cuseruw);

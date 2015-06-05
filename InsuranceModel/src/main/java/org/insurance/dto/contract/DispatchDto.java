@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 public class DispatchDto {
 
 	private long numcliinsurer;
-	private BigDecimal brokerRate;
 	private BigDecimal insurerShare;
 	private BigDecimal insurerRate;
 
@@ -31,14 +30,6 @@ public class DispatchDto {
 
 	public void setInsurerRate(BigDecimal insurerRate) {
 		this.insurerRate = insurerRate;
-	}
-
-	public BigDecimal getBrokerRate() {
-		return brokerRate;
-	}
-
-	public void setBrokerRate(BigDecimal brokerRate) {
-		this.brokerRate = brokerRate;
 	}
 
 }
