@@ -35,6 +35,9 @@ public class GuaranteeIn {
 	@Percentage
 	private String brokerCommissionRate;
 
+	@Percentage
+	private String leaderShare;
+
 	@Valid
 	private List<DispatchIn> dispatch;
 
@@ -92,6 +95,14 @@ public class GuaranteeIn {
 
 	public void setBrokerCommissionRate(String brokerCommissionRate) {
 		this.brokerCommissionRate = brokerCommissionRate;
+	}
+
+	public String getLeaderShare() {
+		return leaderShare;
+	}
+
+	public void setLeaderShare(String leaderShare) {
+		this.leaderShare = leaderShare;
 	}
 
 }

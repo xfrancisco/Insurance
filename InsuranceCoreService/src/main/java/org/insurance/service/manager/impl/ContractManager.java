@@ -1,5 +1,7 @@
 package org.insurance.service.manager.impl;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -56,6 +58,9 @@ public class ContractManager extends ServiceCore implements IContractManager {
 					guaranteeDto.getCpremium());
 			commonCheck.checkAmount(guaranteeDto.getGuaranteedAmount());
 			commonCheck.checkAmount(guaranteeDto.getPremiumAmount());
+			commonCheck.checkPercentage(guaranteeDto.getLeaderShare());
+			List<BigDecimal> shares = new ArrayList<BigDecimal>();
+			shares.add(guaranteeDto.getLeaderShare());
 			List<DispatchDto> dispatchDtos = guaranteeDto.getDispatch();
 			for (DispatchDto dispatch : dispatchDtos) {
 				commonCheck.checkPercentage(dispatch.getBrokerRate());

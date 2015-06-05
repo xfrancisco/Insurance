@@ -49,6 +49,7 @@ public final class ContractMapping {
 			tmp.setGuaranteedAmount(MappingUtils.toBigDecimal(guaranteeIn.getGuaranteedAmount()));
 			tmp.setPremiumAmount(MappingUtils.toBigDecimal(guaranteeIn.getPremiumAmount()));
 			tmp.setDispatch(populateDispatch(guaranteeIn.getDispatch()));
+			tmp.setLeaderShare(MappingUtils.toBigDecimal(guaranteeIn.getLeaderShare()));
 			result.add(tmp);
 		}
 		return result;
