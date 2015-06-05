@@ -7,5 +7,10 @@ D:\applis\GIT\Insurance>D:\applis\MAVEN\apache-maven-3.1.0\bin\mvn install:insta
 	<role rolename="manager"/>
 	<role rolename="admin"/>
 	<role rolename="manager-gui"/>
-	<user username="admin" password="admin" roles="admin,manager,manager-gui"/>
+	<user username="admin" password="MFInsurance" roles="admin,manager,manager-gui"/>
 </tomcat-users>
+
+
+cd /usr/share/tomcat7/
+
+sudo service tomcat7 restart
