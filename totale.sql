@@ -179,7 +179,7 @@ comment on column COD_COUNTRY.INDFOREIGN is 'Indicateur. Si a 1 alors pays par d
 comment on column COD_COUNTRY.INDVALI is 'Indicateur de validite de l''enregistrement. Si a 1 alors valide';
 
 /*CODES POSTAUX*/
-/*CREATE TABLE COD_POSTAL
+CREATE TABLE COD_POSTAL
 ( 
   CPOSTAL VARCHAR2(5) NOT NULL,
   CITY VARCHAR2(128) NOT NULL,
@@ -196,7 +196,7 @@ comment on column COD_POSTAL.CPOSTAL is 'Code postal';
 comment on column COD_POSTAL.CITY is 'Ville ou commune';
 comment on column COD_POSTAL.CCOUNTRY is 'Code pays. Reference COD_COUNTRY';
 comment on column COD_POSTAL.INDVALI is 'Indicateur de validite de l''enregistrement. Si a 1 alors valide';
-*/
+
 /*CATEG CLIENT*/
 CREATE TABLE COD_CATCLI
 ( 
@@ -699,6 +699,8 @@ comment on column CLI_ADDRESS.MODIFDATE is 'Date de modification';
 
 alter table CLI_ADDRESS ADD CONSTRAINT FK_ADDRNUMCLI FOREIGN KEY (NUMCLI) REFERENCES CLI_CLIENT(NUMCLI);
 alter table CLI_ADDRESS ADD CONSTRAINT FK_ADDRCCOUNTRY FOREIGN KEY (CCOUNTRY) REFERENCES COD_COUNTRY(CCOUNTRY);
+
+
 alter table CLI_ADDRESS ADD CONSTRAINT FK_ADDRZIPCITY FOREIGN KEY (CPOSTAL, CITY, CCOUNTRY) REFERENCES COD_POSTAL(CPOSTAL, CITY, CCOUNTRY);
 alter table CLI_ADDRESS ADD CONSTRAINT FK_ADDRUSERCRE FOREIGN KEY (CUSERCRE) REFERENCES USR_USER(CUSER);
 alter table CLI_ADDRESS ADD CONSTRAINT FK_ADDRUSERMOD FOREIGN KEY (CUSERMOD) REFERENCES USR_USER(CUSER);
@@ -992,7 +994,7 @@ CREATE INDEX IDX_MVTQUOTE ON CLI_MOVEMENT (NUMCLI, NUMQUOTE);
 
 ---- 04/06/2015
 
-drop table CLI_CONTRACT cascade constraints;
+
 
 /* CONTRATS */
 CREATE TABLE CLI_CONTRACT
@@ -1050,7 +1052,6 @@ alter table CLI_CONTRACT ADD CONSTRAINT FK_CONNUMCLIL FOREIGN KEY (NUMCLILEADER)
 
 
 
-drop table CLI_GUARANTEE cascade constraints;
 
 /*GARANTIES*/
 CREATE TABLE CLI_GUARANTEE
@@ -1131,7 +1132,7 @@ comment on table CPT_GUARDISPATCH is 'Table des repartition des garanties par as
 comment on column CPT_GUARDISPATCH.NUMDISPATCH is 'Pk fictive';
 comment on column CPT_GUARDISPATCH.NUMGUARANTEE is 'Identifiant de la garantie. Reference CLI_GUARANTEE';
 comment on column CPT_GUARDISPATCH.NUMCLIINS is 'Identifiant de l''assureur. Reference CLI_CLIENT';
-comment on column CPT_GUARDISPATCH.SHAREPART is 'Pourcentage assuré';
+comment on column CPT_GUARDISPATCH.SHAREPART is 'Pourcentage assurï¿½';
 comment on column CPT_GUARDISPATCH.CUSERCRE is 'Utilisateur de creation';
 comment on column CPT_GUARDISPATCH.CREATIONDATE is 'Date de creation';
 comment on column CPT_GUARDISPATCH.CUSERMOD is 'Utilisateur de modification';
