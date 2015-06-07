@@ -14,6 +14,7 @@ import org.insurance.common.IContractService;
 import org.insurance.exception.InsuranceException;
 import org.insurance.in.ContractIn;
 import org.insurance.in.UpdateContractIn;
+import org.insurance.out.ContractListOut;
 import org.insurance.out.ContractOut;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -59,7 +60,7 @@ public class ContractWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(required = true, value = "Client", name = PERSON_ID) @QueryParam(value = PERSON_ID) Long personId,
 			@ApiParam(required = true, value = "Contrat", name = CONTRACT_ID) @QueryParam(value = CONTRACT_ID) Integer contractId)
-					throws InsuranceException {
+			throws InsuranceException {
 		ResponseWrapper<ContractOut> responseWrapper = new ResponseWrapper<ContractOut>();
 		responseWrapper.setData(contractService.getContract(userId, personId, contractId));
 		return responseWrapper;
@@ -68,10 +69,10 @@ public class ContractWebservice extends AbstractWebservice {
 	@GET
 	@Path("/list")
 	@ApiOperation(value = "Liste des contrats d'un client ")
-	public ResponseWrapper<List<ContractOut>> getContracts(
+	public ResponseWrapper<List<ContractListOut>> getContracts(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(required = true, value = "Client", name = PERSON_ID) @QueryParam(value = PERSON_ID) Long personId) throws InsuranceException {
-		ResponseWrapper<List<ContractOut>> responseWrapper = new ResponseWrapper<List<ContractOut>>();
+		ResponseWrapper<List<ContractListOut>> responseWrapper = new ResponseWrapper<List<ContractListOut>>();
 		responseWrapper.setData(contractService.getContracts(userId, personId));
 		return responseWrapper;
 	}

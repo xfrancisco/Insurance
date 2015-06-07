@@ -55,7 +55,7 @@ public class QuoteService implements IQuoteService {
 	@Override
 	public List<QuoteOut> getQuotes(String userId, Long personId) throws InsuranceException {
 		usercheck.checkUser(userId);
-		personCheck.checkClient(personId);
+		personCheck.checkPerson(personId);
 		List<Cli_quote> quotes = quoteInfo.getQuotes(personId);
 		return QuoteMapping.populateQuotes(personId, quotes);
 	}

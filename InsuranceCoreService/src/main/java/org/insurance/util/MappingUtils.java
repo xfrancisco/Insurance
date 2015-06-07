@@ -65,4 +65,11 @@ public final class MappingUtils {
 
 	}
 
+	public static String toString(final BigDecimal value) {
+		if (value == null)
+			return null;
+		return value.toPlainString();
+
+	}
+
 }

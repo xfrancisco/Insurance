@@ -289,4 +289,19 @@ public class PopulationInfo extends ServiceCore implements IPopulationInfo {
 		return genericDao.getByCriteria(mainQuery);
 	}
 
+	@Override
+	public List<Cli_client> getAll() {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_client.class);
+		return genericDao.getByCriteria(criteria);
+	}
+
+	@Override
+	public List<Cli_client> getAllByName(String name) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_client.class);
+		criteria.add(Restrictions.or(Restrictions.ilike("name", name, MatchMode.ANYWHERE),
+				Restrictions.ilike("companyname", name, MatchMode.ANYWHERE)));
+
+		return genericDao.getByCriteria(criteria);
+	}
+
 }

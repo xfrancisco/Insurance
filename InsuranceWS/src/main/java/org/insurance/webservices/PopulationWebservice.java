@@ -57,7 +57,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des clients")
 	public ResponseWrapper<List<PersonOut>> getClients(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getClients(userId));
 		return responseWrapper;
@@ -79,7 +79,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des courtiers")
 	public ResponseWrapper<List<PersonOut>> getBrokers(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getBrokers(userId));
 		return responseWrapper;
@@ -101,7 +101,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des assureurs")
 	public ResponseWrapper<List<PersonOut>> getInsurers(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getInsurers(userId));
 		return responseWrapper;
@@ -123,7 +123,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des réassureurs")
 	public ResponseWrapper<List<PersonOut>> getReinsurers(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getReinsurers(userId));
 		return responseWrapper;
@@ -145,7 +145,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des experts")
 	public ResponseWrapper<List<PersonOut>> getExperts(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getExperts(userId));
 		return responseWrapper;
@@ -167,7 +167,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des avocats")
 	public ResponseWrapper<List<PersonOut>> getLawyers(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getLawyers(userId));
 		return responseWrapper;
@@ -189,7 +189,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des benéficiaires")
 	public ResponseWrapper<List<PersonOut>> getBeneficiaries(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getBeneficiaries(userId));
 		return responseWrapper;
@@ -211,7 +211,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des tiers")
 	public ResponseWrapper<List<PersonOut>> getThirdParties(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getThirdParties(userId));
 		return responseWrapper;
@@ -233,7 +233,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des agences de souscription")
 	public ResponseWrapper<List<PersonOut>> getAgencies(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-			throws InsuranceException {
+					throws InsuranceException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getAgencies(userId));
 		return responseWrapper;
@@ -247,6 +247,28 @@ public class PopulationWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Nom ou raison sociale", name = NAME) @QueryParam(value = NAME) String name) throws InsuranceException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getAgenciesByName(userId, name));
+		return responseWrapper;
+	}
+
+	@GET
+	@Path("/all")
+	@ApiOperation(value = "Toutes les populations")
+	public ResponseWrapper<List<PersonOut>> getAll(
+			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
+					throws InsuranceException {
+		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
+		responseWrapper.setData(populationService.getAll(userId));
+		return responseWrapper;
+	}
+
+	@GET
+	@Path("/all/search")
+	@ApiOperation(value = "Toutes les populations par nom")
+	public ResponseWrapper<List<PersonOut>> getAllByName(
+			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
+			@ApiParam(required = true, value = "Nom ou raison sociale", name = NAME) @QueryParam(value = NAME) String name) throws InsuranceException {
+		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
+		responseWrapper.setData(populationService.getAllByName(userId, name));
 		return responseWrapper;
 	}
 

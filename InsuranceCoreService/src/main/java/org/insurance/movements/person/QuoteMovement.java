@@ -7,6 +7,7 @@ import org.insurance.movements.Movement;
 import org.insurance.movements.MovementCode;
 import org.insurance.util.DateUtils;
 import org.insurance.util.DateUtils.DatePattern;
+import org.insurance.util.MappingUtils;
 
 public class QuoteMovement extends Movement {
 
@@ -21,12 +22,12 @@ public class QuoteMovement extends Movement {
 		addParameters(Fields.CQUOTESTATUS, cquotestatus);
 		addParameters(Fields.CUSERUW, cuseruw);
 		addParameters(Fields.ENDVAL, DateUtils.formatDate(endval, DatePattern.DATE_DD_MM_YYYY));
-		addParameters(Fields.GUARANTEEDAMOUNT, guaranteedAmount.toPlainString());
+		addParameters(Fields.GUARANTEEDAMOUNT, MappingUtils.toString(guaranteedAmount));
 		addParameters(Fields.NUMCLIBROKER, String.valueOf(numclibroker));
 		addParameters(Fields.NUMCLILEADER, String.valueOf(numclileader));
-		addParameters(Fields.PREMIUMAMOUNT, premiumAmount.toPlainString());
+		addParameters(Fields.PREMIUMAMOUNT, MappingUtils.toString(premiumAmount));
 		addParameters(Fields.RECEPTIONDATE, DateUtils.formatDate(receptionDate, DatePattern.DATE_DD_MM_YYYY));
-		addParameters(Fields.SHAREPART, sharepart.toPlainString());
+		addParameters(Fields.SHAREPART, MappingUtils.toString(sharepart));
 		addParameters(Fields.STARTVAL, DateUtils.formatDate(startVal, DatePattern.DATE_DD_MM_YYYY));
 		addParameters(Fields.NUMQUOTE, String.valueOf(numquote));
 

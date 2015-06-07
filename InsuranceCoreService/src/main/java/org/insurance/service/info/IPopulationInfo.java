@@ -24,6 +24,8 @@ public interface IPopulationInfo {
 
 	List<Cli_client> getAgencies();
 
+	List<Cli_client> getAll();
+
 	List<Cli_client> getClientsByName(String name);
 
 	List<Cli_client> getBrokersByName(String name);
@@ -41,5 +43,7 @@ public interface IPopulationInfo {
 	List<Cli_client> getThirdPartiesByName(String name);
 
 	List<Cli_client> getAgenciesByName(String name);
+
+	List<Cli_client> getAllByName(String name);
 
 }

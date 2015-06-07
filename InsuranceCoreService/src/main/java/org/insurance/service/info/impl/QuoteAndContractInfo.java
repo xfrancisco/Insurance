@@ -1,6 +1,9 @@
 package org.insurance.service.info.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
@@ -8,14 +11,23 @@ import org.hibernate.criterion.Restrictions;
 import org.insurance.conf.Cod_duration;
 import org.insurance.conf.Cod_quotestatus;
 import org.insurance.data.Cli_contract;
+import org.insurance.data.Cli_guarantee;
 import org.insurance.data.Cli_quote;
+import org.insurance.data.Cpt_guarcommi;
+import org.insurance.data.Cpt_guardispatch;
 import org.insurance.dto.contract.ContractDto;
+import org.insurance.dto.contract.DispatchDto;
+import org.insurance.dto.contract.GuaranteeDto;
 import org.insurance.service.ServiceCore;
+import org.insurance.service.info.IContractPremiumInfo;
 import org.insurance.service.info.IQuoteAndContractInfo;
 import org.springframework.stereotype.Service;
 
 @Service
 public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContractInfo {
+
+	@Inject
+	private IContractPremiumInfo contractPremiumInfo;
 
 	@Override
 	public List<Cod_quotestatus> getQuoteStatus() {
@@ -68,18 +80,18 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 	}
 
 	@Override
-	public ContractDto getContract(final long numcli, final int numcon) {
+	public Cli_contract getContract(final long numcli, final int numcon) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_contract.class);
 		criteria.add(Restrictions.eq("numcli", numcli));
 		criteria.add(Restrictions.eq("numcon", numcon));
-		genericDao.getFirstByCriteria(criteria);
-		return null;
+		return genericDao.getFirstByCriteria(criteria);
 	}
 
 	@Override
-	public List<ContractDto> getContracts(long personId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Cli_contract> getContracts(final long numcli) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_contract.class);
+		criteria.add(Restrictions.eq("numcli", numcli));
+		return genericDao.getByCriteria(criteria);
 	}
 
 	@Override
@@ -100,6 +112,50 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 		criteria.add(Restrictions.eq("indvali", "1"));
 		criteria.add(Restrictions.eq("indvalidated", "1"));
 		return genericDao.getFirstByCriteria(criteria);
+	}
+
+	@Override
+	public ContractDto getContractDto(final long numcli, final int numcon) {
+		ContractDto result = new ContractDto();
+		Cli_contract contract = getContract(numcli, numcon);
+		result.setContract(contract);
+		result.setGuarantees(getGuaranteesDto(numcli, numcon, contract.getNumclibroker(), contract.getNumclileader()));
+		return result;
+
+	}
+
+	private List<GuaranteeDto> getGuaranteesDto(final long numcli, final int numcon, final long numclibroker, final long numclileader) {
+		List<GuaranteeDto> result = new ArrayList<GuaranteeDto>();
+		List<Cli_guarantee> guarantees = contractPremiumInfo.getGuarantees(numcli, numcon);
+		for (Cli_guarantee cliGuarantee : guarantees) {
+			GuaranteeDto guaranteeDto = new GuaranteeDto();
+			guaranteeDto.setCguarantee(cliGuarantee.getCguarantee());
+			guaranteeDto.setCpremium(cliGuarantee.getCpremium());
+			guaranteeDto.setCsection(cliGuarantee.getCsection());
+			guaranteeDto.setGuaranteedAmount(cliGuarantee.getGuaranteeamount());
+			Cpt_guarcommi cptGuarcommiBroker = contractPremiumInfo.getBrokerCommission(cliGuarantee.getNumguarantee(), numclibroker);
+			Cpt_guardispatch cptGuarDispatchLeader = contractPremiumInfo.getLeaderShare(cliGuarantee.getNumguarantee(), numclileader);
+			guaranteeDto.setBrokerRate(cptGuarcommiBroker.getRate());
+			guaranteeDto.setLeaderShare(cptGuarDispatchLeader.getSharepart());
+			guaranteeDto.setDispatch(getDispatchDto(cliGuarantee.getNumguarantee(), numclileader));
+			guaranteeDto.setPremiumAmount(cliGuarantee.getPremiumamount());
+
+		}
+		return result;
+	}
+
+	private List<DispatchDto> getDispatchDto(final long numguarantee, final long numclileader) {
+		List<DispatchDto> result = new ArrayList<DispatchDto>();
+		List<Cpt_guardispatch> dispatches = contractPremiumInfo.getDispatches(numguarantee, numclileader);
+		for (Cpt_guardispatch dispatch : dispatches) {
+			DispatchDto tmp = new DispatchDto();
+			Cpt_guarcommi commi = contractPremiumInfo.getInsurerCommission(numguarantee, dispatch.getNumcliins());
+			tmp.setInsurerRate(commi.getRate());
+			tmp.setInsurerShare(dispatch.getSharepart());
+			tmp.setNumcliinsurer(dispatch.getNumcliins());
+			result.add(tmp);
+		}
+		return result;
 	}
 
 }

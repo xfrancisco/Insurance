@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.insurance.conf.Cod_duration;
 import org.insurance.conf.Cod_quotestatus;
+import org.insurance.data.Cli_contract;
 import org.insurance.data.Cli_quote;
 import org.insurance.dto.contract.ContractDto;
 
@@ -21,9 +22,11 @@ public interface IQuoteAndContractInfo {
 
 	Cod_quotestatus getQuoteStatus(String cquotestatus);
 
-	ContractDto getContract(long numcli, int numcon);
+	Cli_contract getContract(long numcli, int numcon);
 
-	List<ContractDto> getContracts(long personId);
+	ContractDto getContractDto(long numcli, int numcon);
+
+	List<Cli_contract> getContracts(long numcli);
 
 	int getNextNumContract(long numcli);
 

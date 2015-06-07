@@ -205,4 +205,16 @@ public class PopulationService implements IPopulationService {
 			return getAgencies(userId);
 		return PersonMapping.populatePersonOut(populationInfo.getAgenciesByName(name));
 	}
+
+	@Override
+	public List<PersonOut> getAll(final String userId) throws InsuranceException {
+		userCheck.checkUser(userId);
+		return PersonMapping.populatePersonOut(populationInfo.getAll());
+	}
+
+	@Override
+	public List<PersonOut> getAllByName(final String userId, final String name) throws InsuranceException {
+		userCheck.checkUser(userId);
+		return PersonMapping.populatePersonOut(populationInfo.getAllByName(name));
+	}
 }

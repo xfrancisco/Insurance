@@ -18,6 +18,8 @@ public class Cli_contract implements Serializable {
 	@Id
 	private Integer numcon;
 
+	private Integer numquote;
+
 	private String cbranch;
 	private String ccategory;
 
@@ -173,6 +175,14 @@ public class Cli_contract implements Serializable {
 
 	public void setCuseruw(String cuseruw) {
 		this.cuseruw = cuseruw;
+	}
+
+	public Integer getNumquote() {
+		return numquote;
+	}
+
+	public void setNumquote(Integer numquote) {
+		this.numquote = numquote;
 	}
 
 }

@@ -11,6 +11,10 @@ import org.insurance.exception.CommonException;
 import org.insurance.in.ContractIn;
 import org.insurance.in.DispatchIn;
 import org.insurance.in.GuaranteeIn;
+import org.insurance.out.ContractListOut;
+import org.insurance.out.ContractOut;
+import org.insurance.out.DispatchOut;
+import org.insurance.out.GuaranteeOut;
 import org.insurance.util.DateUtils;
 import org.insurance.util.MappingUtils;
 
@@ -35,6 +39,7 @@ public final class ContractMapping {
 		contract.setEndval(DateUtils.parseStringToSqlDate(contractIn.getEndDate()));
 		contract.setNumclibroker(contractIn.getBrokerId());
 		contract.setNumclileader(contractIn.getLeaderId());
+		contract.setNumquote(contractIn.getQuoteId());
 
 		return contract;
 	}
@@ -70,4 +75,69 @@ public final class ContractMapping {
 		return result;
 	}
 
+	public static List<ContractListOut> populateContractList(final List<Cli_contract> contracts) {
+		List<ContractListOut> result = new ArrayList<ContractListOut>();
+		for (Cli_contract cliContract : contracts) {
+			result.add(populateContract(cliContract));
+		}
+		return result;
+	}
+
+	public static ContractListOut populateContract(final Cli_contract cliContract) {
+		ContractListOut result = new ContractListOut();
+		result.setPersonId(cliContract.getNumcli());
+		result.setContractId(cliContract.getNumcon());
+		result.setBranchId(cliContract.getCbranch());
+		result.setCategoryId(cliContract.getCcategory());
+		result.setUnderwriterId(cliContract.getCuseruw());
+		result.setQuoteId(cliContract.getNumquote());
+		return result;
+	}
+
+	public static ContractOut populateContractOut(final ContractDto contract) {
+		ContractOut result = new ContractOut();
+		result.setBranchId(contract.getContract().getCbranch());
+		result.setBrokerId(contract.getContract().getNumclibroker());
+		result.setCategoryId(contract.getContract().getCcategory());
+		result.setDurationId(contract.getContract().getCduration());
+		result.setEndDate(DateUtils.formatDate(contract.getContract().getEndval()));
+		result.setGuarantees(populateGuaranteesOut(contract.getGuarantees()));
+		result.setLeaderId(contract.getContract().getNumclileader());
+		result.setPersonId(contract.getContract().getNumcli());
+		result.setQuoteId(contract.getContract().getNumquote());
+		result.setContractId(contract.getContract().getNumcon());
+		result.setStartDate(DateUtils.formatDate(contract.getContract().getStartval()));
+		result.setUnderwriterId(contract.getContract().getCuseruw());
+		return result;
+	}
+
+	private static List<GuaranteeOut> populateGuaranteesOut(List<GuaranteeDto> guarantees) {
+		List<GuaranteeOut> result = new ArrayList<GuaranteeOut>();
+		for (GuaranteeDto guaranteeDto : guarantees) {
+			GuaranteeOut tmp = new GuaranteeOut();
+			tmp.setBrokerCommissionRate(MappingUtils.toString(guaranteeDto.getBrokerRate()));
+			tmp.setGuaranteedAmount(MappingUtils.toString(guaranteeDto.getGuaranteedAmount()));
+			tmp.setGuaranteeId(guaranteeDto.getCguarantee());
+			tmp.setLeaderShare(MappingUtils.toString(guaranteeDto.getLeaderShare()));
+			tmp.setPremiumAmount(MappingUtils.toString(guaranteeDto.getPremiumAmount()));
+			tmp.setPremiumId(guaranteeDto.getCpremium());
+			tmp.setSectionId(guaranteeDto.getCsection());
+			tmp.setDispatch(populateDispatchOut(guaranteeDto.getDispatch()));
+			result.add(tmp);
+		}
+		return result;
+	}
+
+	private static List<DispatchOut> populateDispatchOut(List<DispatchDto> dispatch) {
+
+		List<DispatchOut> result = new ArrayList<DispatchOut>();
+		for (DispatchDto dispatchDto : dispatch) {
+			DispatchOut tmp = new DispatchOut();
+			tmp.setInsurerCommissionRate(MappingUtils.toString(dispatchDto.getInsurerRate()));
+			tmp.setInsurerId(dispatchDto.getNumcliinsurer());
+			tmp.setInsurerShare(MappingUtils.toString(dispatchDto.getInsurerShare()));
+			result.add(tmp);
+		}
+		return result;
+	}
 }

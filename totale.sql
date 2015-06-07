@@ -1182,4 +1182,9 @@ NOCYCLE;
 
 commit;
 
-select * from cod_premiumconfig;
+-- 07/06/2015
+
+alter table cli_contract add NUMQUOTE NUMBER (3);
+comment on column cli_contract.NUMQUOTE is 'Identifiant de la proposition ayant mene au contrat';
+
+insert into cod_movement(cmovement, lmovement, indvali) values ('VALQUOTE', 'VALIDATION PROPOSITION', '1');

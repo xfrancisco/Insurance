@@ -46,4 +46,8 @@ public interface IPopulationService {
 
 	List<PersonOut> getAgenciesByName(String userId, String name) throws InsuranceException;
 
+	List<PersonOut> getAll(String userId) throws InsuranceException;
+
+	List<PersonOut> getAllByName(String userId, String name) throws InsuranceException;
+
 }

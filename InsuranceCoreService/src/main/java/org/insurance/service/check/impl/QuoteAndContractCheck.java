@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import org.insurance.conf.Cod_duration;
 import org.insurance.conf.Cod_quotestatus;
+import org.insurance.data.Cli_contract;
 import org.insurance.data.Cli_quote;
 import org.insurance.dto.contract.ContractDto;
 import org.insurance.exception.QuoteAndContractException;
@@ -48,8 +49,16 @@ public class QuoteAndContractCheck extends ServiceCore implements IQuoteAndContr
 	}
 
 	@Override
-	public ContractDto checkContract(final long numcli, final int numcon) throws QuoteAndContractException {
-		ContractDto contract = quoteAndContractInfo.getContract(numcli, numcon);
+	public Cli_contract checkContract(final long numcli, final int numcon) throws QuoteAndContractException {
+		Cli_contract contract = quoteAndContractInfo.getContract(numcli, numcon);
+		if (contract == null)
+			throw new QuoteAndContractException(ErrorCode.ERR_BIZ_QUOTECONTRACT_UNKNOWN_CONTRACT, numcli, numcon);
+		return contract;
+	}
+
+	@Override
+	public ContractDto checkContractDto(final long numcli, final int numcon) throws QuoteAndContractException {
+		ContractDto contract = quoteAndContractInfo.getContractDto(numcli, numcon);
 		if (contract == null)
 			throw new QuoteAndContractException(ErrorCode.ERR_BIZ_QUOTECONTRACT_UNKNOWN_CONTRACT, numcli, numcon);
 		return contract;
