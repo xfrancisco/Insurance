@@ -3,6 +3,7 @@ package org.insurance.service.info;
 import java.util.List;
 
 import org.insurance.conf.Cod_duration;
+import org.insurance.conf.Cod_frequency;
 import org.insurance.conf.Cod_quotestatus;
 import org.insurance.data.Cli_contract;
 import org.insurance.data.Cli_quote;
@@ -19,6 +20,8 @@ public interface IQuoteAndContractInfo {
 	List<Cli_quote> getQuotes(long numcli);
 
 	Cod_duration getDuration(String cduration);
+
+	Cod_frequency getFrequency(String cfrequency);
 
 	Cod_quotestatus getQuoteStatus(String cquotestatus);
 

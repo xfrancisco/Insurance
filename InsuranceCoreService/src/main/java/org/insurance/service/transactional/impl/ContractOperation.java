@@ -36,6 +36,8 @@ public class ContractOperation extends ServiceCore implements IContractOperation
 		for (GuaranteeDto guaranteeDto : guarantees) {
 			// Enregistrement de la garantie
 			Cli_guarantee cliGuarantee = new Cli_guarantee();
+			cliGuarantee.setCbranch(guaranteeDto.getCbranch());
+			cliGuarantee.setCcategory(guaranteeDto.getCcategory());
 			cliGuarantee.setCsection(guaranteeDto.getCsection());
 			cliGuarantee.setCguarantee(guaranteeDto.getCguarantee());
 			cliGuarantee.setCpremium(guaranteeDto.getCpremium());

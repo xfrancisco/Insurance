@@ -11,4 +11,11 @@ public class AbstractWebservice {
 	protected static final String CITY = "city";
 	protected static final String COUNTRY_ID = "countryId";
 	protected static final String ZIPCODE = "zipcode";
+	protected static final String PREMIUM_ID = "premiumId";
+	protected static final String BRANCH_ID = "branchId";
+	protected static final String CATEGORY_ID = "categoryId";
+	protected static final String SECTION_ID = "sectionId";
+	protected static final String GUARANTEE_ID = "guaranteeId";
+	protected static final String CODETABLENAME = "codeTableName";
+	protected static final String NBBILLS = "nbBills";
 }

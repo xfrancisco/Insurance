@@ -9,6 +9,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.insurance.conf.Cod_duration;
+import org.insurance.conf.Cod_frequency;
 import org.insurance.conf.Cod_quotestatus;
 import org.insurance.data.Cli_contract;
 import org.insurance.data.Cli_guarantee;
@@ -129,6 +130,8 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 		List<Cli_guarantee> guarantees = contractPremiumInfo.getGuarantees(numcli, numcon);
 		for (Cli_guarantee cliGuarantee : guarantees) {
 			GuaranteeDto guaranteeDto = new GuaranteeDto();
+			guaranteeDto.setCcategory(cliGuarantee.getCcategory());
+			guaranteeDto.setCbranch(cliGuarantee.getCbranch());
 			guaranteeDto.setCguarantee(cliGuarantee.getCguarantee());
 			guaranteeDto.setCpremium(cliGuarantee.getCpremium());
 			guaranteeDto.setCsection(cliGuarantee.getCsection());
@@ -156,6 +159,14 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 			result.add(tmp);
 		}
 		return result;
+	}
+
+	@Override
+	public Cod_frequency getFrequency(String cfrequency) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_frequency.class);
+		criteria.add(Restrictions.eq("cfrequency", cfrequency));
+		criteria.add(Restrictions.eq("indvali", "1"));
+		return genericDao.getFirstByCriteria(criteria);
 	}
 
 }

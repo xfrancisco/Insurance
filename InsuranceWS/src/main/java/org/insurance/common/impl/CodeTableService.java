@@ -15,6 +15,7 @@ import org.insurance.conf.Cod_guarantee;
 import org.insurance.conf.Cod_premium;
 import org.insurance.conf.Cod_section;
 import org.insurance.conf.Cod_table;
+import org.insurance.conf.Cod_tax;
 import org.insurance.conf.Cod_version;
 import org.insurance.exception.CodesException;
 import org.insurance.exception.InsuranceException;
@@ -23,8 +24,10 @@ import org.insurance.out.AllCodeTableOut;
 import org.insurance.out.CodeTableOut;
 import org.insurance.out.EntityOut;
 import org.insurance.out.QuoteStatusOut;
+import org.insurance.out.TaxOut;
 import org.insurance.out.VersionOut;
 import org.insurance.service.check.ICodesCheck;
+import org.insurance.service.check.IPremiumCheck;
 import org.insurance.service.check.IUserCheck;
 import org.insurance.service.info.ICodesInfo;
 import org.insurance.service.info.IPremiumInfo;
@@ -53,6 +56,9 @@ public class CodeTableService implements ICodeTableService {
 
 	@Inject
 	private IPremiumInfo premiumInfo;
+
+	@Inject
+	private IPremiumCheck premiumCheck;
 
 	@Inject
 	private IUserCheck userCheck;
@@ -207,5 +213,22 @@ public class CodeTableService implements ICodeTableService {
 		}
 
 		return getAllCodes(userId);
+	}
+
+	@Override
+	public TaxOut getTax(String userId, String premiumId) throws InsuranceException {
+		userCheck.checkUser(userId);
+		Cod_premium codPremium = premiumCheck.checkPremium(premiumId);
+		Cod_tax codTax = premiumCheck.checkTax(codPremium.getCtax());
+		return populateTaxOut(codTax);
+	}
+
+	private TaxOut populateTaxOut(Cod_tax codTax) {
+		TaxOut result = new TaxOut();
+		result.setId(codTax.getCtax());
+		result.setLabel(codTax.getLtax());
+		result.setValue(codTax.getTaxvalue());
+		result.setIsValid(MappingUtils.toBoolean(codTax.getIndvali()));
+		return result;
 	}
 }

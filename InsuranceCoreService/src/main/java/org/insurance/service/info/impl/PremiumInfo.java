@@ -13,6 +13,7 @@ import org.insurance.conf.Cod_guarantee;
 import org.insurance.conf.Cod_premium;
 import org.insurance.conf.Cod_premiumconfig;
 import org.insurance.conf.Cod_section;
+import org.insurance.conf.Cod_tax;
 import org.insurance.service.ServiceCore;
 import org.insurance.service.info.IPremiumInfo;
 import org.springframework.stereotype.Service;
@@ -128,7 +129,7 @@ public class PremiumInfo extends ServiceCore implements IPremiumInfo {
 	}
 
 	@Override
-	public Cod_premium getPremium(String cbranch, String ccategory, String csection, String cguarantee, String cpremium) {
+	public Cod_premium getPremium(final String cbranch, final String ccategory, final String csection, final String cguarantee, final String cpremium) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_premiumconfig.class);
 		criteria.add(eq("cbranch", cbranch));
 		criteria.add(eq("ccategory", ccategory));
@@ -140,6 +141,23 @@ public class PremiumInfo extends ServiceCore implements IPremiumInfo {
 			return getPremium(cpremium);
 		}
 		return null;
+	}
+
+	@Override
+	public Cod_tax getTax(String ctax) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_tax.class);
+		criteria.add(eq("ctax", ctax));
+		return genericDao.getFirstByCriteria(criteria);
+	}
+
+	@Override
+	public Cod_tax getTaxByPremium(String cpremium) {
+		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_premium.class);
+		subQuery.add(eq("cpremium", cpremium)).setProjection(property("ctax"));
+
+		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cod_tax.class);
+		mainQuery.add(propertyIn("ctax", subQuery));
+		return genericDao.getFirstByCriteria(mainQuery);
 	}
 
 }

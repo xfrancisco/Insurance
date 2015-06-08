@@ -3,6 +3,7 @@ package org.insurance.service.check.impl;
 import javax.inject.Inject;
 
 import org.insurance.conf.Cod_duration;
+import org.insurance.conf.Cod_frequency;
 import org.insurance.conf.Cod_quotestatus;
 import org.insurance.data.Cli_contract;
 import org.insurance.data.Cli_quote;
@@ -26,6 +27,15 @@ public class QuoteAndContractCheck extends ServiceCore implements IQuoteAndContr
 			throw new QuoteAndContractException(ErrorCode.ERR_BIZ_QUOTECONTRACT_UNKNOWN_DURATION, cduration);
 		}
 		return codDuration;
+	}
+
+	@Override
+	public Cod_frequency checkFrequency(final String cfrequency) throws QuoteAndContractException {
+		Cod_frequency codFrequency = quoteAndContractInfo.getFrequency(cfrequency);
+		if (codFrequency == null) {
+			throw new QuoteAndContractException(ErrorCode.ERR_BIZ_QUOTECONTRACT_UNKNOWN_FREQUENCY, cfrequency);
+		}
+		return codFrequency;
 	}
 
 	@Override

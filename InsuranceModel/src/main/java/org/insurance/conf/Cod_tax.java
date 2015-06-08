@@ -1,5 +1,7 @@
 package org.insurance.conf;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,6 +14,7 @@ public class Cod_tax {
 	private String ctax;
 	private String ltax;
 	private String indvali;
+	private BigDecimal taxvalue;
 
 	public String getCtax() {
 		return ctax;
@@ -35,6 +38,14 @@ public class Cod_tax {
 
 	public void setIndvali(String indvali) {
 		this.indvali = indvali;
+	}
+
+	public BigDecimal getTaxvalue() {
+		return taxvalue;
+	}
+
+	public void setTaxvalue(BigDecimal taxvalue) {
+		this.taxvalue = taxvalue;
 	}
 
 }

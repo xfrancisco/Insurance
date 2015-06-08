@@ -6,6 +6,8 @@ import com.google.common.base.Strings;
 
 public class GuaranteeOut {
 
+	private String branchId;
+	private String categoryId;
 	private String sectionId;
 	private String guaranteeId;
 	private String premiumId;
@@ -82,6 +84,22 @@ public class GuaranteeOut {
 
 	public void setLeaderShare(String leaderShare) {
 		this.leaderShare = leaderShare;
+	}
+
+	public String getBranchId() {
+		return branchId;
+	}
+
+	public void setBranchId(String branchId) {
+		this.branchId = branchId;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
 
 }

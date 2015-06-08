@@ -22,6 +22,8 @@ public class ContractOut {
 
 	private String durationId;
 
+	private String frequencyId;
+
 	private String underwriterId;
 
 	private String startDate;
@@ -124,6 +126,14 @@ public class ContractOut {
 
 	public void setContractId(Integer contractId) {
 		this.contractId = contractId;
+	}
+
+	public String getFrequencyId() {
+		return frequencyId;
+	}
+
+	public void setFrequencyId(String frequencyId) {
+		this.frequencyId = frequencyId;
 	}
 
 }

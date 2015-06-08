@@ -74,7 +74,7 @@ public final class DateUtils {
 	}
 
 	/**
-	 * Convertit une chaine en date. Si la chaine est null ou vide la fonction retourne null 
+	 * Convertit une chaine en date. Si la chaine est null ou vide la fonction retourne null
 	 * @param date Chaine au format YYYYMMDD
 	 * @return une Date
 	 * @throws TechnicalException
@@ -84,7 +84,7 @@ public final class DateUtils {
 	}
 
 	/**
-	 * Convertit une chaine en date. Si la chaine est null ou vide la fonction retourne null 
+	 * Convertit une chaine en date. Si la chaine est null ou vide la fonction retourne null
 	 * @param date Chaine au format spécifié par le pattern
 	 * @param pattern format de la date
 	 * @return une Date
@@ -106,7 +106,7 @@ public final class DateUtils {
 	}
 
 	/**
-	 * Convertit une chaine en date. Si la chaine est null ou vide la fonction retourne null 
+	 * Convertit une chaine en date. Si la chaine est null ou vide la fonction retourne null
 	 * @param date Chaine au format spécifié par le pattern
 	 * @param pattern format de la date
 	 * @return une java.sql.Date
@@ -128,7 +128,7 @@ public final class DateUtils {
 	}
 
 	/**
-	 * Convertit une chaine en date. Si la chaine est null ou vide la fonction retourne null 
+	 * Convertit une chaine en date. Si la chaine est null ou vide la fonction retourne null
 	 * @param date Chaine au format YYYYMMDD
 	 * @return une java.sql.Date
 	 * @throws TechnicalException
@@ -196,7 +196,7 @@ public final class DateUtils {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param date
 	 * @return
 	 */
@@ -311,10 +311,10 @@ public final class DateUtils {
 	/**
 	 * Méthode utilitaire permattant le test de cohérence chronologique entre une date de début et une date de fin.
 	 * Le pattern par défaut "yyyyMMdd"
-	 * 
+	 *
 	 * @param startDate : la date de début
 	 * @param endDate : la date de fin
-	 * 
+	 *
 	 * @throws TechnicalException : Exception renvoyée si l'une des date est vide ou null ou si une incohérence chronologique est trouvée
 	 */
 	public static void checkStartAndEndDate(String startDate, String endDate) {
@@ -323,11 +323,11 @@ public final class DateUtils {
 
 	/**
 	 * Méthode utilitaire permattant le test de cohérence chronologique entre une date de début et une date de fin.
-	 * 
+	 *
 	 * @param startDate : la date de début
 	 * @param endDate : la date de fin
 	 * @param pattern : le format de la date
-	 * 
+	 *
 	 * @throws TechnicalException : Exception renvoyée si l'une des date est vide ou null ou si une incohérence chronologique est trouvée
 	 */
 	public static void checkStartAndEndDate(String startDate, String endDate, DatePattern pattern) {
@@ -348,5 +348,23 @@ public final class DateUtils {
 		LocalDate locdate = new LocalDate(date);
 		LocalDate endOfMonth = locdate.dayOfMonth().withMaximumValue();
 		return endOfMonth.toDate();
+	}
+
+	public static Date getFirstDayOfTheMonth(final Date date) {
+		if (date == null) {
+			return null;
+		}
+		LocalDate locdate = new LocalDate(date);
+		LocalDate endOfMonth = locdate.dayOfMonth().withMinimumValue();
+		return endOfMonth.toDate();
+	}
+
+	public static Date getLastDayOfTheYear(final Date date) {
+		if (date == null) {
+			return null;
+		}
+		LocalDate locdate = new LocalDate(date);
+		LocalDate endOfYear = locdate.monthOfYear().withMaximumValue();
+		return endOfYear.dayOfMonth().withMaximumValue().toDate();
 	}
 }

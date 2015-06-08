@@ -39,6 +39,7 @@ public class Cli_contract implements Serializable {
 	private Long numclibroker;
 	private Long numclileader;
 	private String cduration;
+	private String cfrequency;
 	private String cuseruw;
 
 	public Long getNumcli() {
@@ -183,6 +184,14 @@ public class Cli_contract implements Serializable {
 
 	public void setNumquote(Integer numquote) {
 		this.numquote = numquote;
+	}
+
+	public String getCfrequency() {
+		return cfrequency;
+	}
+
+	public void setCfrequency(String cfrequency) {
+		this.cfrequency = cfrequency;
 	}
 
 }

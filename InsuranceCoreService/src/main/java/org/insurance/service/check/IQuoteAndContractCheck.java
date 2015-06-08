@@ -1,6 +1,7 @@
 package org.insurance.service.check;
 
 import org.insurance.conf.Cod_duration;
+import org.insurance.conf.Cod_frequency;
 import org.insurance.conf.Cod_quotestatus;
 import org.insurance.data.Cli_contract;
 import org.insurance.data.Cli_quote;
@@ -18,5 +19,7 @@ public interface IQuoteAndContractCheck {
 	Cli_contract checkContract(long numcli, int numcon) throws QuoteAndContractException;
 
 	ContractDto checkContractDto(long numcli, int numcon) throws QuoteAndContractException;
+
+	Cod_frequency checkFrequency(String cfrequency) throws QuoteAndContractException;
 
 }

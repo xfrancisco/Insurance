@@ -34,6 +34,7 @@ public final class ContractMapping {
 		contract.setCbranch(contractIn.getBranchId());
 		contract.setCcategory(contractIn.getCategoryId());
 		contract.setCduration(contractIn.getDurationId());
+		contract.setCfrequency(contractIn.getFrequencyId());
 		contract.setCuseruw(contractIn.getUnderwriterId());
 		contract.setStartval(DateUtils.parseStringToSqlDate(contractIn.getStartDate()));
 		contract.setEndval(DateUtils.parseStringToSqlDate(contractIn.getEndDate()));
@@ -52,6 +53,8 @@ public final class ContractMapping {
 			tmp.setCguarantee(guaranteeIn.getGuaranteeId());
 			tmp.setCpremium(guaranteeIn.getPremiumId());
 			tmp.setCsection(guaranteeIn.getSectionId());
+			tmp.setCcategory(guaranteeIn.getCategoryId());
+			tmp.setCbranch(guaranteeIn.getBranchId());
 			tmp.setGuaranteedAmount(MappingUtils.toBigDecimal(guaranteeIn.getGuaranteedAmount()));
 			tmp.setPremiumAmount(MappingUtils.toBigDecimal(guaranteeIn.getPremiumAmount()));
 			tmp.setDispatch(populateDispatch(guaranteeIn.getDispatch()));
@@ -108,6 +111,7 @@ public final class ContractMapping {
 		result.setContractId(contract.getContract().getNumcon());
 		result.setStartDate(DateUtils.formatDate(contract.getContract().getStartval()));
 		result.setUnderwriterId(contract.getContract().getCuseruw());
+		result.setFrequencyId(contract.getContract().getCfrequency());
 		return result;
 	}
 

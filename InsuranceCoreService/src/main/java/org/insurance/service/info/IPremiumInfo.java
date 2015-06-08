@@ -8,6 +8,7 @@ import org.insurance.conf.Cod_guarantee;
 import org.insurance.conf.Cod_premium;
 import org.insurance.conf.Cod_premiumconfig;
 import org.insurance.conf.Cod_section;
+import org.insurance.conf.Cod_tax;
 
 public interface IPremiumInfo {
 
@@ -36,4 +37,8 @@ public interface IPremiumInfo {
 	Cod_category getCategory(String cbranch, String ccategory);
 
 	Cod_premium getPremium(String cbranch, String ccategory, String csection, String cguarantee, String cpremium);
+
+	Cod_tax getTax(String cpremium);
+
+	Cod_tax getTaxByPremium(String cpremium);
 }

@@ -23,6 +23,8 @@ public class Cli_guarantee implements Serializable {
 	private Long numguarantee;
 	private Long numcli;
 	private Integer numcon;
+	private String cbranch;
+	private String ccategory;
 	private String cguarantee;
 	private java.sql.Date startval;
 	private java.sql.Date endval;
@@ -145,6 +147,22 @@ public class Cli_guarantee implements Serializable {
 
 	public void setPremiumamount(BigDecimal premiumamount) {
 		this.premiumamount = premiumamount;
+	}
+
+	public String getCbranch() {
+		return cbranch;
+	}
+
+	public void setCbranch(String cbranch) {
+		this.cbranch = cbranch;
+	}
+
+	public String getCcategory() {
+		return ccategory;
+	}
+
+	public void setCcategory(String ccategory) {
+		this.ccategory = ccategory;
 	}
 
 }

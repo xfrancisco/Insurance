@@ -51,6 +51,7 @@
 				<value>org.insurance.conf.Cod_quotestatus</value>
 				<value>org.insurance.conf.Cod_duration</value>
 				<value>org.insurance.conf.Cod_table</value>
+				<value>org.insurance.conf.Cod_frequency</value>
 				
 				
 				<value>org.insurance.conf.Cod_branch</value>

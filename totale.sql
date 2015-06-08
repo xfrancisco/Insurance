@@ -399,8 +399,16 @@ CREATE TABLE COD_TAX
   CONSTRAINT CODTAX_PK PRIMARY KEY (CTAX)
 );
 
+
+
 INSERT INTO COD_TAX(CTAX, LTAX, TAXVALUE, INDVALI) values ('00', 'TAUX TAXE 0%', 0, '1');
 INSERT INTO COD_TAX(CTAX, LTAX, TAXVALUE, INDVALI) values ('09', 'TAUX TAXE 9%', 9, '1');
+
+update COD_TAX set taxvalue = null; 
+alter table cod_tax modify  TAXVALUE NUMBER(16,3);
+
+update COD_TAX set taxvalue = 0 where ctax = '00';
+update COD_TAX set taxvalue = 9 where ctax = '09';
 
 comment on table COD_TAX is 'Table des taux de taxes';
 comment on column COD_TAX.CTAX is 'Code';
@@ -1188,3 +1196,58 @@ alter table cli_contract add NUMQUOTE NUMBER (3);
 comment on column cli_contract.NUMQUOTE is 'Identifiant de la proposition ayant mene au contrat';
 
 insert into cod_movement(cmovement, lmovement, indvali) values ('VALQUOTE', 'VALIDATION PROPOSITION', '1');
+
+
+-- 08/06/2015
+
+alter table cli_guarantee add CBRANCH VARCHAR2(6) NOT NULL;
+alter table cli_guarantee add CCATEGORY VARCHAR2(6) NOT NULL;
+comment on column cli_guarantee.CBRANCH is 'Identifiant de la branche. Reference COD_BRANCH';
+comment on column cli_guarantee.CCATEGORY is 'Identifiant de la categorie. Reference COD_CATEGORY';
+alter table cli_guarantee ADD CONSTRAINT FK_GUARBRANCH FOREIGN KEY (CBRANCH) REFERENCES COD_BRANCH(CBRANCH);
+alter table cli_guarantee ADD CONSTRAINT FK_GUARCATEG FOREIGN KEY (CCATEGORY) REFERENCES COD_CATEGORY(CCATEGORY);
+
+
+
+alter table cod_duration add INDRENEWAL VARCHAR2(1) DEFAULT '0' NOT NULL;
+comment on column cod_duration.INDRENEWAL is 'Indicateur. Si a 1, alors le contrat sur cette duree sera tacitement reconduit';
+
+update cod_duration set INDRENEWAL = '1' where cduration = '01';
+
+commit;
+
+CREATE TABLE COD_FREQUENCY
+( 
+  CFREQUENCY VARCHAR2(6) NOT NULL,
+  LFREQUENCY VARCHAR2(128) NOT NULL,
+  NBMONTHS NUMBER(2) NOT NULL, 
+  INDVALI VARCHAR2(1) DEFAULT '1' NOT NULL,
+  CONSTRAINT CODFREQUENCY_PK PRIMARY KEY (CFREQUENCY)
+);
+
+comment on table COD_FREQUENCY is 'Table des frequences de facturation';
+comment on column COD_FREQUENCY.CFREQUENCY is 'Code';
+comment on column COD_FREQUENCY.LFREQUENCY is 'Libelle';
+comment on column COD_FREQUENCY.INDVALI is 'Indicateur de validite de l''enregistrement. Si a 1 alors valide';
+comment on column COD_FREQUENCY.NBMONTHS is 'Nombre de mois associes a la frequence';
+
+insert into COD_FREQUENCY(CFREQUENCY, LFREQUENCY, INDVALI, NBMONTHS) values ('12', 'ANNUELLE', '1', 12);
+insert into COD_FREQUENCY(CFREQUENCY, LFREQUENCY, INDVALI, NBMONTHS) values ('01', 'MENSUELLE', '1', 1);
+insert into COD_FREQUENCY(CFREQUENCY, LFREQUENCY, INDVALI, NBMONTHS) values ('03', 'TRIMESTRIELLE', '1', 4);
+insert into COD_FREQUENCY(CFREQUENCY, LFREQUENCY, INDVALI, NBMONTHS) values ('06', 'SEMESTRIELLE', '1', 4);
+
+
+
+INSERT INTO COD_TABLE(CTABLE, LTABLE, TABLENAME, TABLECODE, TABLELABEL, INDVALI) VALUES ('FREQUENCIES', 'LISTE DES FREQUENCES', 'Cod_frequency', 'cfrequency', 'lfrequency', '1' );
+
+alter table cli_contract add CFREQUENCY VARCHAR2(6) default '12' NOT NULL;
+comment on column cli_contract.CFREQUENCY is 'Frequence de facturation. Reference COD_FREQUENCY';
+alter table cli_contract ADD CONSTRAINT FK_CONFREQUENCY FOREIGN KEY (CFREQUENCY) REFERENCES COD_FREQUENCY(CFREQUENCY);
+
+commit;
+
+update cod_frequency set NBMONTHS = '6' where cfrequency = '06';
+
+update cod_frequency set NBMONTHS = 3 where cfrequency = '03';
+commit;
+

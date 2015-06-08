@@ -40,6 +40,10 @@ public class ContractIn {
 	private String durationId;
 
 	@Mandatory
+	@Length(max = EnterpriseModelEnum.FREQUENCY)
+	private String frequencyId;
+
+	@Mandatory
 	@Length(max = EnterpriseModelEnum.USERID)
 	private String underwriterId;
 
@@ -137,6 +141,14 @@ public class ContractIn {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+	public String getFrequencyId() {
+		return frequencyId;
+	}
+
+	public void setFrequencyId(String frequencyId) {
+		this.frequencyId = frequencyId;
 	}
 
 }

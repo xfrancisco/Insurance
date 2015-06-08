@@ -59,6 +59,7 @@ public class ContractManager extends ServiceCore implements IContractManager {
 		premiumCheck.checkBranch(cliContract.getCbranch());
 		premiumCheck.checkCategory(cliContract.getCbranch(), cliContract.getCcategory());
 		quoteAndContractCheck.checkDuration(cliContract.getCduration());
+		quoteAndContractCheck.checkFrequency(cliContract.getCfrequency());
 		if (contract.getNumquote() != null)
 			quoteAndContractCheck.checkQuote(numcli, contract.getNumquote());
 		userCheck.checkUser(cliContract.getCuseruw());
@@ -66,8 +67,8 @@ public class ContractManager extends ServiceCore implements IContractManager {
 
 		List<GuaranteeDto> guarantees = contract.getGuarantees();
 		for (GuaranteeDto guaranteeDto : guarantees) {
-			premiumCheck.checkPremium(cliContract.getCbranch(), cliContract.getCcategory(), guaranteeDto.getCsection(), guaranteeDto.getCguarantee(),
-					guaranteeDto.getCpremium());
+			premiumCheck.checkPremium(guaranteeDto.getCbranch(), guaranteeDto.getCcategory(), guaranteeDto.getCsection(),
+					guaranteeDto.getCguarantee(), guaranteeDto.getCpremium());
 			commonCheck.checkAmount(guaranteeDto.getGuaranteedAmount());
 			commonCheck.checkAmount(guaranteeDto.getPremiumAmount());
 			commonCheck.checkPercentage(guaranteeDto.getLeaderShare());

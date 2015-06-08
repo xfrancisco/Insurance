@@ -7,6 +7,7 @@ import org.insurance.conf.Cod_category;
 import org.insurance.conf.Cod_guarantee;
 import org.insurance.conf.Cod_premium;
 import org.insurance.conf.Cod_section;
+import org.insurance.conf.Cod_tax;
 import org.insurance.exception.PremiumException;
 import org.insurance.exception.PremiumException.ErrorCode;
 import org.insurance.service.ServiceCore;
@@ -58,5 +59,21 @@ public class PremiumCheck extends ServiceCore implements IPremiumCheck {
 		if (codPremium == null)
 			throw new PremiumException(ErrorCode.ERR_BIZ_PREMIUM_UNKNWOWN_PREMIUM_CONF, cbranch, ccategory, csection, cguarantee, cpremium);
 		return codPremium;
+	}
+
+	@Override
+	public Cod_premium checkPremium(String cpremium) throws PremiumException {
+		Cod_premium codPremium = premiumInfo.getPremium(cpremium);
+		if (codPremium == null)
+			throw new PremiumException(ErrorCode.ERR_BIZ_PREMIUM_UNKNWOWN_PREMIUM, cpremium);
+		return codPremium;
+	}
+
+	@Override
+	public Cod_tax checkTax(String ctax) throws PremiumException {
+		Cod_tax codTax = premiumInfo.getTax(ctax);
+		if (codTax == null)
+			throw new PremiumException(ErrorCode.ERR_BIZ_PREMIUM_UNKNWOWN_TAX, ctax);
+		return codTax;
 	}
 }

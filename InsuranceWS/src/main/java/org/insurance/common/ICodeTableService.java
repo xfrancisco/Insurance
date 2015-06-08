@@ -8,6 +8,7 @@ import org.insurance.out.AllCodeTableOut;
 import org.insurance.out.CodeTableOut;
 import org.insurance.out.EntityOut;
 import org.insurance.out.QuoteStatusOut;
+import org.insurance.out.TaxOut;
 import org.insurance.out.VersionOut;
 
 public interface ICodeTableService {
@@ -31,5 +32,7 @@ public interface ICodeTableService {
 	List<QuoteStatusOut> getQuoteStatus(final String userId) throws InsuranceException;
 
 	List<AllCodeTableOut> updateCodeTables(final String userId, final List<CodeTableIn> codeIn) throws InsuranceException;
+
+	TaxOut getTax(String userId, String premiumId) throws InsuranceException;
 
 }

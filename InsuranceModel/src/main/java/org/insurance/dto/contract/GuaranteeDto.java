@@ -5,6 +5,8 @@ import java.util.List;
 
 public class GuaranteeDto {
 
+	private String cbranch;
+	private String ccategory;
 	private String csection;
 	private String cguarantee;
 	private String cpremium;
@@ -78,5 +80,21 @@ public class GuaranteeDto {
 
 	public void setLeaderShare(BigDecimal leaderShare) {
 		this.leaderShare = leaderShare;
+	}
+
+	public String getCbranch() {
+		return cbranch;
+	}
+
+	public void setCbranch(String cbranch) {
+		this.cbranch = cbranch;
+	}
+
+	public String getCcategory() {
+		return ccategory;
+	}
+
+	public void setCcategory(String ccategory) {
+		this.ccategory = ccategory;
 	}
 }

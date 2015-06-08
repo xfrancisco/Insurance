@@ -15,6 +15,12 @@ import com.google.common.base.Strings;
 public class GuaranteeIn {
 
 	@Mandatory
+	@Length(max = EnterpriseModelEnum.BRANCH)
+	private String branchId;
+	@Mandatory
+	@Length(max = EnterpriseModelEnum.CATEGORY)
+	private String categoryId;
+	@Mandatory
 	@Length(max = EnterpriseModelEnum.SECTIONID)
 	private String sectionId;
 	@Mandatory
@@ -103,6 +109,22 @@ public class GuaranteeIn {
 
 	public void setLeaderShare(String leaderShare) {
 		this.leaderShare = leaderShare;
+	}
+
+	public String getBranchId() {
+		return branchId;
+	}
+
+	public void setBranchId(String branchId) {
+		this.branchId = branchId;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
 
 }
