@@ -29,10 +29,10 @@ public class BillingWebservice extends AbstractWebservice {
 	public ResponseWrapper<List<BillOut>> getCodeTable(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(value = "Identifiant du client", name = PERSON_ID, required = true) @QueryParam(PERSON_ID) long personId,
-			@ApiParam(value = "Identifiant du contrat", name = CONTRACT_ID, required = true) @QueryParam(CONTRACT_ID) int contractId,
-			@ApiParam(value = "Nombre de factures", name = NBBILLS, required = true) @QueryParam(NBBILLS) int nbBills) throws InsuranceException {
+			@ApiParam(value = "Identifiant du contrat", name = CONTRACT_ID, required = true) @QueryParam(CONTRACT_ID) int contractId)
+			throws InsuranceException {
 		ResponseWrapper<List<BillOut>> responseWrapper = new ResponseWrapper<List<BillOut>>();
-		responseWrapper.setData(billService.getBills(userId, personId, contractId, nbBills));
+		responseWrapper.setData(billService.getBills(userId, personId, contractId));
 		return responseWrapper;
 	}
 

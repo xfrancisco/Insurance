@@ -36,11 +36,11 @@ public class BillService implements IBillService {
 	private IBillInfo billInfo;
 
 	@Override
-	public List<BillOut> getBills(final String userId, final long personId, final int contractId, final int nbBills) throws InsuranceException {
+	public List<BillOut> getBills(final String userId, final long personId, final int contractId) throws InsuranceException {
 		userCheck.checkUser(userId);
 		personCheck.checkClient(personId);
 		quoteAndContractCheck.checkContract(personId, contractId);
-		List<BillDto> billDtos = billInfo.getBills(personId, contractId, nbBills);
+		List<BillDto> billDtos = billInfo.getBills(personId, contractId);
 		return populateBillOut(billDtos);
 	}
 

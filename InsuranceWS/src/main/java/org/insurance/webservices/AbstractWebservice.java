@@ -17,5 +17,4 @@ public class AbstractWebservice {
 	protected static final String SECTION_ID = "sectionId";
 	protected static final String GUARANTEE_ID = "guaranteeId";
 	protected static final String CODETABLENAME = "codeTableName";
-	protected static final String NBBILLS = "nbBills";
 }

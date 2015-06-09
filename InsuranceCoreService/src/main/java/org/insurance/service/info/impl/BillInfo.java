@@ -39,7 +39,7 @@ public class BillInfo extends ServiceCore implements IBillInfo {
 	private IPremiumInfo premiumInfo;
 
 	@Override
-	public List<BillDto> getBills(final long numcli, final int numcon, final int nbBills) {
+	public List<BillDto> getBills(final long numcli, final int numcon) {
 
 		List<BillDto> result = new ArrayList<BillDto>();
 		Cli_contract cliContract = quoteAndContractInfo.getContract(numcli, numcon);
@@ -78,7 +78,7 @@ public class BillInfo extends ServiceCore implements IBillInfo {
 			BigDecimal nbDaysInCurrentBill = null;
 			if (caca)
 				nbDaysInCurrentBill = new BigDecimal(Days.daysBetween(new LocalDate(lastDate), new LocalDate(nextDate)).getDays())
-						.add(new BigDecimal(1));
+			.add(new BigDecimal(1));
 			else {
 				nbDaysInCurrentBill = new BigDecimal(Days.daysBetween(new LocalDate(lastDate), new LocalDate(nextDate)).getDays());
 				caca = true;

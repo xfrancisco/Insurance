@@ -7,6 +7,6 @@ import org.insurance.out.BillOut;
 
 public interface IBillService {
 
-	List<BillOut> getBills(String userId, long personId, int contractId, int nbBills) throws InsuranceException;
+	List<BillOut> getBills(String userId, long personId, int contractId) throws InsuranceException;
 
 }
