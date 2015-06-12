@@ -1,6 +1,7 @@
 package org.insurance.service.manager.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,6 +11,8 @@ import org.insurance.dto.contract.ContractDto;
 import org.insurance.dto.contract.DispatchDto;
 import org.insurance.dto.contract.GuaranteeDto;
 import org.insurance.exception.InsuranceException;
+import org.insurance.exception.PremiumException;
+import org.insurance.exception.PremiumException.ErrorCode;
 import org.insurance.service.ServiceCore;
 import org.insurance.service.check.ICommonCheck;
 import org.insurance.service.check.IPersonCheck;
@@ -67,6 +70,8 @@ public class ContractManager extends ServiceCore implements IContractManager {
 
 		List<GuaranteeDto> guarantees = contract.getGuarantees();
 		for (GuaranteeDto guaranteeDto : guarantees) {
+			List<Long> insurers = new ArrayList<Long>();
+			insurers.add(cliContract.getNumclileader());
 			premiumCheck.checkPremium(guaranteeDto.getCbranch(), guaranteeDto.getCcategory(), guaranteeDto.getCsection(),
 					guaranteeDto.getCguarantee(), guaranteeDto.getCpremium());
 			commonCheck.checkAmount(guaranteeDto.getGuaranteedAmount());
@@ -81,6 +86,11 @@ public class ContractManager extends ServiceCore implements IContractManager {
 				commonCheck.checkPercentage(dispatch.getInsurerShare());
 				personCheck.checkInsurer(dispatch.getNumcliinsurer());
 				globalShare = globalShare.add(dispatch.getInsurerShare());
+				if (insurers.contains(dispatch.getNumcliinsurer()))
+					throw new PremiumException(ErrorCode.ERR_BIZ_PREMIUM_INSURER_ALREADY_IN_SHARE, guaranteeDto.getCpremium(),
+							dispatch.getNumcliinsurer());
+				else
+					insurers.add(dispatch.getNumcliinsurer());
 			}
 			commonCheck.checkShareOnPremium(globalShare, guaranteeDto.getCpremium());
 		}

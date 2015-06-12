@@ -37,7 +37,7 @@ public class CodeTableWebservice extends AbstractWebservice {
 	public ResponseWrapper<List<CodeTableOut>> getCodeTable(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(value = "Nom de la code table", name = CODETABLENAME, required = true) @QueryParam(CODETABLENAME) String codeTableName)
-					throws InsuranceException {
+			throws InsuranceException {
 		ResponseWrapper<List<CodeTableOut>> responseWrapper = new ResponseWrapper<List<CodeTableOut>>();
 		responseWrapper.setData(codeTableService.getCodeTable(userId, codeTableName, true));
 		return responseWrapper;
@@ -83,7 +83,7 @@ public class CodeTableWebservice extends AbstractWebservice {
 	public ResponseWrapper<List<EntityOut>> getCategories(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(required = true, value = "Identifiant de la branche", name = BRANCH_ID) @QueryParam(BRANCH_ID) String branchId)
-					throws InsuranceException {
+			throws InsuranceException {
 		ResponseWrapper<List<EntityOut>> responseWrapper = new ResponseWrapper<List<EntityOut>>();
 		responseWrapper.setData(codeTableService.getCategories(userId, branchId));
 		return responseWrapper;
@@ -91,37 +91,43 @@ public class CodeTableWebservice extends AbstractWebservice {
 
 	@GET
 	@Path("/sections/filter")
-	@ApiOperation(value = "Liste des sections filtrées par catégorie")
+	@ApiOperation(value = "Liste des sections filtrées par branche et catégorie")
 	public ResponseWrapper<List<EntityOut>> getSections(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
+			@ApiParam(required = true, value = "Identifiant de la branche", name = BRANCH_ID) @QueryParam(BRANCH_ID) String branchId,
 			@ApiParam(required = true, value = "Identifiant de la catégorie", name = CATEGORY_ID) @QueryParam(CATEGORY_ID) String categoryId)
-					throws InsuranceException {
+			throws InsuranceException {
 		ResponseWrapper<List<EntityOut>> responseWrapper = new ResponseWrapper<List<EntityOut>>();
-		responseWrapper.setData(codeTableService.getSections(userId, categoryId));
+		responseWrapper.setData(codeTableService.getSections(userId, branchId, categoryId));
 		return responseWrapper;
 	}
 
 	@GET
 	@Path("/guarantees/filter")
-	@ApiOperation(value = "Liste des garanties filtrées par section")
+	@ApiOperation(value = "Liste des garanties filtrées par branche, catégorie et section")
 	public ResponseWrapper<List<EntityOut>> getGuarantees(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
+			@ApiParam(required = true, value = "Identifiant de la branche", name = BRANCH_ID) @QueryParam(BRANCH_ID) String branchId,
+			@ApiParam(required = true, value = "Identifiant de la catégorie", name = CATEGORY_ID) @QueryParam(CATEGORY_ID) String categoryId,
 			@ApiParam(required = true, value = "Identifiant de la section", name = SECTION_ID) @QueryParam(SECTION_ID) String sectionId)
 			throws InsuranceException {
 		ResponseWrapper<List<EntityOut>> responseWrapper = new ResponseWrapper<List<EntityOut>>();
-		responseWrapper.setData(codeTableService.getGuarantees(userId, sectionId));
+		responseWrapper.setData(codeTableService.getGuarantees(userId, branchId, categoryId, sectionId));
 		return responseWrapper;
 	}
 
 	@GET
 	@Path("/premiums/filter")
-	@ApiOperation(value = "Liste des primes filtrées par garantie")
+	@ApiOperation(value = "Liste des primes filtrées par branche, catégorie, section et garantie")
 	public ResponseWrapper<List<EntityOut>> getPremiums(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
+			@ApiParam(required = true, value = "Identifiant de la branche", name = BRANCH_ID) @QueryParam(BRANCH_ID) String branchId,
+			@ApiParam(required = true, value = "Identifiant de la catégorie", name = CATEGORY_ID) @QueryParam(CATEGORY_ID) String categoryId,
+			@ApiParam(required = true, value = "Identifiant de la section", name = SECTION_ID) @QueryParam(SECTION_ID) String sectionId,
 			@ApiParam(required = true, value = "Identifiant de la garantie", name = GUARANTEE_ID) @QueryParam(GUARANTEE_ID) String guaranteeId)
 			throws InsuranceException {
 		ResponseWrapper<List<EntityOut>> responseWrapper = new ResponseWrapper<List<EntityOut>>();
-		responseWrapper.setData(codeTableService.getPremiums(userId, guaranteeId));
+		responseWrapper.setData(codeTableService.getPremiums(userId, branchId, categoryId, sectionId, guaranteeId));
 		return responseWrapper;
 	}
 
@@ -143,7 +149,7 @@ public class CodeTableWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
 			throws InsuranceException {
 		ResponseWrapper<List<EntityOut>> responseWrapper = new ResponseWrapper<List<EntityOut>>();
-		responseWrapper.setData(codeTableService.getSections(userId, null));
+		responseWrapper.setData(codeTableService.getSections(userId, null, null));
 		return responseWrapper;
 	}
 
@@ -154,7 +160,7 @@ public class CodeTableWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
 			throws InsuranceException {
 		ResponseWrapper<List<EntityOut>> responseWrapper = new ResponseWrapper<List<EntityOut>>();
-		responseWrapper.setData(codeTableService.getGuarantees(userId, null));
+		responseWrapper.setData(codeTableService.getGuarantees(userId, null, null, null));
 		return responseWrapper;
 	}
 
@@ -165,7 +171,7 @@ public class CodeTableWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
 			throws InsuranceException {
 		ResponseWrapper<List<EntityOut>> responseWrapper = new ResponseWrapper<List<EntityOut>>();
-		responseWrapper.setData(codeTableService.getPremiums(userId, null));
+		responseWrapper.setData(codeTableService.getPremiums(userId, null, null, null, null));
 		return responseWrapper;
 	}
 

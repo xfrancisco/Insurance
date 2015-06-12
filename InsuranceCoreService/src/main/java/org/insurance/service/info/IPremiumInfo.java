@@ -28,11 +28,11 @@ public interface IPremiumInfo {
 
 	public List<Cod_category> getCategories(final String cbranch);
 
-	public List<Cod_section> getSections(final String ccategory);
+	public List<Cod_section> getSections(String cbranch, String ccategory);
 
-	public List<Cod_guarantee> getGuarantees(final String csection);
+	public List<Cod_guarantee> getGuarantees(String cbranch, String ccategory, String csection);
 
-	public List<Cod_premium> getPremiums(final String cpremium);
+	public List<Cod_premium> getPremiums(String cbranch, String ccategory, String csection, String cguarantee);
 
 	Cod_category getCategory(String cbranch, String ccategory);
 

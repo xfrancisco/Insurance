@@ -75,11 +75,12 @@ public class PremiumInfo extends ServiceCore implements IPremiumInfo {
 	}
 
 	@Override
-	public List<Cod_section> getSections(final String ccategory) {
+	public List<Cod_section> getSections(final String cbranch, final String ccategory) {
 		if (Strings.isNullOrEmpty(ccategory))
 			return genericDao.getList(Cod_section.class);
 		else {
 			final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_premiumconfig.class);
+			subQuery.add(eq("cbranch", cbranch));
 			subQuery.add(eq("ccategory", ccategory)).setProjection(property("csection"));
 
 			final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cod_section.class);
@@ -89,11 +90,13 @@ public class PremiumInfo extends ServiceCore implements IPremiumInfo {
 	}
 
 	@Override
-	public List<Cod_guarantee> getGuarantees(final String csection) {
+	public List<Cod_guarantee> getGuarantees(final String cbranch, final String ccategory, final String csection) {
 		if (Strings.isNullOrEmpty(csection))
 			return genericDao.getList(Cod_guarantee.class);
 		else {
 			final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_premiumconfig.class);
+			subQuery.add(eq("cbranch", cbranch));
+			subQuery.add(eq("ccategory", ccategory));
 			subQuery.add(eq("csection", csection)).setProjection(property("cguarantee"));
 
 			final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cod_guarantee.class);
@@ -103,11 +106,14 @@ public class PremiumInfo extends ServiceCore implements IPremiumInfo {
 	}
 
 	@Override
-	public List<Cod_premium> getPremiums(final String cguarantee) {
+	public List<Cod_premium> getPremiums(final String cbranch, final String ccategory, final String csection, final String cguarantee) {
 		if (Strings.isNullOrEmpty(cguarantee))
 			return genericDao.getList(Cod_premium.class);
 		else {
 			final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_premiumconfig.class);
+			subQuery.add(eq("cbranch", cbranch));
+			subQuery.add(eq("ccategory", ccategory));
+			subQuery.add(eq("csection", csection));
 			subQuery.add(eq("cguarantee", cguarantee)).setProjection(property("cpremium"));
 
 			final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cod_premium.class);

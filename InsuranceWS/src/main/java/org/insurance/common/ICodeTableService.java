@@ -21,11 +21,12 @@ public interface ICodeTableService {
 
 	List<EntityOut> getCategories(final String userId, String branchId) throws InsuranceException;
 
-	List<EntityOut> getSections(final String userId, String categoryId) throws InsuranceException;
+	List<EntityOut> getSections(final String userId, String branchId, String categoryId) throws InsuranceException;
 
-	List<EntityOut> getGuarantees(final String userId, String sectionId) throws InsuranceException;
+	List<EntityOut> getGuarantees(final String userId, String branchId, String categoryId, String sectionId) throws InsuranceException;
 
-	List<EntityOut> getPremiums(final String userId, String guaranteeId) throws InsuranceException;
+	List<EntityOut> getPremiums(final String userId, String branchId, String categoryId, String sectionId, String guaranteeId)
+			throws InsuranceException;
 
 	List<AllCodeTableOut> getAllCodes(final String userId) throws InsuranceException;
 

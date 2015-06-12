@@ -25,7 +25,7 @@ public class CommonCheck extends ServiceCore implements ICommonCheck {
 	@Override
 	public void checkPercentage(final BigDecimal percentage) throws CommonException {
 		int comparisonResult = percentage.compareTo(maxPercentage);
-		if (comparisonResult >= 0)
+		if (comparisonResult > 0)
 			throw new CommonException(ErrorCode.ERR_BIZ_COMMON_INVALID_PERCENTAGE, percentage);
 
 	}

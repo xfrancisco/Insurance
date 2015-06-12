@@ -127,7 +127,7 @@ public class CodeTableService implements ICodeTableService {
 	}
 
 	@Override
-	public List<EntityOut> getCategories(final String userId, String branchId) throws InsuranceException {
+	public List<EntityOut> getCategories(final String userId, final String branchId) throws InsuranceException {
 		userCheck.checkUser(userId);
 		List<Cod_category> categories = premiumInfo.getCategories(branchId);
 		List<EntityOut> result = PremiumMapping.populateCategoryOutList(categories);
@@ -138,9 +138,9 @@ public class CodeTableService implements ICodeTableService {
 	}
 
 	@Override
-	public List<EntityOut> getSections(final String userId, String categoryId) throws InsuranceException {
+	public List<EntityOut> getSections(final String userId, final String branchId, final String categoryId) throws InsuranceException {
 		userCheck.checkUser(userId);
-		List<Cod_section> sections = premiumInfo.getSections(categoryId);
+		List<Cod_section> sections = premiumInfo.getSections(branchId, categoryId);
 		List<EntityOut> result = PremiumMapping.populateSectionOutList(sections);
 		if (Strings.isNullOrEmpty(categoryId)) {
 			//TODO XFR
@@ -149,9 +149,10 @@ public class CodeTableService implements ICodeTableService {
 	}
 
 	@Override
-	public List<EntityOut> getGuarantees(final String userId, String sectionId) throws InsuranceException {
+	public List<EntityOut> getGuarantees(final String userId, final String branchId, final String categoryId, final String sectionId)
+			throws InsuranceException {
 		userCheck.checkUser(userId);
-		List<Cod_guarantee> guarantees = premiumInfo.getGuarantees(sectionId);
+		List<Cod_guarantee> guarantees = premiumInfo.getGuarantees(branchId, categoryId, sectionId);
 		List<EntityOut> result = PremiumMapping.populateGuaranteeOutList(guarantees);
 		if (Strings.isNullOrEmpty(sectionId)) {
 			//TODO XFR
@@ -160,9 +161,10 @@ public class CodeTableService implements ICodeTableService {
 	}
 
 	@Override
-	public List<EntityOut> getPremiums(final String userId, String guaranteeId) throws InsuranceException {
+	public List<EntityOut> getPremiums(final String userId, final String branchId, final String categoryId, final String sectionId,
+			final String guaranteeId) throws InsuranceException {
 		userCheck.checkUser(userId);
-		List<Cod_premium> premiums = premiumInfo.getPremiums(guaranteeId);
+		List<Cod_premium> premiums = premiumInfo.getPremiums(branchId, categoryId, sectionId, guaranteeId);
 		List<EntityOut> result = PremiumMapping.populatePremiumOutList(premiums);
 		if (Strings.isNullOrEmpty(guaranteeId)) {
 			//TODO XFR
@@ -216,14 +218,14 @@ public class CodeTableService implements ICodeTableService {
 	}
 
 	@Override
-	public TaxOut getTax(String userId, String premiumId) throws InsuranceException {
+	public TaxOut getTax(final String userId, final String premiumId) throws InsuranceException {
 		userCheck.checkUser(userId);
 		Cod_premium codPremium = premiumCheck.checkPremium(premiumId);
 		Cod_tax codTax = premiumCheck.checkTax(codPremium.getCtax());
 		return populateTaxOut(codTax);
 	}
 
-	private TaxOut populateTaxOut(Cod_tax codTax) {
+	private TaxOut populateTaxOut(final Cod_tax codTax) {
 		TaxOut result = new TaxOut();
 		result.setId(codTax.getCtax());
 		result.setLabel(codTax.getLtax());
