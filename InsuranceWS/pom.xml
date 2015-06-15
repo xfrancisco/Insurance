@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.insurance</groupId>
-	<artifactId>InsuranceWS</artifactId>
+	<groupId>org.mfi</groupId>
+	<artifactId>MfiWS</artifactId>
 	<version>1</version>
 	<packaging>war</packaging>
 
@@ -22,7 +22,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		<paranamer-version>2.5.2</paranamer-version>
 		<scannotation-version>1.0.3</scannotation-version>
 		<spring.version>4.0.1.RELEASE</spring.version>
-		<project.name>InsuranceWS</project.name>
+		<project.name>MfiWS</project.name>
 	</properties>
 
 	<dependencies>
@@ -218,19 +218,19 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.insurance</groupId>
-			<artifactId>InsuranceService</artifactId>
+			<groupId>org.mfi</groupId>
+			<artifactId>MfiService</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.insurance</groupId>
-			<artifactId>InsuranceEnterpriseModel</artifactId>
+			<groupId>org.mfi</groupId>
+			<artifactId>MfiEnterpriseModel</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.insurance</groupId>
-			<artifactId>InsuranceCoreService</artifactId>
+			<groupId>org.mfi</groupId>
+			<artifactId>MfiCoreService</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 

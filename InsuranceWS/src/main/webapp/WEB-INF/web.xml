@@ -22,13 +22,13 @@
 	
 	
 	<servlet>
-		<servlet-name>jersey-serlvet</servlet-name>
+		<servlet-name>jersey-servlet</servlet-name>
 		<servlet-class>
          	com.sun.jersey.spi.spring.container.servlet.SpringServlet
   		</servlet-class>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>org.insurance.webservices;com.wordnik.swagger.jersey.listing</param-value>
+			<param-value>org.mfi.webservices;com.wordnik.swagger.jersey.listing</param-value>
 		</init-param>
 		<init-param>
     		<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
@@ -48,11 +48,11 @@
 		<servlet-class>com.wordnik.swagger.jersey.config.JerseyJaxrsConfig</servlet-class>
 		<init-param>
 			<param-name>api.version</param-name>
-			<param-value>1.0.0</param-value>
+			<param-value>0.0.1</param-value>
 		</init-param>
 		<init-param>
 			<param-name>swagger.api.basepath</param-name>
-			<param-value>/InsuranceWS/rest</param-value>
+			<param-value>/MfiWS/rest</param-value>
 		</init-param>
 		<load-on-startup>2</load-on-startup>
 	</servlet>

@@ -2,12 +2,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.insurance</groupId>
-	<artifactId>InsuranceCoreService</artifactId>
+	<groupId>org.mfi</groupId>
+	<artifactId>MfiCoreService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>InsuranceCoreService</name>
+	<name>MfiCoreService</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -106,8 +106,8 @@
 			<version>18.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.insurance</groupId>
-			<artifactId>InsuranceModel</artifactId>
+			<groupId>org.mfi</groupId>
+			<artifactId>MfiModel</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

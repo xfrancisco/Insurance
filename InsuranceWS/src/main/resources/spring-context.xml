@@ -25,8 +25,8 @@
 	<bean id="codesMessagesErrors" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations">
 			<list>
-				<value>classpath:org/insurance/codes-messages.properties</value>
-				<value>classpath:org/insurance/codes-messages-validation.properties</value>
+				<value>classpath:org/mfi/codes-messages.properties</value>
+				<value>classpath:org/mfi/codes-messages-validation.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -37,46 +37,46 @@
 		</property>
 		<property name="annotatedClasses">
 			<list>
-				<value>org.insurance.conf.Cod_version</value>
-				<value>org.insurance.conf.Cod_civility</value>
-				<value>org.insurance.conf.Cod_country</value>
-				<value>org.insurance.conf.Cod_postal</value>
-				<value>org.insurance.conf.Cod_cancel</value>
-				<value>org.insurance.conf.Cod_catcli</value>
-				<value>org.insurance.conf.Cod_movement</value>
-				<value>org.insurance.conf.Cod_movementdet</value>
-				<value>org.insurance.conf.Cod_address</value>
-				<value>org.insurance.conf.Cod_phone</value>
-				<value>org.insurance.conf.Cod_email</value>
-				<value>org.insurance.conf.Cod_quotestatus</value>
-				<value>org.insurance.conf.Cod_duration</value>
-				<value>org.insurance.conf.Cod_table</value>
-				<value>org.insurance.conf.Cod_frequency</value>
+				<value>org.mfi.conf.Cod_version</value>
+				<value>org.mfi.conf.Cod_civility</value>
+				<value>org.mfi.conf.Cod_country</value>
+				<value>org.mfi.conf.Cod_postal</value>
+				<value>org.mfi.conf.Cod_cancel</value>
+				<value>org.mfi.conf.Cod_catcli</value>
+				<value>org.mfi.conf.Cod_movement</value>
+				<value>org.mfi.conf.Cod_movementdet</value>
+				<value>org.mfi.conf.Cod_address</value>
+				<value>org.mfi.conf.Cod_phone</value>
+				<value>org.mfi.conf.Cod_email</value>
+				<value>org.mfi.conf.Cod_quotestatus</value>
+				<value>org.mfi.conf.Cod_duration</value>
+				<value>org.mfi.conf.Cod_table</value>
+				<value>org.mfi.conf.Cod_frequency</value>
 				
 				
-				<value>org.insurance.conf.Cod_branch</value>
-				<value>org.insurance.conf.Cod_category</value>
-				<value>org.insurance.conf.Cod_section</value>
-				<value>org.insurance.conf.Cod_guarantee</value>
-				<value>org.insurance.conf.Cod_premium</value>
-				<value>org.insurance.conf.Cod_tax</value>
-				<value>org.insurance.conf.Cod_premiumconfig</value>
+				<value>org.mfi.conf.Cod_branch</value>
+				<value>org.mfi.conf.Cod_category</value>
+				<value>org.mfi.conf.Cod_section</value>
+				<value>org.mfi.conf.Cod_guarantee</value>
+				<value>org.mfi.conf.Cod_premium</value>
+				<value>org.mfi.conf.Cod_tax</value>
+				<value>org.mfi.conf.Cod_premiumconfig</value>
 				
-				<value>org.insurance.conf.Usr_user</value>
-				<value>org.insurance.conf.Usr_role</value>
+				<value>org.mfi.conf.Usr_user</value>
+				<value>org.mfi.conf.Usr_role</value>
 
-				<value>org.insurance.data.Cli_client</value>
-				<value>org.insurance.data.Cli_catcli</value> 
-				<value>org.insurance.data.Cli_address</value> 
-				<value>org.insurance.data.Cli_phone</value>
-				<value>org.insurance.data.Cli_email</value>
-				<value>org.insurance.data.Cli_contract</value> 
-				<value>org.insurance.data.Cli_guarantee</value>
-				<value>org.insurance.data.Cli_movement</value>
-				<value>org.insurance.data.Cli_movementdet</value>
-				<value>org.insurance.data.Cli_quote</value>
-				<value>org.insurance.data.Cpt_guarcommi</value>
-				<value>org.insurance.data.Cpt_guardispatch</value>
+				<value>org.mfi.data.Cli_client</value>
+				<value>org.mfi.data.Cli_catcli</value> 
+				<value>org.mfi.data.Cli_address</value> 
+				<value>org.mfi.data.Cli_phone</value>
+				<value>org.mfi.data.Cli_email</value>
+				<value>org.mfi.data.Cli_contract</value> 
+				<value>org.mfi.data.Cli_guarantee</value>
+				<value>org.mfi.data.Cli_movement</value>
+				<value>org.mfi.data.Cli_movementdet</value>
+				<value>org.mfi.data.Cli_quote</value>
+				<value>org.mfi.data.Cpt_guarcommi</value>
+				<value>org.mfi.data.Cpt_guardispatch</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -96,22 +96,22 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<context:property-placeholder location="classpath:org/insurance/database.properties" />
+	<context:property-placeholder location="classpath:org/mfi/database.properties" />
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<aop:aspectj-autoproxy />
 	<context:annotation-config />
-	<context:component-scan base-package="org.insurance,
-										org.insurance.dao,
-										org.insurance.dao.impl,
-										org.insurance.common,
-										org.insurance.common.impl,
-										org.insurance.webservices,
-										org.insurance.exception,
-										org.insurance.utils">
-		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Info" />
-		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Check" />
-		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Manager" />
-		<context:include-filter type="regex" expression="org.insurance.service.*.impl.*Operation" />
+	<context:component-scan base-package="org.mfi,
+										org.mfi.dao,
+										org.mfi.dao.impl,
+										org.mfi.common,
+										org.mfi.common.impl,
+										org.mfi.webservices,
+										org.mfi.exception,
+										org.mfi.utils">
+		<context:include-filter type="regex" expression="org.mfi.service.*.impl.*Info" />
+		<context:include-filter type="regex" expression="org.mfi.service.*.impl.*Check" />
+		<context:include-filter type="regex" expression="org.mfi.service.*.impl.*Manager" />
+		<context:include-filter type="regex" expression="org.mfi.service.*.impl.*Operation" />
 	</context:component-scan>
 </beans>
 
