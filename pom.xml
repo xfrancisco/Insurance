@@ -3,26 +3,28 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.mfi</groupId>
-  <artifactId>Insurance</artifactId>
+  <artifactId>Mfi</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  
 
-  <name>Insurance</name>
+  <name>Mfi</name>
   <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.name>MfiWS</project.name>
   </properties>
   
  	<profiles>
   		<profile>
 			<id>Java</id>
 			<modules>
-				<module>InsuranceModel</module>
-				<module>InsuranceService</module>
-				<module>InsuranceEnterpriseModel</module>
-				<module>InsuranceWS</module>
-				<module>InsuranceCoreService</module>
+				<module>MfiModel</module>
+				<module>MfiService</module>
+				<module>MfiEnterpriseModel</module>
+				<module>MfiWS</module>
+				<module>MfiCoreService</module>
 			</modules>
 		</profile>
 	</profiles>
