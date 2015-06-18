@@ -6,6 +6,7 @@ import org.mfi.exception.MfcException;
 import org.mfi.in.CodeTableIn;
 import org.mfi.out.AllCodeTableOut;
 import org.mfi.out.CodeTableOut;
+import org.mfi.out.DurationOut;
 import org.mfi.out.EntityOut;
 import org.mfi.out.QuoteStatusOut;
 import org.mfi.out.TaxOut;
@@ -25,8 +26,7 @@ public interface ICodeTableService {
 
 	List<EntityOut> getGuarantees(final String userId, String branchId, String categoryId, String sectionId) throws MfcException;
 
-	List<EntityOut> getPremiums(final String userId, String branchId, String categoryId, String sectionId, String guaranteeId)
-			throws MfcException;
+	List<EntityOut> getPremiums(final String userId, String branchId, String categoryId, String sectionId, String guaranteeId) throws MfcException;
 
 	List<AllCodeTableOut> getAllCodes(final String userId) throws MfcException;
 
@@ -35,5 +35,7 @@ public interface ICodeTableService {
 	List<AllCodeTableOut> updateCodeTables(final String userId, final List<CodeTableIn> codeIn) throws MfcException;
 
 	TaxOut getTax(String userId, String premiumId) throws MfcException;
+
+	List<DurationOut> getDurations(String userId) throws MfcException;
 
 }

@@ -1156,39 +1156,6 @@ INCREMENT BY   1
 NOCACHE
 NOCYCLE;
 
-CREATE TABLE CPT_GUARCOMMI
-( 
-  NUMCOMMI NUMBER(8) NOT NULL,
-  NUMGUARANTEE NUMBER(8) NOT NULL,
-  NUMCLICOMMI NUMBER(8) NOT NULL,
-  RATE NUMBER(16,3) NOT NULL,
-  CUSERCRE VARCHAR2(32) NOT NULL,
-  CREATIONDATE DATE NOT NULL,
-  CUSERMOD VARCHAR2(32),
-  MODIFDATE DATE,
-  CONSTRAINT CPTGUARCOMMI_PK PRIMARY KEY (NUMCOMMI)
-);
-
-comment on table CPT_GUARCOMMI is 'Table des repartition des commissions';
-comment on column CPT_GUARCOMMI.NUMCOMMI is 'Pk fictive';
-comment on column CPT_GUARCOMMI.NUMGUARANTEE is 'Identifiant de la garantie. Reference CLI_GUARANTEE';
-comment on column CPT_GUARCOMMI.NUMCLICOMMI is 'Identifiant du commissionne. Reference CLI_CLIENT';
-comment on column CPT_GUARCOMMI.RATE is 'Taux de la commission';
-comment on column CPT_GUARCOMMI.CUSERCRE is 'Utilisateur de creation';
-comment on column CPT_GUARCOMMI.CREATIONDATE is 'Date de creation';
-comment on column CPT_GUARCOMMI.CUSERMOD is 'Utilisateur de modification';
-comment on column CPT_GUARCOMMI.MODIFDATE is 'Date de modification';
-
-alter table CPT_GUARCOMMI ADD CONSTRAINT FK_COMMIGUAR FOREIGN KEY (NUMGUARANTEE) REFERENCES CLI_GUARANTEE(NUMGUARANTEE);
-alter table CPT_GUARCOMMI ADD CONSTRAINT FK_COMMINUMCLI FOREIGN KEY (NUMCLICOMMI) REFERENCES CLI_CLIENT(NUMCLI);
-
-CREATE SEQUENCE NUMCOMMI_SEQ
-START WITH     1
-INCREMENT BY   1
-NOCACHE
-NOCYCLE;
-
-commit;
 
 -- 07/06/2015
 
@@ -1250,4 +1217,139 @@ update cod_frequency set NBMONTHS = '6' where cfrequency = '06';
 
 update cod_frequency set NBMONTHS = 3 where cfrequency = '03';
 commit;
+
+
+alter table cod_duration add INDTEMPORARY VARCHAR2(1) DEFAULT '0' NOT NULL;
+update cod_duration set indtemporary = '1' where cduration = '00';
+commit;
+
+
+CREATE TABLE COD_FEE
+( 
+  CFEE VARCHAR2(6) NOT NULL,
+  LFEE VARCHAR2(128) NOT NULL,
+  INDPOLICYFEE VARCHAR2(1) DEFAULT '0' NOT NULL,
+  INDVALI VARCHAR2(1) DEFAULT '1' NOT NULL,
+  CONSTRAINT CODFEE_PK PRIMARY KEY (CFEE)
+);
+
+comment on table COD_FEE is 'Table des frais et des coûts';
+comment on column COD_FEE.CFEE is 'Code';
+comment on column COD_FEE.LFEE is 'Libelle';
+comment on column COD_FEE.INDPOLICYFEE is 'Indicateur de cout de police. Si a 1 alors cout initial de police';
+comment on column COD_FEE.INDVALI is 'Indicateur de validite de l''enregistrement. Si a 1 alors valide';
+
+
+insert into COD_FEE(CFEE, LFEE, INDPOLICYFEE, INDVALI) values ('INIT', 'COUT DE POLICE', '1', '1');
+
+commit;
+
+
+-- 18/06/2015
+
+CREATE TABLE CPT_FEE
+( 
+  NUMFEE NUMBER(8) NOT NULL,
+  NUMCLI NUMBER(8) NOT NULL,
+  NUMCON NUMBER(3) NOT NULL,
+  CFEE VARCHAR2(6) NOT NULL,
+  AMOUNT NUMBER(16,3) NOT NULL,
+  CUSERCRE VARCHAR2(32) NOT NULL,
+  CREATIONDATE DATE NOT NULL,
+  CUSERMOD VARCHAR2(32),
+  MODIFDATE DATE,
+  CONSTRAINT CPTFEE_PK PRIMARY KEY (NUMFEE)
+);
+
+comment on table CPT_FEE is 'Table des frais et des couts par contrat';
+comment on column CPT_FEE.NUMFEE is 'Pk fictive';
+comment on column CPT_FEE.NUMCLI is 'Identifiant de l''individu';
+comment on column CPT_FEE.NUMCON is 'Identifiant du contrat';
+comment on column CPT_FEE.AMOUNT is 'Montant';
+comment on column CPT_FEE.CFEE is 'Identifiant du frais. Référence COD_FEE';
+comment on column CPT_FEE.CUSERCRE is 'Utilisateur de creation';
+comment on column CPT_FEE.CREATIONDATE is 'Date de creation';
+comment on column CPT_FEE.CUSERMOD is 'Utilisateur de modification';
+comment on column CPT_FEE.MODIFDATE is 'Date de modification';
+
+
+alter table CPT_FEE ADD CONSTRAINT FK_FEENUMCLINUMCON FOREIGN KEY (NUMCLI,NUMCON) REFERENCES CLI_CONTRACT(NUMCLI, NUMCON);
+alter table CPT_FEE ADD CONSTRAINT FK_FEECFEE FOREIGN KEY (CFEE) REFERENCES COD_FEE(CFEE);
+
+
+CREATE SEQUENCE NUMFEE_SEQ
+START WITH     1
+INCREMENT BY   1
+NOCACHE
+NOCYCLE;
+
+
+drop table CPT_GUARCOMMI cascade constraints;
+
+CREATE TABLE CPT_GUARCOMMI
+( 
+  NUMCOMMI NUMBER(8) NOT NULL,
+  NUMGUARANTEE NUMBER(8) NOT NULL,
+  NUMCLICOMMI NUMBER(8) NOT NULL,
+  RATE NUMBER(16,3) NOT NULL,
+  CUSERCRE VARCHAR2(32) NOT NULL,
+  CREATIONDATE DATE NOT NULL,
+  CUSERMOD VARCHAR2(32),
+  MODIFDATE DATE,
+  CONSTRAINT CPTGUARCOMMI_PK PRIMARY KEY (NUMCOMMI)
+);
+
+comment on table CPT_GUARCOMMI is 'Table des commission pour l''agence';
+comment on column CPT_GUARCOMMI.NUMCOMMI is 'Pk fictive';
+comment on column CPT_GUARCOMMI.NUMGUARANTEE is 'Identifiant de la garantie. Reference CLI_GUARANTEE';
+comment on column CPT_GUARCOMMI.NUMCLICOMMI is 'Identifiant du coassureur qui doit la commission. Reference CLI_CLIENT';
+comment on column CPT_GUARCOMMI.RATE is 'Taux de la commission';
+comment on column CPT_GUARCOMMI.CUSERCRE is 'Utilisateur de creation';
+comment on column CPT_GUARCOMMI.CREATIONDATE is 'Date de creation';
+comment on column CPT_GUARCOMMI.CUSERMOD is 'Utilisateur de modification';
+comment on column CPT_GUARCOMMI.MODIFDATE is 'Date de modification';
+
+alter table CPT_GUARCOMMI ADD CONSTRAINT FK_COMMIGUAR FOREIGN KEY (NUMGUARANTEE) REFERENCES CLI_GUARANTEE(NUMGUARANTEE);
+alter table CPT_GUARCOMMI ADD CONSTRAINT FK_COMMINUMCLI FOREIGN KEY (NUMCLICOMMI) REFERENCES CLI_CLIENT(NUMCLI);
+
+
+CREATE SEQUENCE NUMCOMMI_SEQ
+START WITH     1
+INCREMENT BY   1
+NOCACHE
+NOCYCLE;
+
+
+alter table CLI_CONTRACT ADD RENEWALDATE DATE;
+comment on column CPT_GUARCOMMI.MODIFDATE is 'Date d''échéance du contrat';
+
+
+
+CREATE TABLE CPT_LEADINGFEE
+( 
+  NUMLEADINGFEE NUMBER(8) NOT NULL,
+  NUMCLI NUMBER(8) NOT NULL,
+  NUMCON NUMBER(3) NOT NULL,
+  NUMCLISRC NUMBER(8) NOT NULL,
+  NUMCLIDEST NUMBER(8) NOT NULL,
+  RATE NUMBER(16,3) NOT NULL,
+  CUSERCRE VARCHAR2(32) NOT NULL,
+  CREATIONDATE DATE NOT NULL,
+  CUSERMOD VARCHAR2(32),
+  MODIFDATE DATE,
+  CONSTRAINT CPTLEADINGFEE_PK PRIMARY KEY (NUMLEADINGFEE)
+);
+
+
+
+
+
+CREATE SEQUENCE NUMLEADINGFEE_SEQ
+START WITH     1
+INCREMENT BY   1
+NOCACHE
+NOCYCLE;
+
+commit;
+
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.mfi.conf.Cod_duration;
 import org.mfi.data.Cli_contract;
 import org.mfi.dto.contract.ContractDto;
 import org.mfi.dto.contract.DispatchDto;
@@ -53,16 +54,16 @@ public class ContractManager extends ServiceCore implements IContractManager {
 	private IQuoteOperation quoteOperation;
 
 	@Override
-	public int insertContract(String cuser, long numcli, ContractDto contract) throws MfcException {
+	public int insertContract(final String cuser, final long numcli, ContractDto contract) throws MfcException {
 		personCheck.checkClient(numcli);
-
 		Cli_contract cliContract = contract.getContract();
 		personCheck.checkBroker(cliContract.getNumclibroker());
 		personCheck.checkInsurer(cliContract.getNumclileader());
 		premiumCheck.checkBranch(cliContract.getCbranch());
 		premiumCheck.checkCategory(cliContract.getCbranch(), cliContract.getCcategory());
-		quoteAndContractCheck.checkDuration(cliContract.getCduration());
+		Cod_duration codDuration = quoteAndContractCheck.checkDuration(cliContract.getCduration());
 		quoteAndContractCheck.checkFrequency(cliContract.getCfrequency());
+		quoteAndContractCheck.checkDurationAndDates(codDuration, cliContract.getRenewalDate(), cliContract.getEndval());
 		if (contract.getNumquote() != null)
 			quoteAndContractCheck.checkQuote(numcli, contract.getNumquote());
 		userCheck.checkUser(cliContract.getCuseruw());
@@ -82,7 +83,7 @@ public class ContractManager extends ServiceCore implements IContractManager {
 			globalShare = globalShare.add(guaranteeDto.getLeaderShare());
 			List<DispatchDto> dispatchDtos = guaranteeDto.getDispatch();
 			for (DispatchDto dispatch : dispatchDtos) {
-				commonCheck.checkPercentage(dispatch.getInsurerRate());
+				commonCheck.checkPercentage(dispatch.getAgencyCommissionRate());
 				commonCheck.checkPercentage(dispatch.getInsurerShare());
 				personCheck.checkInsurer(dispatch.getNumcliinsurer());
 				globalShare = globalShare.add(dispatch.getInsurerShare());

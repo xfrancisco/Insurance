@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.mfi.common.ICodeTableService;
 import org.mfi.conf.Cod_branch;
 import org.mfi.conf.Cod_category;
+import org.mfi.conf.Cod_duration;
 import org.mfi.conf.Cod_guarantee;
 import org.mfi.conf.Cod_premium;
 import org.mfi.conf.Cod_section;
@@ -22,6 +23,7 @@ import org.mfi.exception.MfcException;
 import org.mfi.in.CodeTableIn;
 import org.mfi.out.AllCodeTableOut;
 import org.mfi.out.CodeTableOut;
+import org.mfi.out.DurationOut;
 import org.mfi.out.EntityOut;
 import org.mfi.out.QuoteStatusOut;
 import org.mfi.out.TaxOut;
@@ -231,6 +233,31 @@ public class CodeTableService implements ICodeTableService {
 		result.setLabel(codTax.getLtax());
 		result.setValue(codTax.getTaxvalue());
 		result.setIsValid(MappingUtils.toBoolean(codTax.getIndvali()));
+		return result;
+	}
+
+	@Override
+	public List<DurationOut> getDurations(String userId) throws MfcException {
+		userCheck.checkUser(userId);
+		List<Cod_duration> durations = codesInfo.getDurations();
+		return populateDurationOut(durations);
+	}
+
+	private List<DurationOut> populateDurationOut(List<Cod_duration> durations) {
+		List<DurationOut> result = new ArrayList<DurationOut>();
+		for (Cod_duration codDuration : durations) {
+			DurationOut durationOut = populateDurationOut(codDuration);
+			result.add(durationOut);
+		}
+		return result;
+	}
+
+	private DurationOut populateDurationOut(Cod_duration codDuration) {
+		DurationOut result = new DurationOut();
+		result.setId(codDuration.getCduration());
+		result.setIsValid(MappingUtils.toBoolean(codDuration.getIndvali()));
+		result.setLabel(codDuration.getLduration());
+		result.setTemporary(MappingUtils.toBoolean(codDuration.getIndtemporary()));
 		return result;
 	}
 }

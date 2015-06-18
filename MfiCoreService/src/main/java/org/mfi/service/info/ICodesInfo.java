@@ -2,6 +2,7 @@ package org.mfi.service.info;
 
 import java.util.List;
 
+import org.mfi.conf.Cod_duration;
 import org.mfi.conf.Cod_table;
 import org.mfi.conf.Cod_version;
 
@@ -14,5 +15,7 @@ public interface ICodesInfo {
 	Cod_version getCurrentVersion();
 
 	List<Cod_table> getCodeTables();
+
+	List<Cod_duration> getDurations();
 
 }

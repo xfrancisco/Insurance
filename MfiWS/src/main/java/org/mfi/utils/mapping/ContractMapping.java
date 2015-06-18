@@ -16,6 +16,7 @@ import org.mfi.out.ContractOut;
 import org.mfi.out.DispatchOut;
 import org.mfi.out.GuaranteeOut;
 import org.mfi.util.DateUtils;
+import org.mfi.util.DateUtils.DatePattern;
 import org.mfi.util.MappingUtils;
 
 public final class ContractMapping {
@@ -23,7 +24,7 @@ public final class ContractMapping {
 	public static ContractDto populateContractDto(ContractIn contractIn) throws CommonException {
 		ContractDto result = new ContractDto();
 		result.setContract(populateContract(contractIn));
-		result.setGuarantees(populateGuarantees(contractIn.getGuarantees()));
+		result.setGuarantees(populateGuarantees(contractIn.getGuarantees(), contractIn.getBrokerCommissionRate(), contractIn.getLeaderShare()));
 		result.setNumquote(contractIn.getQuoteId());
 		return result;
 
@@ -38,6 +39,7 @@ public final class ContractMapping {
 		contract.setCuseruw(contractIn.getUnderwriterId());
 		contract.setStartval(DateUtils.parseStringToSqlDate(contractIn.getStartDate()));
 		contract.setEndval(DateUtils.parseStringToSqlDate(contractIn.getEndDate()));
+		contract.setRenewalDate(DateUtils.parseStringToSqlDate(contractIn.getRenewalDate(), DatePattern.DATE_DD_MM));
 		contract.setNumclibroker(contractIn.getBrokerId());
 		contract.setNumclileader(contractIn.getLeaderId());
 		contract.setNumquote(contractIn.getQuoteId());
@@ -45,11 +47,12 @@ public final class ContractMapping {
 		return contract;
 	}
 
-	private static List<GuaranteeDto> populateGuarantees(List<GuaranteeIn> guaranteesIn) throws CommonException {
+	private static List<GuaranteeDto> populateGuarantees(List<GuaranteeIn> guaranteesIn, String brokerCommissionRate, String leaderShare)
+			throws CommonException {
 		List<GuaranteeDto> result = new ArrayList<GuaranteeDto>();
 		for (GuaranteeIn guaranteeIn : guaranteesIn) {
 			GuaranteeDto tmp = new GuaranteeDto();
-			tmp.setBrokerRate(MappingUtils.toBigDecimal(guaranteeIn.getBrokerCommissionRate()));
+			tmp.setBrokerRate(MappingUtils.toBigDecimal(brokerCommissionRate));
 			tmp.setCguarantee(guaranteeIn.getGuaranteeId());
 			tmp.setCpremium(guaranteeIn.getPremiumId());
 			tmp.setCsection(guaranteeIn.getSectionId());
@@ -58,7 +61,7 @@ public final class ContractMapping {
 			tmp.setGuaranteedAmount(MappingUtils.toBigDecimal(guaranteeIn.getGuaranteedAmount()));
 			tmp.setPremiumAmount(MappingUtils.toBigDecimal(guaranteeIn.getPremiumAmount()));
 			tmp.setDispatch(populateDispatch(guaranteeIn.getDispatch()));
-			tmp.setLeaderShare(MappingUtils.toBigDecimal(guaranteeIn.getLeaderShare()));
+			tmp.setLeaderShare(MappingUtils.toBigDecimal(leaderShare));
 			result.add(tmp);
 		}
 		return result;
@@ -69,7 +72,7 @@ public final class ContractMapping {
 		List<DispatchDto> result = new ArrayList<DispatchDto>();
 		for (DispatchIn dispatchIn : dispatchesIn) {
 			DispatchDto tmp = new DispatchDto();
-			tmp.setInsurerRate(MappingUtils.toBigDecimal(dispatchIn.getInsurerCommissionRate()));
+			tmp.setAgencyCommissionRate(MappingUtils.toBigDecimal(dispatchIn.getAgencyCommissionRate()));
 			tmp.setInsurerShare(MappingUtils.toBigDecimal(dispatchIn.getInsurerShare()));
 			tmp.setNumcliinsurer(dispatchIn.getInsurerId());
 			result.add(tmp);
@@ -137,7 +140,7 @@ public final class ContractMapping {
 		List<DispatchOut> result = new ArrayList<DispatchOut>();
 		for (DispatchDto dispatchDto : dispatch) {
 			DispatchOut tmp = new DispatchOut();
-			tmp.setInsurerCommissionRate(MappingUtils.toString(dispatchDto.getInsurerRate()));
+			tmp.setAgencyCommissionRate(MappingUtils.toString(dispatchDto.getAgencyCommissionRate()));
 			tmp.setInsurerId(dispatchDto.getNumcliinsurer());
 			tmp.setInsurerShare(MappingUtils.toString(dispatchDto.getInsurerShare()));
 			result.add(tmp);

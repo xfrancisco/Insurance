@@ -15,4 +15,15 @@ public final class MathUtils {
 
 	}
 
+	public static boolean equals(final BigDecimal value, final int other) {
+		BigDecimal tmp = new BigDecimal(other);
+		return equals(value, tmp);
+	}
+
+	private static boolean equals(BigDecimal value, BigDecimal other) {
+		if (value.compareTo(other) == 0)
+			return true;
+		return false;
+	}
+
 }

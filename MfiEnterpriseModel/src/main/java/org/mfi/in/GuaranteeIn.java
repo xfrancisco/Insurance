@@ -8,7 +8,6 @@ import org.mfi.validation.constraints.BigDecimalMin;
 import org.mfi.validation.constraints.EnterpriseModelEnum;
 import org.mfi.validation.constraints.Length;
 import org.mfi.validation.constraints.Mandatory;
-import org.mfi.validation.constraints.Percentage;
 
 import com.google.common.base.Strings;
 
@@ -37,12 +36,6 @@ public class GuaranteeIn {
 	@Mandatory
 	@BigDecimalMin
 	private String premiumAmount;
-
-	@Percentage
-	private String brokerCommissionRate;
-
-	@Percentage
-	private String leaderShare;
 
 	@Valid
 	private List<DispatchIn> dispatch;
@@ -93,22 +86,6 @@ public class GuaranteeIn {
 
 	public void setSectionId(String sectionId) {
 		this.sectionId = sectionId;
-	}
-
-	public String getBrokerCommissionRate() {
-		return brokerCommissionRate;
-	}
-
-	public void setBrokerCommissionRate(String brokerCommissionRate) {
-		this.brokerCommissionRate = brokerCommissionRate;
-	}
-
-	public String getLeaderShare() {
-		return leaderShare;
-	}
-
-	public void setLeaderShare(String leaderShare) {
-		this.leaderShare = leaderShare;
 	}
 
 	public String getBranchId() {

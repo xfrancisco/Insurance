@@ -1,13 +1,17 @@
 package org.mfi.common.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.mfi.common.IContractService;
+import org.mfi.conf.Cod_fee;
 import org.mfi.data.Cli_contract;
+import org.mfi.data.Cpt_fee;
 import org.mfi.dto.contract.ContractDto;
 import org.mfi.exception.MfcException;
+import org.mfi.exception.QuoteAndContractException;
 import org.mfi.in.ContractIn;
 import org.mfi.in.UpdateContractIn;
 import org.mfi.out.ContractListOut;
@@ -17,6 +21,8 @@ import org.mfi.service.check.IQuoteAndContractCheck;
 import org.mfi.service.check.IUserCheck;
 import org.mfi.service.info.IQuoteAndContractInfo;
 import org.mfi.service.manager.IContractManager;
+import org.mfi.util.MappingUtils;
+import org.mfi.util.MathUtils;
 import org.mfi.utils.mapping.ContractMapping;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +50,7 @@ public class ContractService implements IContractService {
 	public ContractOut insertContract(String userId, ContractIn contractIn) throws MfcException {
 		userCheck.checkUser(userId);
 		ContractDto contract = ContractMapping.populateContractDto(contractIn);
+		contract.setFee(populateFees(MappingUtils.toBigDecimal(contractIn.getPolicyFees())));
 		contractManager.insertContract(userId, contractIn.getPersonId(), contract);
 		return ContractMapping.populateContractOut(contract);
 	}
@@ -72,4 +79,13 @@ public class ContractService implements IContractService {
 		return ContractMapping.populateContractList(contracts);
 	}
 
+	private Cpt_fee populateFees(BigDecimal policyFees) throws QuoteAndContractException {
+		if (MathUtils.equals(policyFees, 0))
+			return null;
+		Cpt_fee result = new Cpt_fee();
+		Cod_fee codFee = quoteAndContractCheck.checkAndGetInitialPolicyFee();
+		result.setAmount(policyFees);
+		result.setCfee(codFee.getCfee());
+		return result;
+	}
 }

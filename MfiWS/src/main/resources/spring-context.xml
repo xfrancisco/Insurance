@@ -60,6 +60,7 @@
 				<value>org.mfi.conf.Cod_guarantee</value>
 				<value>org.mfi.conf.Cod_premium</value>
 				<value>org.mfi.conf.Cod_tax</value>
+				<value>org.mfi.conf.Cod_fee</value>
 				<value>org.mfi.conf.Cod_premiumconfig</value>
 				
 				<value>org.mfi.conf.Usr_user</value>
@@ -77,6 +78,7 @@
 				<value>org.mfi.data.Cli_quote</value>
 				<value>org.mfi.data.Cpt_guarcommi</value>
 				<value>org.mfi.data.Cpt_guardispatch</value>
+				<value>org.mfi.data.Cpt_fee</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

@@ -39,11 +39,7 @@ public class BillService implements IBillService {
 	public List<BillOut> getBills(final String userId, final long personId, final int contractId) throws MfcException {
 		userCheck.checkUser(userId);
 		personCheck.checkClient(personId);
-		try {
-			quoteAndContractCheck.checkContract(personId, contractId);
-		} catch (Exception e) {
-			return null;
-		}
+		quoteAndContractCheck.checkContract(personId, contractId);
 		List<BillDto> billDtos = billInfo.getBills(personId, contractId);
 		return populateBillOut(billDtos);
 	}

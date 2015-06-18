@@ -6,7 +6,7 @@ public class DispatchDto {
 
 	private long numcliinsurer;
 	private BigDecimal insurerShare;
-	private BigDecimal insurerRate;
+	private BigDecimal agencyCommissionRate;
 
 	public long getNumcliinsurer() {
 		return numcliinsurer;
@@ -24,12 +24,12 @@ public class DispatchDto {
 		this.insurerShare = insurerShare;
 	}
 
-	public BigDecimal getInsurerRate() {
-		return insurerRate;
+	public BigDecimal getAgencyCommissionRate() {
+		return agencyCommissionRate;
 	}
 
-	public void setInsurerRate(BigDecimal insurerRate) {
-		this.insurerRate = insurerRate;
+	public void setAgencyCommissionRate(BigDecimal agencyCommissionRate) {
+		this.agencyCommissionRate = agencyCommissionRate;
 	}
 
 }

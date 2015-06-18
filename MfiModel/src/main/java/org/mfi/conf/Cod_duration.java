@@ -12,6 +12,7 @@ public class Cod_duration {
 	private String cduration;
 	private String lduration;
 	private String indvali;
+	private String indtemporary;
 
 	public String getCduration() {
 		return cduration;
@@ -35,6 +36,14 @@ public class Cod_duration {
 
 	public void setIndvali(String indvali) {
 		this.indvali = indvali;
+	}
+
+	public String getIndtemporary() {
+		return indtemporary;
+	}
+
+	public void setIndtemporary(String indtemporary) {
+		this.indtemporary = indtemporary;
 	}
 
 }

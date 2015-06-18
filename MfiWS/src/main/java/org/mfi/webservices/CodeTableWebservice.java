@@ -14,6 +14,7 @@ import org.mfi.exception.MfcException;
 import org.mfi.in.CodeTableIn;
 import org.mfi.out.AllCodeTableOut;
 import org.mfi.out.CodeTableOut;
+import org.mfi.out.DurationOut;
 import org.mfi.out.EntityOut;
 import org.mfi.out.QuoteStatusOut;
 import org.mfi.out.TaxOut;
@@ -36,7 +37,7 @@ public class CodeTableWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Ensemble des valeurs pour une code donné")
 	public ResponseWrapper<List<CodeTableOut>> getCodeTable(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
-			@ApiParam(value = "Nom de la code table", name = CODETABLENAME, required = true) @QueryParam(CODETABLENAME) String codeTableName)
+			@ApiParam(value = "Nom de la code table", name = CODETABLE_NAME, required = true) @QueryParam(CODETABLE_NAME) String codeTableName)
 			throws MfcException {
 		ResponseWrapper<List<CodeTableOut>> responseWrapper = new ResponseWrapper<List<CodeTableOut>>();
 		responseWrapper.setData(codeTableService.getCodeTable(userId, codeTableName, true));
@@ -206,6 +207,17 @@ public class CodeTableWebservice extends AbstractWebservice {
 			@Valid List<CodeTableIn> codeIn) throws MfcException {
 		ResponseWrapper<List<AllCodeTableOut>> responseWrapper = new ResponseWrapper<List<AllCodeTableOut>>();
 		responseWrapper.setData(codeTableService.updateCodeTables(userId, codeIn));
+		return responseWrapper;
+	}
+
+	@GET
+	@Path("/durations")
+	@ApiOperation(value = "Durées")
+	public ResponseWrapper<List<DurationOut>> getTax(
+			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
+			throws MfcException {
+		ResponseWrapper<List<DurationOut>> responseWrapper = new ResponseWrapper<List<DurationOut>>();
+		responseWrapper.setData(codeTableService.getDurations(userId));
 		return responseWrapper;
 	}
 

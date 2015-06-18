@@ -9,6 +9,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.mfi.conf.Cod_duration;
+import org.mfi.conf.Cod_fee;
 import org.mfi.conf.Cod_frequency;
 import org.mfi.conf.Cod_quotestatus;
 import org.mfi.data.Cli_contract;
@@ -153,7 +154,7 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 		for (Cpt_guardispatch dispatch : dispatches) {
 			DispatchDto tmp = new DispatchDto();
 			Cpt_guarcommi commi = contractPremiumInfo.getInsurerCommission(numguarantee, dispatch.getNumcliins());
-			tmp.setInsurerRate(commi.getRate());
+			tmp.setAgencyCommissionRate(commi.getRate());
 			tmp.setInsurerShare(dispatch.getSharepart());
 			tmp.setNumcliinsurer(dispatch.getNumcliins());
 			result.add(tmp);
@@ -167,6 +168,15 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 		criteria.add(Restrictions.eq("cfrequency", cfrequency));
 		criteria.add(Restrictions.eq("indvali", "1"));
 		return genericDao.getFirstByCriteria(criteria);
+	}
+
+	@Override
+	public Cod_fee getInitialPolicyFee() {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_fee.class);
+		criteria.add(Restrictions.eq("indpolicyfee", "1"));
+		criteria.add(Restrictions.eq("indvali", "1"));
+		return genericDao.getFirstByCriteria(criteria);
+
 	}
 
 }

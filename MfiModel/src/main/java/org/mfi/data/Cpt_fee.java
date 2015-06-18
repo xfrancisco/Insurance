@@ -12,37 +12,62 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "CPT_GUARCOMMI")
-public class Cpt_guarcommi implements Serializable {
+@Table(name = "CPT_FEE")
+public class Cpt_fee implements Serializable {
 
-	private static final long serialVersionUID = -795149994051799338L;
+	private static final long serialVersionUID = 8426063286524702658L;
 
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NUMCOMMI_SEQ")
-	@SequenceGenerator(name = "NUMCOMMI_SEQ", sequenceName = "NUMCOMMI_SEQ", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NUMFEE_SEQ")
+	@SequenceGenerator(name = "NUMFEE_SEQ", sequenceName = "NUMFEE_SEQ", allocationSize = 1, initialValue = 1)
 	@Id
-	private Long numcommi;
-	private Long numguarantee;
-	private Long numclicommi;
-	private BigDecimal rate;
+	private long numfee;
+	private long numcli;
+	private int numcon;
+	private String cfee;
+	private BigDecimal amount;
 	private String cusercre;
 	private String cusermod;
 	private Date creationDate;
 	private Date modifDate;
 
-	public Long getNumcommi() {
-		return numcommi;
+	public long getNumfee() {
+		return numfee;
 	}
 
-	public void setNumcommi(Long numcommi) {
-		this.numcommi = numcommi;
+	public void setNumfee(long numfee) {
+		this.numfee = numfee;
 	}
 
-	public Long getNumguarantee() {
-		return numguarantee;
+	public long getNumcli() {
+		return numcli;
 	}
 
-	public void setNumguarantee(Long numguarantee) {
-		this.numguarantee = numguarantee;
+	public void setNumcli(long numcli) {
+		this.numcli = numcli;
+	}
+
+	public int getNumcon() {
+		return numcon;
+	}
+
+	public void setNumcon(int numcon) {
+		this.numcon = numcon;
+	}
+
+	public String getCfee() {
+		return cfee;
+	}
+
+	public void setCfee(String cfee) {
+		this.cfee = cfee;
+	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
 	}
 
 	public String getCusercre() {
@@ -75,22 +100,6 @@ public class Cpt_guarcommi implements Serializable {
 
 	public void setModifDate(Date modifDate) {
 		this.modifDate = modifDate;
-	}
-
-	public BigDecimal getRate() {
-		return rate;
-	}
-
-	public void setRate(BigDecimal rate) {
-		this.rate = rate;
-	}
-
-	public Long getNumclicommi() {
-		return numclicommi;
-	}
-
-	public void setNumclicommi(Long numclicommi) {
-		this.numclicommi = numclicommi;
 	}
 
 }

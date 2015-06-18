@@ -2,18 +2,21 @@ package org.mfi.in;
 
 import org.mfi.validation.constraints.EnterpriseModelEnum;
 import org.mfi.validation.constraints.Length;
+import org.mfi.validation.constraints.Mandatory;
 import org.mfi.validation.constraints.Percentage;
 
-public class DispatchIn {
-
+public class ProtocolInsurerIn {
+	@Mandatory
 	@Length(max = EnterpriseModelEnum.PERSONID)
 	private Long insurerId;
 
+	@Mandatory
 	@Percentage
 	private String insurerShare;
 
+	@Mandatory
 	@Percentage
-	private String agencyCommissionRate;
+	private String insurerRate;
 
 	public Long getInsurerId() {
 		return insurerId;
@@ -31,12 +34,12 @@ public class DispatchIn {
 		this.insurerShare = insurerShare;
 	}
 
-	public String getAgencyCommissionRate() {
-		return agencyCommissionRate;
+	public String getInsurerRate() {
+		return insurerRate;
 	}
 
-	public void setAgencyCommissionRate(String agencyCommissionRate) {
-		this.agencyCommissionRate = agencyCommissionRate;
+	public void setInsurerRate(String insurerRate) {
+		this.insurerRate = insurerRate;
 	}
 
 }

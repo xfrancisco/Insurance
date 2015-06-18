@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.mfi.data.Cli_contract;
 import org.mfi.data.Cli_guarantee;
+import org.mfi.data.Cpt_fee;
 import org.mfi.data.Cpt_guarcommi;
 import org.mfi.data.Cpt_guardispatch;
 import org.mfi.dto.contract.ContractDto;
@@ -31,6 +32,15 @@ public class ContractOperation extends ServiceCore implements IContractOperation
 		cliContract.setCusercre(cuser);
 		cliContract.setCreationDate(dbHelper.getNow());
 		genericDao.save(cliContract);
+
+		Cpt_fee cptFee = contract.getFee();
+		if (cptFee != null) {
+			cptFee.setCreationDate(dbHelper.getNow());
+			cptFee.setCusercre(cuser);
+			cptFee.setNumcli(numcli);
+			cptFee.setNumcon(numcon);
+			genericDao.save(cptFee);
+		}
 
 		List<GuaranteeDto> guarantees = contract.getGuarantees();
 		for (GuaranteeDto guaranteeDto : guarantees) {
@@ -77,7 +87,7 @@ public class ContractOperation extends ServiceCore implements IContractOperation
 				cptGuarcommi.setCusercre(cuser);
 				cptGuarcommi.setNumclicommi(dispatchDto.getNumcliinsurer());
 				cptGuarcommi.setNumguarantee(numguarantee);
-				cptGuarcommi.setRate(dispatchDto.getInsurerRate());
+				cptGuarcommi.setRate(dispatchDto.getAgencyCommissionRate());
 				genericDao.save(cptGuarcommi);
 			}
 

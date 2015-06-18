@@ -1,8 +1,11 @@
 package org.mfi.service.check.impl;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import org.mfi.conf.Cod_duration;
+import org.mfi.conf.Cod_fee;
 import org.mfi.conf.Cod_frequency;
 import org.mfi.conf.Cod_quotestatus;
 import org.mfi.data.Cli_contract;
@@ -72,6 +75,26 @@ public class QuoteAndContractCheck extends ServiceCore implements IQuoteAndContr
 		if (contract == null)
 			throw new QuoteAndContractException(ErrorCode.ERR_BIZ_QUOTECONTRACT_UNKNOWN_CONTRACT, numcli, numcon);
 		return contract;
+	}
+
+	@Override
+	public void checkDurationAndDates(final Cod_duration codDuration, final Date renewalDate, final Date endval) throws QuoteAndContractException {
+		if (MappingUtils.toBoolean(codDuration.getIndtemporary())) {
+			if (endval == null)
+				throw new QuoteAndContractException(ErrorCode.ERR_BIZ_QUOTECONTRACT_INVALID_ENDVAL_AND_DURATION, codDuration.getCduration());
+		} else {
+			if (renewalDate == null)
+				throw new QuoteAndContractException(ErrorCode.ERR_BIZ_QUOTECONTRACT_INVALID_RENEWAL_AND_DURATION, codDuration.getCduration());
+		}
+
+	}
+
+	@Override
+	public Cod_fee checkAndGetInitialPolicyFee() throws QuoteAndContractException {
+		Cod_fee codFee = quoteAndContractInfo.getInitialPolicyFee();
+		if (codFee == null)
+			throw new QuoteAndContractException(ErrorCode.ERR_BIZ_QUOTECONTRACT_UNKNOWN_INITIAL_FEE);
+		return codFee;
 	}
 
 }

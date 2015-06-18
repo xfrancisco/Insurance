@@ -1,13 +1,12 @@
 package org.mfi.out;
 
-
 public class DispatchOut {
 
 	private Long insurerId;
 
 	private String insurerShare;
 
-	private String insurerCommissionRate;
+	private String agencyCommissionRate;
 
 	public Long getInsurerId() {
 		return insurerId;
@@ -25,12 +24,12 @@ public class DispatchOut {
 		this.insurerShare = insurerShare;
 	}
 
-	public String getInsurerCommissionRate() {
-		return insurerCommissionRate;
+	public String getAgencyCommissionRate() {
+		return agencyCommissionRate;
 	}
 
-	public void setInsurerCommissionRate(String insurerCommissionRate) {
-		this.insurerCommissionRate = insurerCommissionRate;
+	public void setAgencyCommissionRate(String agencyCommissionRate) {
+		this.agencyCommissionRate = agencyCommissionRate;
 	}
 
 }

@@ -35,6 +35,7 @@ public class AbstractExceptionMapper implements ExceptionMapper<Exception> {
 
 	@Override
 	public Response toResponse(Exception exception) {
+		Response result = null;
 		//TODO XFR : print de la stack
 		ResponseBuilder<String> builder = new ResponseBuilder<>();
 		ResponseWrapper<String> wrapper = null;
@@ -43,7 +44,8 @@ public class AbstractExceptionMapper implements ExceptionMapper<Exception> {
 			MfcException tmp = (MfcException) exception;
 			builder.addReturnCode(tmp.getErrorCode())
 					.addMessage(propertiesUtils.getMessage(tmp.getErrorCode(), tmp.getMessageArgs(), exception.getMessage()))
-					.addSeverity(Severity.ERROR);
+					.addSeverity(Severity.WARN);
+			result = Response.status(Status.OK).entity(builder.getResponseWrapper()).build();
 		} else if (exception instanceof ConstraintViolationException) {
 			// Erreurs validation JSR-303
 			ConstraintViolationException myException = (ConstraintViolationException) exception;
@@ -82,7 +84,8 @@ public class AbstractExceptionMapper implements ExceptionMapper<Exception> {
 						errorMessageArgs.add(String.valueOf(min));
 					}
 					errorMessages.add(propertiesUtils.getMessage(errorCode, errorMessageArgs.toArray(), exception.getMessage()));
-					builder.addReturnCode(exception.getMessage()).addMessage(errorMessages.get(0)).addSeverity(Severity.ERROR);
+					builder.addReturnCode(exception.getMessage()).addMessage(errorMessages.get(0)).addSeverity(Severity.WARN);
+					result = Response.status(Status.OK).entity(builder.getResponseWrapper()).build();
 				}
 			}
 		} else {
@@ -90,14 +93,15 @@ public class AbstractExceptionMapper implements ExceptionMapper<Exception> {
 			builder.addReturnCode(TechnicalException.ErrorCode.ERR_TECH_GEN_DEFAULT.name())
 					.addMessage(propertiesUtils.getMessage(TechnicalException.ErrorCode.ERR_TECH_GEN_DEFAULT.name(), new Object[] {}, ""))
 					.addSeverity(Severity.ERROR);
+			result = Response.status(Status.INTERNAL_SERVER_ERROR).entity(builder.getResponseWrapper()).build();
 		}
 		//TODO XFR : Ajout de la stack dans le flux de sortie
 
 		/*if (isStackTracePrintingEnabled) {
 		builder.addData(ExceptionUtils.getStackTrace(exception));
 		}*/
+
 		exception.printStackTrace();
-		wrapper = builder.getResponseWrapper();
-		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(wrapper).build();
+		return result;
 	}
 }

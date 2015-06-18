@@ -3,6 +3,7 @@ package org.mfi.service.info;
 import java.util.List;
 
 import org.mfi.conf.Cod_duration;
+import org.mfi.conf.Cod_fee;
 import org.mfi.conf.Cod_frequency;
 import org.mfi.conf.Cod_quotestatus;
 import org.mfi.data.Cli_contract;
@@ -34,5 +35,7 @@ public interface IQuoteAndContractInfo {
 	int getNextNumContract(long numcli);
 
 	Cod_quotestatus getValidatedQuoteStatus();
+
+	Cod_fee getInitialPolicyFee();
 
 }

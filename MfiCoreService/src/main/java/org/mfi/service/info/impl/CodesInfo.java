@@ -7,6 +7,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.mfi.conf.Cod_duration;
 import org.mfi.conf.Cod_table;
 import org.mfi.conf.Cod_version;
 import org.mfi.service.ServiceCore;
@@ -54,6 +55,12 @@ public class CodesInfo extends ServiceCore implements ICodesInfo {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_table.class);
 		criteria.add(Restrictions.eq("ctable", ctable));
 		return genericDao.getFirstByCriteria(criteria);
+	}
+
+	@Override
+	public List<Cod_duration> getDurations() {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cod_duration.class);
+		return genericDao.getByCriteria(criteria);
 	}
 
 }

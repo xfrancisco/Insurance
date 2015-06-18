@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.mfi.validation.constraints.BigDecimalMin;
 import org.mfi.validation.constraints.EnterpriseModelEnum;
 import org.mfi.validation.constraints.Length;
 import org.mfi.validation.constraints.Mandatory;
+import org.mfi.validation.constraints.Percentage;
 
 import com.google.common.base.Strings;
 
@@ -51,6 +53,27 @@ public class ContractIn {
 	private String startDate;
 
 	private String endDate;
+
+	private String renewalDate;
+
+	@Mandatory
+	@Percentage
+	private String leaderShare;
+
+	@Mandatory
+	@Percentage
+	private String leadingCommissionRate;
+
+	@Mandatory
+	@Percentage
+	private String brokerCommissionRate;
+
+	@Mandatory
+	@BigDecimalMin
+	private String policyFees;
+
+	@Valid
+	private List<ContractInsurerIn> coinsurers;
 
 	@Valid
 	private List<GuaranteeIn> guarantees;
@@ -149,6 +172,54 @@ public class ContractIn {
 
 	public void setFrequencyId(String frequencyId) {
 		this.frequencyId = frequencyId;
+	}
+
+	public String getRenewalDate() {
+		return renewalDate;
+	}
+
+	public void setRenewalDate(String renewalDate) {
+		this.renewalDate = renewalDate;
+	}
+
+	public String getLeaderShare() {
+		return leaderShare;
+	}
+
+	public void setLeaderShare(String leaderShare) {
+		this.leaderShare = leaderShare;
+	}
+
+	public String getLeadingCommissionRate() {
+		return leadingCommissionRate;
+	}
+
+	public void setLeadingCommissionRate(String leadingCommissionRate) {
+		this.leadingCommissionRate = leadingCommissionRate;
+	}
+
+	public String getBrokerCommissionRate() {
+		return brokerCommissionRate;
+	}
+
+	public void setBrokerCommissionRate(String brokerCommissionRate) {
+		this.brokerCommissionRate = brokerCommissionRate;
+	}
+
+	public String getPolicyFees() {
+		return policyFees;
+	}
+
+	public void setPolicyFees(String policyFees) {
+		this.policyFees = policyFees;
+	}
+
+	public List<ContractInsurerIn> getCoinsurers() {
+		return coinsurers;
+	}
+
+	public void setCoinsurers(List<ContractInsurerIn> coinsurers) {
+		this.coinsurers = coinsurers;
 	}
 
 }

@@ -1,6 +1,9 @@
 package org.mfi.service.check;
 
+import java.util.Date;
+
 import org.mfi.conf.Cod_duration;
+import org.mfi.conf.Cod_fee;
 import org.mfi.conf.Cod_frequency;
 import org.mfi.conf.Cod_quotestatus;
 import org.mfi.data.Cli_contract;
@@ -21,5 +24,9 @@ public interface IQuoteAndContractCheck {
 	ContractDto checkContractDto(long numcli, int numcon) throws QuoteAndContractException;
 
 	Cod_frequency checkFrequency(String cfrequency) throws QuoteAndContractException;
+
+	void checkDurationAndDates(Cod_duration codDuration, Date renewalDate, Date endval) throws QuoteAndContractException;
+
+	Cod_fee checkAndGetInitialPolicyFee() throws QuoteAndContractException;;
 
 }
