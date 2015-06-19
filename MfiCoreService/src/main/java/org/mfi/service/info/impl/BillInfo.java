@@ -20,6 +20,7 @@ import org.mfi.dto.bill.PremiumBillDto;
 import org.mfi.service.ServiceCore;
 import org.mfi.service.info.IBillInfo;
 import org.mfi.service.info.IContractPremiumInfo;
+import org.mfi.service.info.IPersonInfo;
 import org.mfi.service.info.IPremiumInfo;
 import org.mfi.service.info.IQuoteAndContractInfo;
 import org.mfi.util.DateUtils;
@@ -38,12 +39,21 @@ public class BillInfo extends ServiceCore implements IBillInfo {
 	@Inject
 	private IPremiumInfo premiumInfo;
 
+	@Inject
+	private IPersonInfo personInfo;
+
 	@Override
 	public List<BillDto> getBills(final long numcli, final int numcon) {
 
 		List<BillDto> result = new ArrayList<BillDto>();
 		Cli_contract cliContract = quoteAndContractInfo.getContract(numcli, numcon);
 		long numclibroker = cliContract.getNumclibroker();
+		long numclileader = cliContract.getNumclileader();
+		Long numcliagency = null;
+		boolean isLeaderAnAgency = personInfo.isAgency(numclileader);
+		if (isLeaderAnAgency)
+			numcliagency = numclileader;
+
 		List<Cli_guarantee> guarantees = contractPremiumInfo.getGuarantees(numcli, numcon);
 
 		Cod_frequency codFrequency = quoteAndContractInfo.getFrequency(cliContract.getCfrequency());

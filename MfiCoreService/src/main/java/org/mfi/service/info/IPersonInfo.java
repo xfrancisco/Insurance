@@ -22,4 +22,8 @@ public interface IPersonInfo {
 	Cli_client getInsurer(long numcli);
 
 	Cli_client getClient(long numcli);
+
+	boolean isAgency(long numcli);
+
+	Cli_client getAgency(long numcli);
 }
