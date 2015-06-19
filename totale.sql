@@ -1233,7 +1233,7 @@ CREATE TABLE COD_FEE
   CONSTRAINT CODFEE_PK PRIMARY KEY (CFEE)
 );
 
-comment on table COD_FEE is 'Table des frais et des coûts';
+comment on table COD_FEE is 'Table des frais et des couts';
 comment on column COD_FEE.CFEE is 'Code';
 comment on column COD_FEE.LFEE is 'Libelle';
 comment on column COD_FEE.INDPOLICYFEE is 'Indicateur de cout de police. Si a 1 alors cout initial de police';
@@ -1266,7 +1266,7 @@ comment on column CPT_FEE.NUMFEE is 'Pk fictive';
 comment on column CPT_FEE.NUMCLI is 'Identifiant de l''individu';
 comment on column CPT_FEE.NUMCON is 'Identifiant du contrat';
 comment on column CPT_FEE.AMOUNT is 'Montant';
-comment on column CPT_FEE.CFEE is 'Identifiant du frais. Référence COD_FEE';
+comment on column CPT_FEE.CFEE is 'Identifiant du frais. Reference COD_FEE';
 comment on column CPT_FEE.CUSERCRE is 'Utilisateur de creation';
 comment on column CPT_FEE.CREATIONDATE is 'Date de creation';
 comment on column CPT_FEE.CUSERMOD is 'Utilisateur de modification';
@@ -1321,7 +1321,7 @@ NOCYCLE;
 
 
 alter table CLI_CONTRACT ADD RENEWALDATE DATE;
-comment on column CPT_GUARCOMMI.MODIFDATE is 'Date d''échéance du contrat';
+comment on column CPT_GUARCOMMI.MODIFDATE is 'Date d''echeance du contrat';
 
 
 
@@ -1353,3 +1353,16 @@ NOCYCLE;
 commit;
 
 
+CPT_FEES => couts de police
+CPT_GUARCOMMI => commissions pour Oxygen
+CPT_LEADINGFEE  => frais d'apÃ©rition
+
+Si Oxygen est apÃ©riteur
+CPT_FEES => facile
+CPT_GUARCOMMI => facile
+CPT_LEADINGFEE => des coassureurs vers Oxygen
+
+Si Oxygen est seul
+CPT_FEES => facile
+CPT_GUARCOMMI => vide
+CPT_LEADINGFEE => vide
