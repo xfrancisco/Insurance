@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mfi.data.Cli_guarantee;
 import org.mfi.data.Cpt_fee;
+import org.mfi.data.Cpt_guarbroker;
 import org.mfi.data.Cpt_guarcommi;
 import org.mfi.data.Cpt_guardispatch;
 import org.mfi.data.Cpt_guarplacement;
@@ -13,7 +14,7 @@ public interface IContractPremiumInfo {
 
 	List<Cli_guarantee> getGuarantees(long numcli, int numcon);
 
-	Cpt_guarcommi getBrokerCommission(long numguarantee, long numclibroker);
+	Cpt_guarbroker getBrokerCommission(long numguarantee, long numclibroker);
 
 	Cpt_guardispatch getLeaderShare(long numguarantee, long numclileader);
 

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.mfi.data.Cli_contract;
 import org.mfi.data.Cli_guarantee;
 import org.mfi.data.Cpt_fee;
+import org.mfi.data.Cpt_guarbroker;
 import org.mfi.data.Cpt_guarcommi;
 import org.mfi.data.Cpt_guardispatch;
 import org.mfi.data.Cpt_guarplacement;
@@ -118,13 +119,13 @@ public class ContractOperation extends ServiceCore implements IContractOperation
 			}
 
 			// Enregistrement de la commission du courtier
-			Cpt_guarcommi cptGuarcommiBroker = new Cpt_guarcommi();
-			cptGuarcommiBroker.setCreationDate(dbHelper.getNow());
-			cptGuarcommiBroker.setCusercre(cuser);
-			cptGuarcommiBroker.setNumclicommi(cliContract.getNumclibroker());
-			cptGuarcommiBroker.setNumguarantee(numguarantee);
-			cptGuarcommiBroker.setRate(guaranteeDto.getBrokerRate());
-			genericDao.save(cptGuarcommiBroker);
+			Cpt_guarbroker cptGuarbroker = new Cpt_guarbroker();
+			cptGuarbroker.setCreationDate(dbHelper.getNow());
+			cptGuarbroker.setCusercre(cuser);
+			cptGuarbroker.setNumclibro(cliContract.getNumclibroker());
+			cptGuarbroker.setNumguarantee(numguarantee);
+			cptGuarbroker.setRate(guaranteeDto.getBrokerRate());
+			genericDao.save(cptGuarbroker);
 		}
 
 	}

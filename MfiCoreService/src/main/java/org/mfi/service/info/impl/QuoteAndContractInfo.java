@@ -16,6 +16,7 @@ import org.mfi.conf.Cod_quotestatus;
 import org.mfi.data.Cli_contract;
 import org.mfi.data.Cli_guarantee;
 import org.mfi.data.Cli_quote;
+import org.mfi.data.Cpt_guarbroker;
 import org.mfi.data.Cpt_guarcommi;
 import org.mfi.data.Cpt_guardispatch;
 import org.mfi.data.Cpt_guarplacement;
@@ -145,13 +146,13 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 			guaranteeDto.setCpremium(cliGuarantee.getCpremium());
 			guaranteeDto.setCsection(cliGuarantee.getCsection());
 			guaranteeDto.setGuaranteedAmount(cliGuarantee.getGuaranteeamount());
-			Cpt_guarcommi cptGuarcommiBroker = contractPremiumInfo.getBrokerCommission(cliGuarantee.getNumguarantee(), numclibroker);
+			Cpt_guarbroker cptGuarcommiBroker = contractPremiumInfo.getBrokerCommission(cliGuarantee.getNumguarantee(), numclibroker);
 			Cpt_guardispatch cptGuarDispatchLeader = contractPremiumInfo.getLeaderShare(cliGuarantee.getNumguarantee(), numclileader);
 			guaranteeDto.setBrokerRate(cptGuarcommiBroker.getRate());
 			guaranteeDto.setLeaderShare(cptGuarDispatchLeader.getSharepart());
 			guaranteeDto.setPremiumAmount(cliGuarantee.getPremiumamount());
 
-			guaranteeDto.setAgencyPlacement(getAgencyPlacementDto(cliGuarantee.getNumguarantee(), numclibroker));
+			guaranteeDto.setAgencyPlacement(getAgencyPlacementDto(cliGuarantee.getNumguarantee()));
 			guaranteeDto.setInsurerDispatch(getInsurerDispatchDto(cliGuarantee.getNumguarantee(), numclileader));
 			guaranteeDto.setLeadingCommissionRate(populateLeadingCommissionRate(contractPremiumInfo.getLeadingCommission(cliGuarantee
 					.getNumguarantee())));
@@ -160,14 +161,11 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 		return result;
 	}
 
-	private List<AgencyPlacementDto> getAgencyPlacementDto(Long numguarantee, long numclibroker) {
+	private List<AgencyPlacementDto> getAgencyPlacementDto(Long numguarantee) {
 		List<AgencyPlacementDto> result = new ArrayList<AgencyPlacementDto>();
 		List<Cpt_guarcommi> agencyCommissions = contractPremiumInfo.getAgencyCommission(numguarantee);
 
 		for (Cpt_guarcommi cptGuarcommi : agencyCommissions) {
-			if (cptGuarcommi.getNumclicommi() == numclibroker)
-				continue;
-			// TODO XFR : TABLE BROKER
 			Cpt_guarplacement agencyPlacement = contractPremiumInfo.getAgencyPlacement(numguarantee, cptGuarcommi.getNumclicommi());
 			AgencyPlacementDto tmp = new AgencyPlacementDto();
 			tmp.setAgencyCommissionRate(cptGuarcommi.getRate());

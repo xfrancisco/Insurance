@@ -14,7 +14,7 @@ import org.mfi.conf.Cod_frequency;
 import org.mfi.conf.Cod_tax;
 import org.mfi.data.Cli_contract;
 import org.mfi.data.Cli_guarantee;
-import org.mfi.data.Cpt_guarcommi;
+import org.mfi.data.Cpt_guarbroker;
 import org.mfi.dto.bill.BillDto;
 import org.mfi.dto.bill.PremiumBillDto;
 import org.mfi.service.ServiceCore;
@@ -103,7 +103,7 @@ public class BillInfo extends ServiceCore implements IBillInfo {
 
 				PremiumBillDto premiumBillDto = new PremiumBillDto();
 				Cod_tax codTax = premiumInfo.getTaxByPremium(cliGuarantee.getCpremium());
-				Cpt_guarcommi brokerCommission = contractPremiumInfo.getBrokerCommission(cliGuarantee.getNumguarantee(), numclibroker);
+				Cpt_guarbroker brokerCommission = contractPremiumInfo.getBrokerCommission(cliGuarantee.getNumguarantee(), numclibroker);
 
 				premiumBillDto.setCsection(cliGuarantee.getCsection());
 				premiumBillDto.setCguarantee(cliGuarantee.getCguarantee());

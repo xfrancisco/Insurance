@@ -10,6 +10,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.mfi.data.Cli_guarantee;
 import org.mfi.data.Cpt_fee;
+import org.mfi.data.Cpt_guarbroker;
 import org.mfi.data.Cpt_guarcommi;
 import org.mfi.data.Cpt_guardispatch;
 import org.mfi.data.Cpt_guarplacement;
@@ -33,10 +34,10 @@ public class ContractPremiumInfo extends ServiceCore implements IContractPremium
 	}
 
 	@Override
-	public Cpt_guarcommi getBrokerCommission(final long numguarantee, final long numclibroker) {
-		final DetachedCriteria criteria = DetachedCriteria.forClass(Cpt_guarcommi.class);
+	public Cpt_guarbroker getBrokerCommission(final long numguarantee, final long numclibroker) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cpt_guarbroker.class);
 		criteria.add(eq("numguarantee", numguarantee));
-		criteria.add(eq("numclicommi", numclibroker));
+		criteria.add(eq("numclibro", numclibroker));
 		return genericDao.getFirstByCriteria(criteria);
 	}
 
