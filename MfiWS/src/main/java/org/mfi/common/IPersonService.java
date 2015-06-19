@@ -5,10 +5,10 @@ import java.util.List;
 import org.mfi.exception.MfcException;
 import org.mfi.in.InsertPersonIn;
 import org.mfi.in.UpdatePersonIn;
-import org.mfi.out.AddressHistoryOut;
-import org.mfi.out.EmailHistoryOut;
-import org.mfi.out.PersonOut;
-import org.mfi.out.PhoneHistoryOut;
+import org.mfi.out.person.AddressHistoryOut;
+import org.mfi.out.person.EmailHistoryOut;
+import org.mfi.out.person.PersonOut;
+import org.mfi.out.person.PhoneHistoryOut;
 
 public interface IPersonService {
 

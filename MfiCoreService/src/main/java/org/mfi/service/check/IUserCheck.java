@@ -8,4 +8,6 @@ public interface IUserCheck {
 	Usr_user checkUser(final String cuser) throws UserException;
 
 	Usr_role checkRole(final String crole) throws UserException;
+
+	Usr_user checkUserWithoutValidity(String cuser) throws UserException;
 }

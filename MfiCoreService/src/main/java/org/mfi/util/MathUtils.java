@@ -1,6 +1,7 @@
 package org.mfi.util;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public final class MathUtils {
 
@@ -11,7 +12,7 @@ public final class MathUtils {
 	private static final BigDecimal ONEHUNDERT = new BigDecimal(100);
 
 	public static BigDecimal applyPercentage(final BigDecimal value, final BigDecimal percentage) {
-		return value.multiply(percentage).divide(ONEHUNDERT);
+		return value.multiply(percentage).divide(ONEHUNDERT, 2, RoundingMode.HALF_UP);
 
 	}
 

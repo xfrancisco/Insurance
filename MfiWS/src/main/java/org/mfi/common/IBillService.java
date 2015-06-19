@@ -1,12 +1,10 @@
 package org.mfi.common;
 
-import java.util.List;
-
 import org.mfi.exception.MfcException;
-import org.mfi.out.BillOut;
+import org.mfi.out.billing.GlobalBillOut;
 
 public interface IBillService {
 
-	List<BillOut> getBills(String userId, long personId, int contractId) throws MfcException;
+	GlobalBillOut getBills(String userId, long personId, int contractId) throws MfcException;
 
 }

@@ -1,4 +1,4 @@
-package org.mfi.out;
+package org.mfi.out.billing;
 
 import java.math.BigDecimal;
 
@@ -93,4 +93,5 @@ public class PremiumBillOut {
 	public void setTaxRate(BigDecimal taxRate) {
 		this.taxRate = taxRate;
 	}
+
 }

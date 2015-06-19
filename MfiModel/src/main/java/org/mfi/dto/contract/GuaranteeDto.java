@@ -15,8 +15,11 @@ public class GuaranteeDto {
 	private BigDecimal premiumAmount;
 	private BigDecimal leaderShare;
 	private BigDecimal brokerRate;
+	private BigDecimal leadingCommissionRate;
 
-	private List<DispatchDto> dispatch;
+	private List<InsurerDispatchDto> insurerDispatch;
+
+	private List<AgencyPlacementDto> agencyPlacement;
 
 	public BigDecimal getBrokerRate() {
 		return brokerRate;
@@ -66,14 +69,6 @@ public class GuaranteeDto {
 		this.premiumAmount = premiumAmount;
 	}
 
-	public List<DispatchDto> getDispatch() {
-		return dispatch;
-	}
-
-	public void setDispatch(List<DispatchDto> dispatch) {
-		this.dispatch = dispatch;
-	}
-
 	public BigDecimal getLeaderShare() {
 		return leaderShare;
 	}
@@ -97,4 +92,29 @@ public class GuaranteeDto {
 	public void setCcategory(String ccategory) {
 		this.ccategory = ccategory;
 	}
+
+	public BigDecimal getLeadingCommissionRate() {
+		return leadingCommissionRate;
+	}
+
+	public void setLeadingCommissionRate(BigDecimal leadingCommissionRate) {
+		this.leadingCommissionRate = leadingCommissionRate;
+	}
+
+	public List<InsurerDispatchDto> getInsurerDispatch() {
+		return insurerDispatch;
+	}
+
+	public void setInsurerDispatch(List<InsurerDispatchDto> insurerDispatch) {
+		this.insurerDispatch = insurerDispatch;
+	}
+
+	public List<AgencyPlacementDto> getAgencyPlacement() {
+		return agencyPlacement;
+	}
+
+	public void setAgencyPlacement(List<AgencyPlacementDto> agencyPlacement) {
+		this.agencyPlacement = agencyPlacement;
+	}
+
 }

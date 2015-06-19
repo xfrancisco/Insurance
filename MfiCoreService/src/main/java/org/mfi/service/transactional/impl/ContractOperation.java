@@ -9,9 +9,12 @@ import org.mfi.data.Cli_guarantee;
 import org.mfi.data.Cpt_fee;
 import org.mfi.data.Cpt_guarcommi;
 import org.mfi.data.Cpt_guardispatch;
+import org.mfi.data.Cpt_guarplacement;
+import org.mfi.data.Cpt_leadingfee;
+import org.mfi.dto.contract.AgencyPlacementDto;
 import org.mfi.dto.contract.ContractDto;
-import org.mfi.dto.contract.DispatchDto;
 import org.mfi.dto.contract.GuaranteeDto;
+import org.mfi.dto.contract.InsurerDispatchDto;
 import org.mfi.exception.MfcException;
 import org.mfi.service.ServiceCore;
 import org.mfi.service.transactional.IContractOperation;
@@ -25,7 +28,7 @@ public class ContractOperation extends ServiceCore implements IContractOperation
 	private IMovementOperation movementOperation;
 
 	@Override
-	public int insertContract(final long numcli, final int numcon, final String cuser, final ContractDto contract) throws MfcException {
+	public void insertContract(final long numcli, final int numcon, final String cuser, final ContractDto contract) throws MfcException {
 		Cli_contract cliContract = contract.getContract();
 		cliContract.setNumcli(numcli);
 		cliContract.setNumcon(numcon);
@@ -70,8 +73,8 @@ public class ContractOperation extends ServiceCore implements IContractOperation
 			cptGuardispatchLeader.setSharepart(guaranteeDto.getLeaderShare());
 			genericDao.save(cptGuardispatchLeader);
 
-			List<DispatchDto> dispatches = guaranteeDto.getDispatch();
-			for (DispatchDto dispatchDto : dispatches) {
+			List<InsurerDispatchDto> dispatches = guaranteeDto.getInsurerDispatch();
+			for (InsurerDispatchDto dispatchDto : dispatches) {
 				// Enregistrement de la part des co-assureurs
 				Cpt_guardispatch cptGuardispatch = new Cpt_guardispatch();
 				cptGuardispatch.setCreationDate(dbHelper.getNow());
@@ -81,14 +84,37 @@ public class ContractOperation extends ServiceCore implements IContractOperation
 				cptGuardispatch.setSharepart(dispatchDto.getInsurerShare());
 				genericDao.save(cptGuardispatch);
 
-				// Enregistrement de la commission des coassureurs
+				Cpt_leadingfee cptLeadingfee = new Cpt_leadingfee();
+				cptLeadingfee.setCreationDate(dbHelper.getNow());
+				cptLeadingfee.setCusercre(cuser);
+				cptLeadingfee.setNumguarantee(numguarantee);
+				cptLeadingfee.setNumclidest(cliContract.getNumclileader());
+				cptLeadingfee.setNumclisrc(dispatchDto.getNumcliinsurer());
+				cptLeadingfee.setRate(guaranteeDto.getLeadingCommissionRate());
+				genericDao.save(cptGuardispatch);
+			}
+
+			List<AgencyPlacementDto> placements = guaranteeDto.getAgencyPlacement();
+			for (AgencyPlacementDto agencyPlacementDto : placements) {
+				// Enregistrement des placements pour l'agence
+
+				// Commission
 				Cpt_guarcommi cptGuarcommi = new Cpt_guarcommi();
 				cptGuarcommi.setCreationDate(dbHelper.getNow());
 				cptGuarcommi.setCusercre(cuser);
-				cptGuarcommi.setNumclicommi(dispatchDto.getNumcliinsurer());
+				cptGuarcommi.setNumclicommi(agencyPlacementDto.getNumcliinsurer());
 				cptGuarcommi.setNumguarantee(numguarantee);
-				cptGuarcommi.setRate(dispatchDto.getAgencyCommissionRate());
+				cptGuarcommi.setRate(agencyPlacementDto.getAgencyCommissionRate());
 				genericDao.save(cptGuarcommi);
+
+				//Taux de placement par coassureur (protocole)
+				Cpt_guarplacement cptGuarplacement = new Cpt_guarplacement();
+				cptGuarplacement.setCreationDate(dbHelper.getNow());
+				cptGuarplacement.setCusercre(cuser);
+				cptGuarplacement.setNumcliins(agencyPlacementDto.getNumcliinsurer());
+				cptGuarplacement.setNumguarantee(numguarantee);
+				cptGuarplacement.setSharepart(agencyPlacementDto.getInsurerShare());
+				genericDao.save(cptGuarplacement);
 			}
 
 			// Enregistrement de la commission du courtier
@@ -100,7 +126,6 @@ public class ContractOperation extends ServiceCore implements IContractOperation
 			cptGuarcommiBroker.setRate(guaranteeDto.getBrokerRate());
 			genericDao.save(cptGuarcommiBroker);
 		}
-		return 0;
-	}
 
+	}
 }

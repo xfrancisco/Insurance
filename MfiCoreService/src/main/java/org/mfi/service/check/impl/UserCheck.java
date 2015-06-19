@@ -33,4 +33,13 @@ public class UserCheck extends ServiceCore implements IUserCheck {
 		return usrRole;
 
 	}
+
+	@Override
+	public Usr_user checkUserWithoutValidity(String cuser) throws UserException {
+		Usr_user usrUser = userInfo.getUserWithoutValidity(cuser);
+		if (usrUser == null) {
+			throw new UserException(ErrorCode.ERR_BIZ_USER_UNKNOWN_USER, cuser);
+		}
+		return usrUser;
+	}
 }

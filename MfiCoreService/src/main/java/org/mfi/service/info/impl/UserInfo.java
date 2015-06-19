@@ -36,4 +36,11 @@ public class UserInfo extends ServiceCore implements IUserInfo {
 
 	}
 
+	@Override
+	public Usr_user getUserWithoutValidity(String cuser) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Usr_user.class);
+		criteria.add(Restrictions.eq("cuser", cuser));
+		return genericDao.getFirstByCriteria(criteria);
+	}
+
 }

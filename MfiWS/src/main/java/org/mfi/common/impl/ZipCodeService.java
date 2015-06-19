@@ -13,7 +13,7 @@ import org.mfi.exception.ContactException;
 import org.mfi.exception.MfcException;
 import org.mfi.exception.ContactException.ErrorCode;
 import org.mfi.in.ZipCodeIn;
-import org.mfi.out.ZipCodeOut;
+import org.mfi.out.codes.ZipCodeOut;
 import org.mfi.service.check.IContactCheck;
 import org.mfi.service.check.IUserCheck;
 import org.mfi.service.info.IContactInfo;

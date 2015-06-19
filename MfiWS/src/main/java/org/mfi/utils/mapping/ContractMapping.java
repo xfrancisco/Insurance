@@ -4,27 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.mfi.data.Cli_contract;
+import org.mfi.data.Cpt_fee;
+import org.mfi.dto.contract.AgencyPlacementDto;
 import org.mfi.dto.contract.ContractDto;
-import org.mfi.dto.contract.DispatchDto;
 import org.mfi.dto.contract.GuaranteeDto;
+import org.mfi.dto.contract.InsurerDispatchDto;
 import org.mfi.exception.CommonException;
 import org.mfi.in.ContractIn;
+import org.mfi.in.ContractInsurerIn;
 import org.mfi.in.DispatchIn;
 import org.mfi.in.GuaranteeIn;
-import org.mfi.out.ContractListOut;
-import org.mfi.out.ContractOut;
-import org.mfi.out.DispatchOut;
-import org.mfi.out.GuaranteeOut;
+import org.mfi.out.codes.GuaranteeOut;
+import org.mfi.out.contract.ContractInsurerOut;
+import org.mfi.out.contract.ContractListOut;
+import org.mfi.out.contract.ContractOut;
+import org.mfi.out.contract.DispatchOut;
 import org.mfi.util.DateUtils;
-import org.mfi.util.DateUtils.DatePattern;
 import org.mfi.util.MappingUtils;
+
+import com.google.common.base.Strings;
 
 public final class ContractMapping {
 
 	public static ContractDto populateContractDto(ContractIn contractIn) throws CommonException {
 		ContractDto result = new ContractDto();
 		result.setContract(populateContract(contractIn));
-		result.setGuarantees(populateGuarantees(contractIn.getGuarantees(), contractIn.getBrokerCommissionRate(), contractIn.getLeaderShare()));
+		result.setGuarantees(populateGuarantees(contractIn.getCoinsurers(), contractIn.getGuarantees(), contractIn.getBrokerCommissionRate(),
+				contractIn.getLeaderShare()));
 		result.setNumquote(contractIn.getQuoteId());
 		return result;
 
@@ -39,7 +45,11 @@ public final class ContractMapping {
 		contract.setCuseruw(contractIn.getUnderwriterId());
 		contract.setStartval(DateUtils.parseStringToSqlDate(contractIn.getStartDate()));
 		contract.setEndval(DateUtils.parseStringToSqlDate(contractIn.getEndDate()));
-		contract.setRenewalDate(DateUtils.parseStringToSqlDate(contractIn.getRenewalDate(), DatePattern.DATE_DD_MM));
+		String renewalDate = contractIn.getRenewalDate();
+		if (!Strings.isNullOrEmpty(renewalDate)) {
+			contract.setRenewalDate(DateUtils.parseStringToSqlDate(renewalDate));
+			contract.setEndval(contract.getRenewalDate());
+		}
 		contract.setNumclibroker(contractIn.getBrokerId());
 		contract.setNumclileader(contractIn.getLeaderId());
 		contract.setNumquote(contractIn.getQuoteId());
@@ -47,8 +57,8 @@ public final class ContractMapping {
 		return contract;
 	}
 
-	private static List<GuaranteeDto> populateGuarantees(List<GuaranteeIn> guaranteesIn, String brokerCommissionRate, String leaderShare)
-			throws CommonException {
+	private static List<GuaranteeDto> populateGuarantees(List<ContractInsurerIn> insurers, List<GuaranteeIn> guaranteesIn,
+			String brokerCommissionRate, String leaderShare) throws CommonException {
 		List<GuaranteeDto> result = new ArrayList<GuaranteeDto>();
 		for (GuaranteeIn guaranteeIn : guaranteesIn) {
 			GuaranteeDto tmp = new GuaranteeDto();
@@ -60,24 +70,36 @@ public final class ContractMapping {
 			tmp.setCbranch(guaranteeIn.getBranchId());
 			tmp.setGuaranteedAmount(MappingUtils.toBigDecimal(guaranteeIn.getGuaranteedAmount()));
 			tmp.setPremiumAmount(MappingUtils.toBigDecimal(guaranteeIn.getPremiumAmount()));
-			tmp.setDispatch(populateDispatch(guaranteeIn.getDispatch()));
 			tmp.setLeaderShare(MappingUtils.toBigDecimal(leaderShare));
+
+			tmp.setInsurerDispatch(populateDispatch(insurers));
+			tmp.setAgencyPlacement(populateAgencyPlacement(guaranteeIn.getDispatch()));
 			result.add(tmp);
 		}
 		return result;
 
 	}
 
-	private static List<DispatchDto> populateDispatch(List<DispatchIn> dispatchesIn) throws CommonException {
-		List<DispatchDto> result = new ArrayList<DispatchDto>();
-		for (DispatchIn dispatchIn : dispatchesIn) {
-			DispatchDto tmp = new DispatchDto();
+	private static List<AgencyPlacementDto> populateAgencyPlacement(List<DispatchIn> dispatch) throws CommonException {
+		List<AgencyPlacementDto> result = new ArrayList<AgencyPlacementDto>();
+		for (DispatchIn dispatchIn : dispatch) {
+			AgencyPlacementDto tmp = new AgencyPlacementDto();
 			tmp.setAgencyCommissionRate(MappingUtils.toBigDecimal(dispatchIn.getAgencyCommissionRate()));
 			tmp.setInsurerShare(MappingUtils.toBigDecimal(dispatchIn.getInsurerShare()));
 			tmp.setNumcliinsurer(dispatchIn.getInsurerId());
 			result.add(tmp);
 		}
+		return result;
+	}
 
+	private static List<InsurerDispatchDto> populateDispatch(List<ContractInsurerIn> insurersIn) throws CommonException {
+		List<InsurerDispatchDto> result = new ArrayList<InsurerDispatchDto>();
+		for (ContractInsurerIn insurerIn : insurersIn) {
+			InsurerDispatchDto tmp = new InsurerDispatchDto();
+			tmp.setInsurerShare(MappingUtils.toBigDecimal(insurerIn.getInsurerShare()));
+			tmp.setNumcliinsurer(insurerIn.getInsurerId());
+			result.add(tmp);
+		}
 		return result;
 	}
 
@@ -115,34 +137,61 @@ public final class ContractMapping {
 		result.setStartDate(DateUtils.formatDate(contract.getContract().getStartval()));
 		result.setUnderwriterId(contract.getContract().getCuseruw());
 		result.setFrequencyId(contract.getContract().getCfrequency());
+		result.setPolicyFees(populatePolicyFees(contract.getFee()));
+		result.setRenewalDate(DateUtils.formatDate(contract.getContract().getRenewalDate()));
+
+		GuaranteeDto firstGuarantee = contract.getGuarantees().isEmpty() ? null : contract.getGuarantees().get(0);
+		if (firstGuarantee != null) {
+			result.setBrokerCommissionRate(MappingUtils.toString(firstGuarantee.getBrokerRate()));
+			result.setLeaderShare(MappingUtils.toString(firstGuarantee.getLeaderShare()));
+			result.setLeadingCommissionRate(MappingUtils.toString(firstGuarantee.getLeadingCommissionRate()));
+			result.setCoinsurers(populateContractInsurersOut(firstGuarantee.getInsurerDispatch()));
+		}
 		return result;
+	}
+
+	private static List<ContractInsurerOut> populateContractInsurersOut(List<InsurerDispatchDto> insurerDispatch) {
+		List<ContractInsurerOut> result = new ArrayList<ContractInsurerOut>();
+		for (InsurerDispatchDto insurerDispatchDto : insurerDispatch) {
+			ContractInsurerOut tmp = new ContractInsurerOut();
+			tmp.setInsurerId(insurerDispatchDto.getNumcliinsurer());
+			tmp.setInsurerShare(MappingUtils.toString(insurerDispatchDto.getInsurerShare()));
+			result.add(tmp);
+		}
+		return result;
+	}
+
+	private static String populatePolicyFees(Cpt_fee fee) {
+		if (fee != null)
+			return MappingUtils.toString(fee.getAmount());
+		return null;
 	}
 
 	private static List<GuaranteeOut> populateGuaranteesOut(List<GuaranteeDto> guarantees) {
 		List<GuaranteeOut> result = new ArrayList<GuaranteeOut>();
 		for (GuaranteeDto guaranteeDto : guarantees) {
 			GuaranteeOut tmp = new GuaranteeOut();
-			tmp.setBrokerCommissionRate(MappingUtils.toString(guaranteeDto.getBrokerRate()));
 			tmp.setGuaranteedAmount(MappingUtils.toString(guaranteeDto.getGuaranteedAmount()));
 			tmp.setGuaranteeId(guaranteeDto.getCguarantee());
-			tmp.setLeaderShare(MappingUtils.toString(guaranteeDto.getLeaderShare()));
 			tmp.setPremiumAmount(MappingUtils.toString(guaranteeDto.getPremiumAmount()));
 			tmp.setPremiumId(guaranteeDto.getCpremium());
 			tmp.setSectionId(guaranteeDto.getCsection());
-			tmp.setDispatch(populateDispatchOut(guaranteeDto.getDispatch()));
+			tmp.setBranchId(guaranteeDto.getCbranch());
+			tmp.setCategoryId(guaranteeDto.getCcategory());
+			tmp.setDispatch(populateDispatchOut(guaranteeDto.getAgencyPlacement()));
 			result.add(tmp);
 		}
 		return result;
 	}
 
-	private static List<DispatchOut> populateDispatchOut(List<DispatchDto> dispatch) {
+	private static List<DispatchOut> populateDispatchOut(List<AgencyPlacementDto> placement) {
 
 		List<DispatchOut> result = new ArrayList<DispatchOut>();
-		for (DispatchDto dispatchDto : dispatch) {
+		for (AgencyPlacementDto placementDto : placement) {
 			DispatchOut tmp = new DispatchOut();
-			tmp.setAgencyCommissionRate(MappingUtils.toString(dispatchDto.getAgencyCommissionRate()));
-			tmp.setInsurerId(dispatchDto.getNumcliinsurer());
-			tmp.setInsurerShare(MappingUtils.toString(dispatchDto.getInsurerShare()));
+			tmp.setAgencyCommissionRate(MappingUtils.toString(placementDto.getAgencyCommissionRate()));
+			tmp.setInsurerId(placementDto.getNumcliinsurer());
+			tmp.setInsurerShare(MappingUtils.toString(placementDto.getInsurerShare()));
 			result.add(tmp);
 		}
 		return result;

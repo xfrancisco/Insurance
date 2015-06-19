@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.mfi.exception.MfcException;
 import org.mfi.in.CodeTableIn;
-import org.mfi.out.AllCodeTableOut;
-import org.mfi.out.CodeTableOut;
-import org.mfi.out.DurationOut;
-import org.mfi.out.EntityOut;
 import org.mfi.out.QuoteStatusOut;
-import org.mfi.out.TaxOut;
-import org.mfi.out.VersionOut;
+import org.mfi.out.codes.AllCodeTableOut;
+import org.mfi.out.codes.CodeTableOut;
+import org.mfi.out.codes.DurationOut;
+import org.mfi.out.codes.EntityOut;
+import org.mfi.out.codes.TaxOut;
+import org.mfi.out.codes.VersionOut;
 
 public interface ICodeTableService {
 

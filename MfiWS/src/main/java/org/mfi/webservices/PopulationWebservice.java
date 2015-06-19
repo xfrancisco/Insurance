@@ -12,7 +12,7 @@ import javax.ws.rs.QueryParam;
 import org.mfi.common.IPopulationService;
 import org.mfi.exception.MfcException;
 import org.mfi.in.PopulationIn;
-import org.mfi.out.PersonOut;
+import org.mfi.out.person.PersonOut;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 

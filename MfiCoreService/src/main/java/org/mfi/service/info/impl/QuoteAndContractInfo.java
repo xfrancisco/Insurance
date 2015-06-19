@@ -1,5 +1,6 @@
 package org.mfi.service.info.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +18,12 @@ import org.mfi.data.Cli_guarantee;
 import org.mfi.data.Cli_quote;
 import org.mfi.data.Cpt_guarcommi;
 import org.mfi.data.Cpt_guardispatch;
+import org.mfi.data.Cpt_guarplacement;
+import org.mfi.data.Cpt_leadingfee;
+import org.mfi.dto.contract.AgencyPlacementDto;
 import org.mfi.dto.contract.ContractDto;
-import org.mfi.dto.contract.DispatchDto;
 import org.mfi.dto.contract.GuaranteeDto;
+import org.mfi.dto.contract.InsurerDispatchDto;
 import org.mfi.service.ServiceCore;
 import org.mfi.service.info.IContractPremiumInfo;
 import org.mfi.service.info.IQuoteAndContractInfo;
@@ -121,7 +125,10 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 		ContractDto result = new ContractDto();
 		Cli_contract contract = getContract(numcli, numcon);
 		result.setContract(contract);
-		result.setGuarantees(getGuaranteesDto(numcli, numcon, contract.getNumclibroker(), contract.getNumclileader()));
+		result.setFee(contractPremiumInfo.getInitialFees(numcli, numcon));
+		result.setNumquote(contract.getNumquote());
+		List<GuaranteeDto> guarantees = getGuaranteesDto(numcli, numcon, contract.getNumclibroker(), contract.getNumclileader());
+		result.setGuarantees(guarantees);
 		return result;
 
 	}
@@ -131,6 +138,7 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 		List<Cli_guarantee> guarantees = contractPremiumInfo.getGuarantees(numcli, numcon);
 		for (Cli_guarantee cliGuarantee : guarantees) {
 			GuaranteeDto guaranteeDto = new GuaranteeDto();
+
 			guaranteeDto.setCcategory(cliGuarantee.getCcategory());
 			guaranteeDto.setCbranch(cliGuarantee.getCbranch());
 			guaranteeDto.setCguarantee(cliGuarantee.getCguarantee());
@@ -141,20 +149,49 @@ public class QuoteAndContractInfo extends ServiceCore implements IQuoteAndContra
 			Cpt_guardispatch cptGuarDispatchLeader = contractPremiumInfo.getLeaderShare(cliGuarantee.getNumguarantee(), numclileader);
 			guaranteeDto.setBrokerRate(cptGuarcommiBroker.getRate());
 			guaranteeDto.setLeaderShare(cptGuarDispatchLeader.getSharepart());
-			guaranteeDto.setDispatch(getDispatchDto(cliGuarantee.getNumguarantee(), numclileader));
 			guaranteeDto.setPremiumAmount(cliGuarantee.getPremiumamount());
 
+			guaranteeDto.setAgencyPlacement(getAgencyPlacementDto(cliGuarantee.getNumguarantee(), numclibroker));
+			guaranteeDto.setInsurerDispatch(getInsurerDispatchDto(cliGuarantee.getNumguarantee(), numclileader));
+			guaranteeDto.setLeadingCommissionRate(populateLeadingCommissionRate(contractPremiumInfo.getLeadingCommission(cliGuarantee
+					.getNumguarantee())));
+			result.add(guaranteeDto);
 		}
 		return result;
 	}
 
-	private List<DispatchDto> getDispatchDto(final long numguarantee, final long numclileader) {
-		List<DispatchDto> result = new ArrayList<DispatchDto>();
+	private List<AgencyPlacementDto> getAgencyPlacementDto(Long numguarantee, long numclibroker) {
+		List<AgencyPlacementDto> result = new ArrayList<AgencyPlacementDto>();
+		List<Cpt_guarcommi> agencyCommissions = contractPremiumInfo.getAgencyCommission(numguarantee);
+
+		for (Cpt_guarcommi cptGuarcommi : agencyCommissions) {
+			if (cptGuarcommi.getNumclicommi() == numclibroker)
+				continue;
+			// TODO XFR : TABLE BROKER
+			Cpt_guarplacement agencyPlacement = contractPremiumInfo.getAgencyPlacement(numguarantee, cptGuarcommi.getNumclicommi());
+			AgencyPlacementDto tmp = new AgencyPlacementDto();
+			tmp.setAgencyCommissionRate(cptGuarcommi.getRate());
+			tmp.setInsurerShare(agencyPlacement.getSharepart());
+			tmp.setNumcliinsurer(agencyPlacement.getNumcliins());
+			result.add(tmp);
+		}
+		return result;
+	}
+
+	private BigDecimal populateLeadingCommissionRate(List<Cpt_leadingfee> leadingCommissions) {
+		if (leadingCommissions == null || leadingCommissions.isEmpty())
+			return new BigDecimal(0);
+		else {
+			Cpt_leadingfee cptLeadingfee = leadingCommissions.get(0);
+			return cptLeadingfee.getRate();
+		}
+	}
+
+	private List<InsurerDispatchDto> getInsurerDispatchDto(final long numguarantee, final long numclileader) {
+		List<InsurerDispatchDto> result = new ArrayList<InsurerDispatchDto>();
 		List<Cpt_guardispatch> dispatches = contractPremiumInfo.getDispatches(numguarantee, numclileader);
 		for (Cpt_guardispatch dispatch : dispatches) {
-			DispatchDto tmp = new DispatchDto();
-			Cpt_guarcommi commi = contractPremiumInfo.getInsurerCommission(numguarantee, dispatch.getNumcliins());
-			tmp.setAgencyCommissionRate(commi.getRate());
+			InsurerDispatchDto tmp = new InsurerDispatchDto();
 			tmp.setInsurerShare(dispatch.getSharepart());
 			tmp.setNumcliinsurer(dispatch.getNumcliins());
 			result.add(tmp);

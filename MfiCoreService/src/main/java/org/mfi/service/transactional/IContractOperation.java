@@ -5,6 +5,6 @@ import org.mfi.exception.MfcException;
 
 public interface IContractOperation {
 
-	int insertContract(long numcli, int numcon, String cuser, ContractDto contract) throws MfcException;
+	void insertContract(long numcli, int numcon, String cuser, ContractDto contract) throws MfcException;
 
 }

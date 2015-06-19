@@ -11,7 +11,7 @@ import org.mfi.common.IPopulationService;
 import org.mfi.data.Cli_client;
 import org.mfi.exception.MfcException;
 import org.mfi.in.PopulationIn;
-import org.mfi.out.PersonOut;
+import org.mfi.out.person.PersonOut;
 import org.mfi.service.check.IUserCheck;
 import org.mfi.service.info.IPopulationInfo;
 import org.mfi.utils.mapping.PersonMapping;

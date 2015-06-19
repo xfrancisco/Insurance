@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.mfi.exception.MfcException;
 import org.mfi.in.PopulationIn;
-import org.mfi.out.PersonOut;
+import org.mfi.out.person.PersonOut;
 
 public interface IPopulationService {
 

@@ -8,9 +8,10 @@ import javax.inject.Inject;
 
 import org.mfi.conf.Cod_duration;
 import org.mfi.data.Cli_contract;
+import org.mfi.dto.contract.AgencyPlacementDto;
 import org.mfi.dto.contract.ContractDto;
-import org.mfi.dto.contract.DispatchDto;
 import org.mfi.dto.contract.GuaranteeDto;
+import org.mfi.dto.contract.InsurerDispatchDto;
 import org.mfi.exception.MfcException;
 import org.mfi.exception.PremiumException;
 import org.mfi.exception.PremiumException.ErrorCode;
@@ -81,9 +82,9 @@ public class ContractManager extends ServiceCore implements IContractManager {
 			commonCheck.checkPercentage(guaranteeDto.getBrokerRate());
 			BigDecimal globalShare = new BigDecimal(0);
 			globalShare = globalShare.add(guaranteeDto.getLeaderShare());
-			List<DispatchDto> dispatchDtos = guaranteeDto.getDispatch();
-			for (DispatchDto dispatch : dispatchDtos) {
-				commonCheck.checkPercentage(dispatch.getAgencyCommissionRate());
+
+			List<InsurerDispatchDto> dispatchDtos = guaranteeDto.getInsurerDispatch();
+			for (InsurerDispatchDto dispatch : dispatchDtos) {
 				commonCheck.checkPercentage(dispatch.getInsurerShare());
 				personCheck.checkInsurer(dispatch.getNumcliinsurer());
 				globalShare = globalShare.add(dispatch.getInsurerShare());
@@ -94,9 +95,23 @@ public class ContractManager extends ServiceCore implements IContractManager {
 					insurers.add(dispatch.getNumcliinsurer());
 			}
 			commonCheck.checkShareOnPremium(globalShare, guaranteeDto.getCpremium());
+
+			List<AgencyPlacementDto> placements = guaranteeDto.getAgencyPlacement();
+			globalShare = new BigDecimal(0);
+			for (AgencyPlacementDto agencyPlacementDto : placements) {
+				commonCheck.checkPercentage(agencyPlacementDto.getAgencyCommissionRate());
+				commonCheck.checkPercentage(agencyPlacementDto.getInsurerShare());
+				personCheck.checkInsurer(agencyPlacementDto.getNumcliinsurer());
+				globalShare = globalShare.add(agencyPlacementDto.getInsurerShare());
+			}
+			commonCheck.checkShareOnPremium(globalShare, guaranteeDto.getCpremium());
 		}
+
+		/* Insertion du contrat */
 		int numcon = quoteInfo.getNextNumContract(numcli);
 		contractOperation.insertContract(numcli, numcon, cuser, contract);
+
+		/* Validation de la proposition */
 		if (contract.getNumquote() != null) {
 			quoteOperation.validateQuote(cuser, numcli, contract.getNumquote(), numcon);
 		}

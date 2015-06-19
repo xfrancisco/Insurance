@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.mfi.exception.MfcException;
 import org.mfi.in.ZipCodeIn;
-import org.mfi.out.ZipCodeOut;
+import org.mfi.out.codes.ZipCodeOut;
 
 public interface IZipCodeService {
 

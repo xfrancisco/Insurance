@@ -1,4 +1,4 @@
-package org.mfi.out;
+package org.mfi.out.person;
 
 public class EmailHistoryOut {
 	private Long id;

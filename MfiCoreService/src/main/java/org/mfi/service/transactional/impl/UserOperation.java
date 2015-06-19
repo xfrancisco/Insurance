@@ -17,7 +17,9 @@ public class UserOperation extends ServiceCore implements IUserOperation {
 	}
 
 	@Override
-	public void updateUser(final String cuser, Usr_user usrUser) {
+	public void updateUser(final String cuser, Usr_user usrUser, final Usr_user oldUsrUser) {
+		usrUser.setCreationDate(oldUsrUser.getCreationDate());
+		usrUser.setCusercre(oldUsrUser.getCusercre());
 		usrUser.setModifDate(dbHelper.getNow());
 		usrUser.setCusermod(cuser);
 		genericDao.merge(usrUser);

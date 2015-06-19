@@ -35,7 +35,7 @@ public class Cli_contract implements Serializable {
 	private Date creationDate;
 	private Date modifDate;
 	private Date cancelDate;
-	private Date renewalDate;
+	private java.sql.Date renewalDate;
 
 	private Long numclibroker;
 	private Long numclileader;
@@ -195,11 +195,11 @@ public class Cli_contract implements Serializable {
 		this.cfrequency = cfrequency;
 	}
 
-	public Date getRenewalDate() {
+	public java.sql.Date getRenewalDate() {
 		return renewalDate;
 	}
 
-	public void setRenewalDate(Date renewalDate) {
+	public void setRenewalDate(java.sql.Date renewalDate) {
 		this.renewalDate = renewalDate;
 	}
 

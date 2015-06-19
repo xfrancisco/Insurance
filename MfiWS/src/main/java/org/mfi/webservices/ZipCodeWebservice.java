@@ -12,7 +12,7 @@ import javax.ws.rs.QueryParam;
 import org.mfi.common.IZipCodeService;
 import org.mfi.exception.MfcException;
 import org.mfi.in.ZipCodeIn;
-import org.mfi.out.ZipCodeOut;
+import org.mfi.out.codes.ZipCodeOut;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 

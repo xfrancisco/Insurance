@@ -22,7 +22,6 @@ public final class DateUtils {
 		DATE_YYYYMMDD("yyyyMMdd"),
 		DATE_YYYYMM("yyyyMM"),
 		DATE_MM_YY("MM/YY"),
-		DATE_DD_MM("DD/MM"),
 		DATE_DD_MM_YYYY("dd/MM/yyyy"),
 		DATE_DD_MM_YYYY_HH_MM_SS("dd/MM/yyyy hh:mm:ss");
 

@@ -1,6 +1,8 @@
-package org.mfi.out;
+package org.mfi.out.codes;
 
 import java.util.List;
+
+import org.mfi.out.contract.DispatchOut;
 
 import com.google.common.base.Strings;
 
@@ -11,15 +13,8 @@ public class GuaranteeOut {
 	private String sectionId;
 	private String guaranteeId;
 	private String premiumId;
-
 	private String guaranteedAmount;
-
 	private String premiumAmount;
-
-	private String brokerCommissionRate;
-
-	private String leaderShare;
-
 	private List<DispatchOut> dispatch;
 
 	public String getGuaranteeId() {
@@ -68,22 +63,6 @@ public class GuaranteeOut {
 
 	public void setSectionId(String sectionId) {
 		this.sectionId = sectionId;
-	}
-
-	public String getBrokerCommissionRate() {
-		return brokerCommissionRate;
-	}
-
-	public void setBrokerCommissionRate(String brokerCommissionRate) {
-		this.brokerCommissionRate = brokerCommissionRate;
-	}
-
-	public String getLeaderShare() {
-		return leaderShare;
-	}
-
-	public void setLeaderShare(String leaderShare) {
-		this.leaderShare = leaderShare;
 	}
 
 	public String getBranchId() {

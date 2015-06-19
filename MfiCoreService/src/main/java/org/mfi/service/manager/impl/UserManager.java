@@ -34,11 +34,10 @@ public class UserManager extends ServiceCore implements IUserManager {
 
 	@Override
 	public void updateUser(String cuser, Usr_user usrUser) throws UserException {
-		userCheck.checkUser(usrUser.getCuser());
+		Usr_user oldUsrUser = userCheck.checkUserWithoutValidity(usrUser.getCuser());
 		userCheck.checkRole(usrUser.getCrole());
-		Usr_user oldUser = userInfo.getUser(usrUser.getCuser());
-		if (!oldUser.equals(usrUser))
-			userOperation.updateUser(cuser, usrUser);
+		if (!oldUsrUser.equals(usrUser))
+			userOperation.updateUser(cuser, usrUser, oldUsrUser);
 
 	}
 

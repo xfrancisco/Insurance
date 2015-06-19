@@ -14,8 +14,8 @@ import org.mfi.common.IContractService;
 import org.mfi.exception.MfcException;
 import org.mfi.in.ContractIn;
 import org.mfi.in.UpdateContractIn;
-import org.mfi.out.ContractListOut;
-import org.mfi.out.ContractOut;
+import org.mfi.out.contract.ContractListOut;
+import org.mfi.out.contract.ContractOut;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 

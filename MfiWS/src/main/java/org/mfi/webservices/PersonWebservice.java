@@ -14,10 +14,10 @@ import org.mfi.common.IPersonService;
 import org.mfi.exception.MfcException;
 import org.mfi.in.InsertPersonIn;
 import org.mfi.in.UpdatePersonIn;
-import org.mfi.out.AddressHistoryOut;
-import org.mfi.out.EmailHistoryOut;
-import org.mfi.out.PersonOut;
-import org.mfi.out.PhoneHistoryOut;
+import org.mfi.out.person.AddressHistoryOut;
+import org.mfi.out.person.EmailHistoryOut;
+import org.mfi.out.person.PersonOut;
+import org.mfi.out.person.PhoneHistoryOut;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 

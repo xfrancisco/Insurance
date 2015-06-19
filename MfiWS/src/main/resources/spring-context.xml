@@ -78,7 +78,9 @@
 				<value>org.mfi.data.Cli_quote</value>
 				<value>org.mfi.data.Cpt_guarcommi</value>
 				<value>org.mfi.data.Cpt_guardispatch</value>
+				<value>org.mfi.data.Cpt_guarplacement</value>
 				<value>org.mfi.data.Cpt_fee</value>
+				<value>org.mfi.data.Cpt_leadingfee</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

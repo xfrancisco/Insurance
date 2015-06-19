@@ -1,28 +1,13 @@
-package org.mfi.dto.bill;
+package org.mfi.out.billing;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
-import org.mfi.data.Cpt_fee;
-
-public class BillDto {
-
-	private List<PremiumBillDto> premiumBills;
+public class GlobalBillOut {
 	private BigDecimal grossTotalAmount;
 	private BigDecimal brokerTotalAmount;
 	private BigDecimal netCompanyTotalAmount;
-	private List<Cpt_fee> fees;
-	private Date startDate;
-	private Date endDate;
-
-	public List<PremiumBillDto> getPremiumBills() {
-		return premiumBills;
-	}
-
-	public void setPremiumBills(List<PremiumBillDto> premiumBills) {
-		this.premiumBills = premiumBills;
-	}
+	private List<BillOut> bills;
 
 	public BigDecimal getGrossTotalAmount() {
 		return grossTotalAmount;
@@ -48,28 +33,12 @@ public class BillDto {
 		this.netCompanyTotalAmount = netCompanyTotalAmount;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public List<BillOut> getBills() {
+		return bills;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	public List<Cpt_fee> getFees() {
-		return fees;
-	}
-
-	public void setFees(List<Cpt_fee> fees) {
-		this.fees = fees;
+	public void setBills(List<BillOut> bills) {
+		this.bills = bills;
 	}
 
 }

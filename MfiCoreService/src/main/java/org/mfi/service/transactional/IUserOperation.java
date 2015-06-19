@@ -6,6 +6,6 @@ public interface IUserOperation {
 
 	void insertUser(String cuser, Usr_user usrUser);
 
-	void updateUser(String cuser, Usr_user usrUser);
+	void updateUser(String cuser, Usr_user usrUser, Usr_user oldUsrUser);
 
 }

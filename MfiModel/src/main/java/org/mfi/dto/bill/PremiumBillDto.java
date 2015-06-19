@@ -16,6 +16,7 @@ public class PremiumBillDto {
 	private BigDecimal brokerRate;
 	private BigDecimal brokerAmount;
 	private BigDecimal netCompanyAmount;
+	private BigDecimal policyFees;
 
 	public String getCpremium() {
 		return cpremium;
@@ -95,6 +96,14 @@ public class PremiumBillDto {
 
 	public void setCguarantee(String cguarantee) {
 		this.cguarantee = cguarantee;
+	}
+
+	public BigDecimal getPolicyFees() {
+		return policyFees;
+	}
+
+	public void setPolicyFees(BigDecimal policyFees) {
+		this.policyFees = policyFees;
 	}
 
 }

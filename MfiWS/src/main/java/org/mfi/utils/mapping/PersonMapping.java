@@ -15,12 +15,12 @@ import org.mfi.data.Cli_phone;
 import org.mfi.in.AddressIn;
 import org.mfi.in.ClientCategoryIn;
 import org.mfi.in.InsertPersonIn;
-import org.mfi.out.AddressHistoryOut;
-import org.mfi.out.AddressOut;
-import org.mfi.out.EmailHistoryOut;
-import org.mfi.out.PersonCategoryOut;
-import org.mfi.out.PersonOut;
-import org.mfi.out.PhoneHistoryOut;
+import org.mfi.out.person.AddressHistoryOut;
+import org.mfi.out.person.AddressOut;
+import org.mfi.out.person.EmailHistoryOut;
+import org.mfi.out.person.PersonCategoryOut;
+import org.mfi.out.person.PersonOut;
+import org.mfi.out.person.PhoneHistoryOut;
 import org.mfi.util.DateUtils;
 
 public final class PersonMapping {

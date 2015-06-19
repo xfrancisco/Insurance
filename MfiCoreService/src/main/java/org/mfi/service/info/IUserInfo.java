@@ -13,4 +13,6 @@ public interface IUserInfo {
 
 	List<Usr_user> getUsers();
 
+	Usr_user getUserWithoutValidity(String cuser);
+
 }

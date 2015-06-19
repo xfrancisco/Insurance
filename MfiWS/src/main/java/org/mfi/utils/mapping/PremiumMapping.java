@@ -8,7 +8,7 @@ import org.mfi.conf.Cod_category;
 import org.mfi.conf.Cod_guarantee;
 import org.mfi.conf.Cod_premium;
 import org.mfi.conf.Cod_section;
-import org.mfi.out.EntityOut;
+import org.mfi.out.codes.EntityOut;
 import org.mfi.util.MappingUtils;
 
 public final class PremiumMapping {

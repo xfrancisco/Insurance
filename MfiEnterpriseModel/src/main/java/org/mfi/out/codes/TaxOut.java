@@ -1,4 +1,4 @@
-package org.mfi.out;
+package org.mfi.out.codes;
 
 import java.math.BigDecimal;
 
