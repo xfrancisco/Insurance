@@ -95,10 +95,19 @@ public class ContractPremiumInfo extends ServiceCore implements IContractPremium
 	}
 
 	@Override
-	public Cpt_guarplacement getAgencyPlacement(long numguarantee, long numcliinsurer) {
+	public Cpt_guarplacement getAgencyPlacement(final long numguarantee, final long numcliinsurer) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cpt_guarplacement.class);
 		criteria.add(eq("numguarantee", numguarantee));
 		criteria.add(eq("numcliins", numcliinsurer));
+		return genericDao.getFirstByCriteria(criteria);
+	}
+
+	@Override
+	public Cpt_leadingfee getLeadingCommission(final long numguarantee, final long numclisrc, final long numclidest) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cpt_leadingfee.class);
+		criteria.add(eq("numguarantee", numguarantee));
+		criteria.add(eq("numclisrc", numguarantee));
+		criteria.add(eq("numclidest", numguarantee));
 		return genericDao.getFirstByCriteria(criteria);
 	}
 }

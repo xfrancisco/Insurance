@@ -26,6 +26,8 @@ public interface IContractPremiumInfo {
 
 	List<Cpt_leadingfee> getLeadingCommission(long numguarantee);
 
+	Cpt_leadingfee getLeadingCommission(long numguarantee, long numclisrc, long numclidest);
+
 	List<Cpt_guarcommi> getAgencyCommission(long numguarantee);
 
 	List<Cpt_guarplacement> getAgencyPlacement(long numguarantee);

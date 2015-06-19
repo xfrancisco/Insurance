@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -15,7 +17,11 @@ import org.mfi.conf.Cod_tax;
 import org.mfi.data.Cli_contract;
 import org.mfi.data.Cli_guarantee;
 import org.mfi.data.Cpt_guarbroker;
+import org.mfi.data.Cpt_guardispatch;
+import org.mfi.data.Cpt_guarplacement;
+import org.mfi.data.Cpt_leadingfee;
 import org.mfi.dto.bill.BillDto;
+import org.mfi.dto.bill.CoinsurerBillDto;
 import org.mfi.dto.bill.PremiumBillDto;
 import org.mfi.service.ServiceCore;
 import org.mfi.service.info.IBillInfo;
@@ -41,6 +47,8 @@ public class BillInfo extends ServiceCore implements IBillInfo {
 
 	@Inject
 	private IPersonInfo personInfo;
+
+	private static BigDecimal ZERO = new BigDecimal(0);
 
 	@Override
 	public List<BillDto> getBills(final long numcli, final int numcon) {
@@ -92,32 +100,92 @@ public class BillInfo extends ServiceCore implements IBillInfo {
 
 			BillDto billDto = new BillDto();
 			List<PremiumBillDto> premiumBills = new ArrayList<PremiumBillDto>();
-			BigDecimal grossTotalAmount = new BigDecimal(0);
-			BigDecimal brokerTotalAmount = new BigDecimal(0);
-			BigDecimal netCompanyTotalAmount = new BigDecimal(0);
+			BigDecimal grossTotalAmount = ZERO;
+			BigDecimal brokerTotalAmount = ZERO;
+			BigDecimal netCompanyTotalAmount = ZERO;
+
+			BigDecimal netLeaderAmount = ZERO;
+			BigDecimal grossLeaderAmount = ZERO;
 
 			for (Cli_guarantee cliGuarantee : guarantees) {
-				BigDecimal premiumAmount = cliGuarantee.getPremiumamount();
-				BigDecimal dailyPremiumAmount = premiumAmount.divide(nbDaysOfContract, 2, RoundingMode.HALF_UP);
-				BigDecimal currentBillPremiumAmount = dailyPremiumAmount.multiply(nbDaysInCurrentBill);
-
 				PremiumBillDto premiumBillDto = new PremiumBillDto();
-				Cod_tax codTax = premiumInfo.getTaxByPremium(cliGuarantee.getCpremium());
-				Cpt_guarbroker brokerCommission = contractPremiumInfo.getBrokerCommission(cliGuarantee.getNumguarantee(), numclibroker);
-
+				long numguarantee = cliGuarantee.getNumguarantee();
 				premiumBillDto.setCsection(cliGuarantee.getCsection());
 				premiumBillDto.setCguarantee(cliGuarantee.getCguarantee());
 				premiumBillDto.setCpremium(cliGuarantee.getCpremium());
 
+				BigDecimal premiumAmount = cliGuarantee.getPremiumamount();
+				BigDecimal dailyPremiumAmount = premiumAmount.divide(nbDaysOfContract, 2, RoundingMode.HALF_UP);
+				BigDecimal currentBillPremiumAmount = dailyPremiumAmount.multiply(nbDaysInCurrentBill);
+
+				Cod_tax codTax = premiumInfo.getTaxByPremium(cliGuarantee.getCpremium());
 				premiumBillDto.setCodtax(codTax);
-				premiumBillDto.setTaxAmount(MathUtils.applyPercentage(currentBillPremiumAmount, codTax.getTaxvalue()));
+				BigDecimal taxamount = MathUtils.applyPercentage(currentBillPremiumAmount, codTax.getTaxvalue());
+
+				BigDecimal grossPremiumAmount = currentBillPremiumAmount.add(taxamount);
+
+				Cpt_guarbroker brokerCommission = contractPremiumInfo.getBrokerCommission(numguarantee, numclibroker);
+				BigDecimal brokerAmount = MathUtils.applyPercentage(currentBillPremiumAmount, brokerCommission.getRate());
+
+				premiumBillDto.setTaxAmount(taxamount);
 				premiumBillDto.setNetPremiumAmount(currentBillPremiumAmount);
-				premiumBillDto.setGrossPremiumAmount(premiumBillDto.getNetPremiumAmount().add(premiumBillDto.getTaxAmount()));
+				premiumBillDto.setGrossPremiumAmount(grossPremiumAmount);
 
 				premiumBillDto.setBrokerRate(brokerCommission.getRate());
-				premiumBillDto.setBrokerAmount(MathUtils.applyPercentage(currentBillPremiumAmount, brokerCommission.getRate()));
+				premiumBillDto.setBrokerAmount(brokerAmount);
 
-				BigDecimal netCompanyAmount = premiumBillDto.getGrossPremiumAmount().subtract(premiumBillDto.getBrokerAmount());
+				BigDecimal netCompanyAmount = grossPremiumAmount.subtract(brokerAmount);
+
+				/* Apériteur */
+				List<Cpt_leadingfee> leadingfees = contractPremiumInfo.getLeadingCommission(numguarantee);
+				for (Cpt_leadingfee cptLeadingfee : leadingfees) {
+					netLeaderAmount = netLeaderAmount.add(MathUtils.applyPercentage(currentBillPremiumAmount, cptLeadingfee.getRate()));
+				}
+				if (isLeaderAnAgency)
+					grossLeaderAmount = netLeaderAmount.add(premiumBillDto.getTaxAmount());
+				else
+					grossLeaderAmount = netLeaderAmount;
+
+				/* Coassureurs */
+				List<Cpt_guardispatch> dispatches = contractPremiumInfo.getDispatches(numguarantee, numclileader);
+				Map<Long, CoinsurerBillDto> coinsurersMap = new HashMap<Long, CoinsurerBillDto>();
+				Map<Long, CoinsurerBillDto> placementsMap = new HashMap<Long, CoinsurerBillDto>();
+				for (Cpt_guardispatch cptGuardispatch : dispatches) {
+					long numcliins = cptGuardispatch.getNumcliins();
+					if (personInfo.isAgency(numcliins)) {
+						numcliagency = numcliins;
+						/* Cas des protocoles ou placements */
+						List<Cpt_guarplacement> placements = contractPremiumInfo.getAgencyPlacement(numguarantee);
+						for (Cpt_guarplacement cptGuarplacement : placements) {
+							BigDecimal amount = cptGuarplacement.getSharepart().multiply(currentBillPremiumAmount);
+							CoinsurerBillDto tmp = placementsMap.get(cptGuarplacement.getNumcliins());
+							if (tmp == null) {
+								tmp = new CoinsurerBillDto();
+								tmp.setAmount(amount);
+								tmp.setNumcliins(cptGuarplacement.getNumcliins());
+							} else {
+								tmp.setAmount(tmp.getAmount().add(amount));
+							}
+							placementsMap.put(cptGuarplacement.getNumcliins(), tmp);
+						}
+					} else {
+						/* Cas des coassureurs classiques */
+						Cpt_leadingfee cptLeadingFee = contractPremiumInfo.getLeadingCommission(numguarantee, numcliins, numclileader);
+						BigDecimal leadingFeeAmount = cptLeadingFee == null ? ZERO : MathUtils.applyPercentage(
+								MathUtils.applyPercentage(currentBillPremiumAmount, cptGuardispatch.getSharepart()), cptLeadingFee.getRate());
+						BigDecimal amount = currentBillPremiumAmount.subtract(brokerAmount).multiply(cptGuardispatch.getSharepart())
+								.subtract(leadingFeeAmount);
+						CoinsurerBillDto tmp = coinsurersMap.get(numcliins);
+						if (tmp == null) {
+							tmp = new CoinsurerBillDto();
+							tmp.setAmount(amount);
+							tmp.setNumcliins(numcliins);
+						} else {
+							tmp.setAmount(tmp.getAmount().add(amount));
+						}
+						coinsurersMap.put(numcliins, tmp);
+					}
+				}
 
 				premiumBillDto.setNetCompanyAmount(netCompanyAmount);
 				premiumBills.add(premiumBillDto);
