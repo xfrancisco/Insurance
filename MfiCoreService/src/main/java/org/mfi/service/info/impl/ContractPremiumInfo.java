@@ -5,11 +5,9 @@ import static org.hibernate.criterion.Restrictions.eq;
 import static org.hibernate.criterion.Restrictions.ne;
 import static org.hibernate.criterion.Subqueries.propertyIn;
 
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
 import org.mfi.conf.Cod_fee;
 import org.mfi.data.Cli_guarantee;
 import org.mfi.data.Cpt_fee;
@@ -27,12 +25,11 @@ public class ContractPremiumInfo extends ServiceCore implements IContractPremium
 
 	@Override
 	public List<Cli_guarantee> getGuarantees(final long numcli, final int numcon) {
-		Date today = dbHelper.getToday();
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cli_guarantee.class);
 		criteria.add(eq("numcli", numcli));
 		criteria.add(eq("numcon", numcon));
-		criteria.add(Restrictions.le("startval", today));
-		criteria.add(Restrictions.or(Restrictions.isNull("endval"), Restrictions.ge("endval", today)));
+		/*criteria.add(Restrictions.le("startval", today));
+		criteria.add(Restrictions.or(Restrictions.isNull("endval"), Restrictions.ge("endval", today)));*/
 		return genericDao.getByCriteria(criteria);
 	}
 
