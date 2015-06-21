@@ -1,13 +1,16 @@
 package org.mfi.service.info.impl;
 
+import static org.hibernate.criterion.Projections.property;
 import static org.hibernate.criterion.Restrictions.eq;
 import static org.hibernate.criterion.Restrictions.ne;
+import static org.hibernate.criterion.Subqueries.propertyIn;
 
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.mfi.conf.Cod_fee;
 import org.mfi.data.Cli_guarantee;
 import org.mfi.data.Cpt_fee;
 import org.mfi.data.Cpt_guarbroker;
@@ -58,6 +61,13 @@ public class ContractPremiumInfo extends ServiceCore implements IContractPremium
 	}
 
 	@Override
+	public List<Cpt_guardispatch> getDispatches(final long numguarantee) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cpt_guardispatch.class);
+		criteria.add(eq("numguarantee", numguarantee));
+		return genericDao.getByCriteria(criteria);
+	}
+
+	@Override
 	public Cpt_guarcommi getAgencyCommission(final long numguarantee, final long numcliinsurer) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cpt_guarcommi.class);
 		criteria.add(eq("numguarantee", numguarantee));
@@ -67,10 +77,15 @@ public class ContractPremiumInfo extends ServiceCore implements IContractPremium
 
 	@Override
 	public Cpt_fee getInitialFees(final long numcli, final int numcon) {
-		final DetachedCriteria criteria = DetachedCriteria.forClass(Cpt_fee.class);
-		criteria.add(eq("numcli", numcli));
-		criteria.add(eq("numcon", numcon));
-		return genericDao.getFirstByCriteria(criteria);
+		final DetachedCriteria subQuery = DetachedCriteria.forClass(Cod_fee.class);
+		subQuery.add(eq("indpolicyfee", "1")).setProjection(property("cfee"));
+
+		final DetachedCriteria mainQuery = DetachedCriteria.forClass(Cpt_fee.class);
+		mainQuery.add(propertyIn("cfee", subQuery));
+		mainQuery.add(eq("numcli", numcli));
+		mainQuery.add(eq("numcon", numcon));
+
+		return genericDao.getFirstByCriteria(mainQuery);
 	}
 
 	@Override
@@ -106,8 +121,16 @@ public class ContractPremiumInfo extends ServiceCore implements IContractPremium
 	public Cpt_leadingfee getLeadingCommission(final long numguarantee, final long numclisrc, final long numclidest) {
 		final DetachedCriteria criteria = DetachedCriteria.forClass(Cpt_leadingfee.class);
 		criteria.add(eq("numguarantee", numguarantee));
-		criteria.add(eq("numclisrc", numguarantee));
-		criteria.add(eq("numclidest", numguarantee));
+		criteria.add(eq("numclisrc", numclisrc));
+		criteria.add(eq("numclidest", numclidest));
 		return genericDao.getFirstByCriteria(criteria);
+	}
+
+	@Override
+	public List<Cpt_fee> getFees(long numcli, int numcon) {
+		final DetachedCriteria criteria = DetachedCriteria.forClass(Cpt_fee.class);
+		criteria.add(eq("numcli", numcli));
+		criteria.add(eq("numcon", numcon));
+		return genericDao.getByCriteria(criteria);
 	}
 }

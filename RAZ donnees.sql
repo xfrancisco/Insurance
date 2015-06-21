@@ -1,3 +1,11 @@
+delete from CPT_FEE;
+
+delete from CPT_LEADINGFEE;
+
+delete from CPT_GUARPLACEMENT;
+
+delete from CPT_GUARBROKER;
+
 delete from CPT_GUARCOMMI;
 
 delete from CPT_GUARDISPATCH;
@@ -23,3 +31,4 @@ delete from CLI_ADDRESS;
 delete from CLI_CLIENT;
 
 commit;
+

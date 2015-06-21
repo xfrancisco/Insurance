@@ -12,7 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "CPT_GUARPLACEMENT")
+@Table(name = "CPT_GUARBROKER")
 public class Cpt_guarbroker implements Serializable {
 
 	private static final long serialVersionUID = 7380226496752978707L;

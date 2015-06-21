@@ -92,7 +92,7 @@ public class ContractOperation extends ServiceCore implements IContractOperation
 				cptLeadingfee.setNumclidest(cliContract.getNumclileader());
 				cptLeadingfee.setNumclisrc(dispatchDto.getNumcliinsurer());
 				cptLeadingfee.setRate(guaranteeDto.getLeadingCommissionRate());
-				genericDao.save(cptGuardispatch);
+				genericDao.save(cptLeadingfee);
 			}
 
 			List<AgencyPlacementDto> placements = guaranteeDto.getAgencyPlacement();

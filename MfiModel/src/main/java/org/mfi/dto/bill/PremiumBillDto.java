@@ -1,6 +1,7 @@
 package org.mfi.dto.bill;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 import org.mfi.conf.Cod_tax;
 
@@ -17,6 +18,9 @@ public class PremiumBillDto {
 	private BigDecimal brokerAmount;
 	private BigDecimal netCompanyAmount;
 	private BigDecimal policyFees;
+	private Map<Long, CoinsurerBillDto> coinsurers;
+	private Map<Long, PlacementBillDto> placements;
+	private Map<Long, LeadingFeeDto> leadingFees;
 
 	public String getCpremium() {
 		return cpremium;
@@ -104,6 +108,30 @@ public class PremiumBillDto {
 
 	public void setPolicyFees(BigDecimal policyFees) {
 		this.policyFees = policyFees;
+	}
+
+	public Map<Long, CoinsurerBillDto> getCoinsurers() {
+		return coinsurers;
+	}
+
+	public void setCoinsurers(Map<Long, CoinsurerBillDto> coinsurers) {
+		this.coinsurers = coinsurers;
+	}
+
+	public Map<Long, PlacementBillDto> getPlacements() {
+		return placements;
+	}
+
+	public void setPlacements(Map<Long, PlacementBillDto> placements) {
+		this.placements = placements;
+	}
+
+	public Map<Long, LeadingFeeDto> getLeadingFees() {
+		return leadingFees;
+	}
+
+	public void setLeadingFees(Map<Long, LeadingFeeDto> leadingFees) {
+		this.leadingFees = leadingFees;
 	}
 
 }

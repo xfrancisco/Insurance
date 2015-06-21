@@ -1,6 +1,7 @@
 package org.mfi.out.billing;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class PremiumBillOut {
 	private String premiumId;
@@ -13,6 +14,9 @@ public class PremiumBillOut {
 	private BigDecimal brokerAmount;
 	private BigDecimal netCompanyAmount;
 	private BigDecimal taxRate;
+	private List<PlacementBillOut> placements;
+	private List<InsurerBillOut> coinsurers;
+	private List<LeadingFeesBillOut> leadingfees;
 
 	public String getPremiumId() {
 		return premiumId;
@@ -92,6 +96,30 @@ public class PremiumBillOut {
 
 	public void setTaxRate(BigDecimal taxRate) {
 		this.taxRate = taxRate;
+	}
+
+	public List<PlacementBillOut> getPlacements() {
+		return placements;
+	}
+
+	public void setPlacements(List<PlacementBillOut> placements) {
+		this.placements = placements;
+	}
+
+	public List<InsurerBillOut> getCoinsurers() {
+		return coinsurers;
+	}
+
+	public void setCoinsurers(List<InsurerBillOut> coinsurers) {
+		this.coinsurers = coinsurers;
+	}
+
+	public List<LeadingFeesBillOut> getLeadingfees() {
+		return leadingfees;
+	}
+
+	public void setLeadingfees(List<LeadingFeesBillOut> leadingfees) {
+		this.leadingfees = leadingfees;
 	}
 
 }

@@ -13,7 +13,6 @@ public class BillDto {
 	private BigDecimal brokerTotalAmount;
 	private BigDecimal netCompanyTotalAmount;
 	private List<Cpt_fee> fees;
-	private List<CoinsurerBillDto> coinsurers;
 	private Date startDate;
 	private Date endDate;
 
@@ -71,14 +70,6 @@ public class BillDto {
 
 	public void setFees(List<Cpt_fee> fees) {
 		this.fees = fees;
-	}
-
-	public List<CoinsurerBillDto> getCoinsurers() {
-		return coinsurers;
-	}
-
-	public void setCoinsurers(List<CoinsurerBillDto> coinsurers) {
-		this.coinsurers = coinsurers;
 	}
 
 }

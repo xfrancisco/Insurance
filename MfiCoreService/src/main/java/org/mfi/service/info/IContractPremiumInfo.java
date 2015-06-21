@@ -20,6 +20,8 @@ public interface IContractPremiumInfo {
 
 	List<Cpt_guardispatch> getDispatches(long numguarantee, long numclileader);
 
+	List<Cpt_guardispatch> getDispatches(long numguarantee);
+
 	Cpt_guarcommi getAgencyCommission(long numguarantee, long numcliinsurer);
 
 	Cpt_fee getInitialFees(long numcli, int numcon);
@@ -33,5 +35,7 @@ public interface IContractPremiumInfo {
 	List<Cpt_guarplacement> getAgencyPlacement(long numguarantee);
 
 	Cpt_guarplacement getAgencyPlacement(long numguarantee, long numcliinsurer);
+
+	List<Cpt_fee> getFees(long numcli, int numcon);
 
 }

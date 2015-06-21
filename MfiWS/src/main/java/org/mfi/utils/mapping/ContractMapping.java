@@ -30,7 +30,7 @@ public final class ContractMapping {
 		ContractDto result = new ContractDto();
 		result.setContract(populateContract(contractIn));
 		result.setGuarantees(populateGuarantees(contractIn.getCoinsurers(), contractIn.getGuarantees(), contractIn.getBrokerCommissionRate(),
-				contractIn.getLeaderShare()));
+				contractIn.getLeaderShare(), contractIn.getLeadingCommissionRate()));
 		result.setNumquote(contractIn.getQuoteId());
 		return result;
 
@@ -58,7 +58,7 @@ public final class ContractMapping {
 	}
 
 	private static List<GuaranteeDto> populateGuarantees(List<ContractInsurerIn> insurers, List<GuaranteeIn> guaranteesIn,
-			String brokerCommissionRate, String leaderShare) throws CommonException {
+			String brokerCommissionRate, String leaderShare, String leadingCommissionRate) throws CommonException {
 		List<GuaranteeDto> result = new ArrayList<GuaranteeDto>();
 		for (GuaranteeIn guaranteeIn : guaranteesIn) {
 			GuaranteeDto tmp = new GuaranteeDto();
@@ -71,7 +71,7 @@ public final class ContractMapping {
 			tmp.setGuaranteedAmount(MappingUtils.toBigDecimal(guaranteeIn.getGuaranteedAmount()));
 			tmp.setPremiumAmount(MappingUtils.toBigDecimal(guaranteeIn.getPremiumAmount()));
 			tmp.setLeaderShare(MappingUtils.toBigDecimal(leaderShare));
-
+			tmp.setLeadingCommissionRate(MappingUtils.toBigDecimal(leadingCommissionRate));
 			tmp.setInsurerDispatch(populateDispatch(insurers));
 			tmp.setAgencyPlacement(populateAgencyPlacement(guaranteeIn.getDispatch()));
 			result.add(tmp);

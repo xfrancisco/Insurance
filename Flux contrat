@@ -1,0 +1,41 @@
+{
+  "guarantees": [
+    {
+      "guaranteedAmount": "1000000",
+      "premiumAmount": "500",
+      "guaranteeId": "DCG",
+      "premiumId": "DCG00",
+      "dispatch": [
+        {
+          "insurerShare": "100",
+          "agencyCommissionRate": "30",
+          "insurerId": 9
+        }
+      ],
+      "sectionId": "PEFI",
+      "branchId": "IA",
+      "categoryId": "IAG"
+    }
+  ],
+  "startDate": "20150620",
+  "endDate": "",
+  "policyFees": "50",
+  "personId": 11,
+  "renewalDate": "20160101",
+  "leadingCommissionRate": "5",
+  "leaderShare": "50",
+  "coinsurers": [
+    {
+      "insurerShare": "50",
+      "insurerId": 8
+    }
+  ],
+  "brokerId": 7,
+  "leaderId": 6,
+  "branchId": "IA",
+  "categoryId": "IAG",
+  "durationId": "01",
+  "underwriterId": "LAURENT",
+  "frequencyId": "12",
+  "brokerCommissionRate": "20"
+}

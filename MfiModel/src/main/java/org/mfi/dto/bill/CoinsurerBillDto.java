@@ -7,6 +7,11 @@ public class CoinsurerBillDto {
 	private long numcliins;
 	private BigDecimal amount;
 
+	public CoinsurerBillDto(BigDecimal amount, long numcliins) {
+		this.amount = amount;
+		this.numcliins = numcliins;
+	}
+
 	public long getNumcliins() {
 		return numcliins;
 	}

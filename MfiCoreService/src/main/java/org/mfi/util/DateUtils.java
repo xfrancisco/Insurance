@@ -367,4 +367,10 @@ public final class DateUtils {
 		LocalDate endOfYear = locdate.monthOfYear().withMaximumValue();
 		return endOfYear.dayOfMonth().withMaximumValue().toDate();
 	}
+
+	public static Date getFirstDayOfNextYear(final Date date) {
+		Date lastDay = getLastDayOfTheYear(date);
+		lastDay = addToDate(lastDay, 1, TimePeriod.DAY);
+		return lastDay;
+	}
 }

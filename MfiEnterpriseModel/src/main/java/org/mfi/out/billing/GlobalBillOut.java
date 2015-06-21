@@ -1,35 +1,35 @@
 package org.mfi.out.billing;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class GlobalBillOut {
-	private BigDecimal grossTotalAmount;
-	private BigDecimal brokerTotalAmount;
-	private BigDecimal netCompanyTotalAmount;
+	private String grossTotalAmount;
+	private String brokerTotalAmount;
+	private String netCompanyTotalAmount;
+	private String feesTotalAmount;
 	private List<BillOut> bills;
 
-	public BigDecimal getGrossTotalAmount() {
+	public String getGrossTotalAmount() {
 		return grossTotalAmount;
 	}
 
-	public void setGrossTotalAmount(BigDecimal grossTotalAmount) {
+	public void setGrossTotalAmount(String grossTotalAmount) {
 		this.grossTotalAmount = grossTotalAmount;
 	}
 
-	public BigDecimal getBrokerTotalAmount() {
+	public String getBrokerTotalAmount() {
 		return brokerTotalAmount;
 	}
 
-	public void setBrokerTotalAmount(BigDecimal brokerTotalAmount) {
+	public void setBrokerTotalAmount(String brokerTotalAmount) {
 		this.brokerTotalAmount = brokerTotalAmount;
 	}
 
-	public BigDecimal getNetCompanyTotalAmount() {
+	public String getNetCompanyTotalAmount() {
 		return netCompanyTotalAmount;
 	}
 
-	public void setNetCompanyTotalAmount(BigDecimal netCompanyTotalAmount) {
+	public void setNetCompanyTotalAmount(String netCompanyTotalAmount) {
 		this.netCompanyTotalAmount = netCompanyTotalAmount;
 	}
 
@@ -39,6 +39,14 @@ public class GlobalBillOut {
 
 	public void setBills(List<BillOut> bills) {
 		this.bills = bills;
+	}
+
+	public String getFeesTotalAmount() {
+		return feesTotalAmount;
+	}
+
+	public void setFeesTotalAmount(String feesTotalAmount) {
+		this.feesTotalAmount = feesTotalAmount;
 	}
 
 }
