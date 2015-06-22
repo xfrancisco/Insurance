@@ -86,12 +86,12 @@ public class PersonOperation extends ServiceCore implements IPersonOperation {
 		for (Cli_catcli cliCatcli : addedCategories) {
 			genericDao.save(cliCatcli);
 			NewCategoryMovement movement = new NewCategoryMovement(cliCatcli.getCcatcli());
-			movementOperation.insertMovement(cliCatcli.getNumcli(), null, null, cuser, movement);
+			movementOperation.insertMovement(numcli, null, null, cuser, movement);
 		}
 
 		for (Cli_catcli cliCatcli : removedCategories) {
 			DelCategoryMovement movement = new DelCategoryMovement(cliCatcli.getCcatcli());
-			movementOperation.insertMovement(cliCatcli.getNumcli(), null, null, cuser, movement);
+			movementOperation.insertMovement(numcli, null, null, cuser, movement);
 			genericDao.delete(cliCatcli);
 		}
 	}

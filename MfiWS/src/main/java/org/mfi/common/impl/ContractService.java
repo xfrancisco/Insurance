@@ -74,7 +74,7 @@ public class ContractService implements IContractService {
 	@Override
 	public List<ContractListOut> getContracts(String userId, long personId) throws MfcException {
 		userCheck.checkUser(userId);
-		personCheck.checkClient(personId);
+		personCheck.checkPerson(personId);
 		List<Cli_contract> contracts = quoteAndContractInfo.getContracts(personId);
 		return ContractMapping.populateContractList(contracts);
 	}

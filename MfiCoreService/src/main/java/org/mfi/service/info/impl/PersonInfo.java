@@ -16,6 +16,8 @@ import org.mfi.service.ServiceCore;
 import org.mfi.service.info.IPersonInfo;
 import org.springframework.stereotype.Service;
 
+import com.google.common.base.Strings;
+
 @Service
 public class PersonInfo extends ServiceCore implements IPersonInfo {
 
@@ -112,6 +114,22 @@ public class PersonInfo extends ServiceCore implements IPersonInfo {
 		if (cliClient != null)
 			return true;
 		return false;
+	}
+
+	@Override
+	public String getPersonLabel(long numcli) {
+		Cli_client person = getPerson(numcli);
+		Cod_civility codCivility = genericDao.get(Cod_civility.class, person.getCcivil());
+		StringBuffer result = new StringBuffer("");
+		result.append(codCivility.getLcivil());
+		result.append(" ");
+		if (Strings.isNullOrEmpty(person.getCompanyname())) {
+			result.append(person.getName());
+			result.append(" ");
+			result.append(person.getFirstname());
+		} else
+			result.append(person.getCompanyname());
+		return result.toString();
 	}
 
 }

@@ -2,9 +2,13 @@ package org.mfi.out.person;
 
 import java.util.List;
 
+import org.mfi.annotations.NameSetter;
+
 public class PersonOut {
 
+	@NameSetter
 	private long personId;
+	private String personIdLabel;
 	private String civility;
 	private String lastName;
 	private String firstName;
@@ -105,6 +109,14 @@ public class PersonOut {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPersonIdLabel() {
+		return personIdLabel;
+	}
+
+	public void setPersonIdLabel(String personIdLabel) {
+		this.personIdLabel = personIdLabel;
 	}
 
 }

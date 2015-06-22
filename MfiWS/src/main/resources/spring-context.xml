@@ -11,6 +11,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
+	<aop:aspectj-autoproxy />
 
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 	<bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor" />
@@ -111,6 +112,7 @@
 										org.mfi.common,
 										org.mfi.common.impl,
 										org.mfi.webservices,
+										org.mfi.aspects,
 										org.mfi.exception,
 										org.mfi.utils">
 		<context:include-filter type="regex" expression="org.mfi.service.*.impl.*Info" />

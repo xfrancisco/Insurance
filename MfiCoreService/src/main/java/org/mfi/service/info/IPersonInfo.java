@@ -26,4 +26,6 @@ public interface IPersonInfo {
 	boolean isAgency(long numcli);
 
 	Cli_client getAgency(long numcli);
+
+	String getPersonLabel(long numcli);
 }
