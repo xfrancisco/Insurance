@@ -1,8 +1,12 @@
 package org.mfi.out.billing;
 
+import org.mfi.annotations.NameSetter;
+
 public class PlacementBillOut {
 
+	@NameSetter
 	private long insurerId;
+	private String insurerIdLabel;
 	private String placementAmount;
 	private String agencyAmount;
 
@@ -28,6 +32,14 @@ public class PlacementBillOut {
 
 	public void setAgencyAmount(String agencyAmount) {
 		this.agencyAmount = agencyAmount;
+	}
+
+	public String getInsurerIdLabel() {
+		return insurerIdLabel;
+	}
+
+	public void setInsurerIdLabel(String insurerIdLabel) {
+		this.insurerIdLabel = insurerIdLabel;
 	}
 
 }

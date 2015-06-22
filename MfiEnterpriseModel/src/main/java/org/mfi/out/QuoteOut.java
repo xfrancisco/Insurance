@@ -2,15 +2,26 @@ package org.mfi.out;
 
 import java.math.BigDecimal;
 
+import org.mfi.annotations.NameSetter;
+
 public class QuoteOut {
 
+	@NameSetter
 	private long personId;
+
+	private String personIdLabel;
 
 	private long quoteId;
 
+	@NameSetter
 	private long brokerId;
 
+	private String brokerIdLabel;
+
+	@NameSetter
 	private long leaderId;
+
+	private String leaderIdLabel;
 
 	private String branchId;
 
@@ -192,6 +203,30 @@ public class QuoteOut {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public String getPersonIdLabel() {
+		return personIdLabel;
+	}
+
+	public void setPersonIdLabel(String personIdLabel) {
+		this.personIdLabel = personIdLabel;
+	}
+
+	public String getBrokerIdLabel() {
+		return brokerIdLabel;
+	}
+
+	public void setBrokerIdLabel(String brokerIdLabel) {
+		this.brokerIdLabel = brokerIdLabel;
+	}
+
+	public String getLeaderIdLabel() {
+		return leaderIdLabel;
+	}
+
+	public void setLeaderIdLabel(String leaderIdLabel) {
+		this.leaderIdLabel = leaderIdLabel;
 	}
 
 }

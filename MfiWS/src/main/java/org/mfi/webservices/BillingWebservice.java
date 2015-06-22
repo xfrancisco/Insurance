@@ -6,6 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 import org.mfi.common.IBillService;
+import org.mfi.common.IUtilService;
 import org.mfi.exception.MfcException;
 import org.mfi.out.billing.GlobalBillOut;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class BillingWebservice extends AbstractWebservice {
 	@Inject
 	private IBillService billService;
 
+	@Inject
+	private IUtilService utilService;
+
 	@GET
 	@Path("/bills")
 	@ApiOperation(value = "Simulation de la facturation pour un contrat")
@@ -30,8 +34,7 @@ public class BillingWebservice extends AbstractWebservice {
 			@ApiParam(value = "Identifiant du contrat", name = CONTRACT_ID, required = true) @QueryParam(CONTRACT_ID) int contractId)
 			throws MfcException {
 		ResponseWrapper<GlobalBillOut> responseWrapper = new ResponseWrapper<GlobalBillOut>();
-		responseWrapper.setData(billService.getBills(userId, personId, contractId));
+		responseWrapper.setData(utilService.setNames(billService.getBills(userId, personId, contractId)));
 		return responseWrapper;
 	}
-
 }

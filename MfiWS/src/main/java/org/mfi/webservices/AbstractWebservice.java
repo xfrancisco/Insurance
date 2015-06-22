@@ -1,5 +1,6 @@
 package org.mfi.webservices;
 
+
 public class AbstractWebservice {
 
 	protected static final String USER_ID = "userId";
@@ -19,4 +20,5 @@ public class AbstractWebservice {
 	protected static final String CODETABLE_NAME = "codeTableName";
 	protected static final String PROTOCOL_ID = "protocolId";
 	protected static final String PROTOCOL_NAME = "protocolName";
+
 }

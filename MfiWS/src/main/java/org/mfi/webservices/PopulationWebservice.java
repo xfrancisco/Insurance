@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 import org.mfi.common.IPopulationService;
+import org.mfi.common.IUtilService;
 import org.mfi.exception.MfcException;
 import org.mfi.in.PopulationIn;
 import org.mfi.out.person.PersonOut;
@@ -29,6 +30,9 @@ public class PopulationWebservice extends AbstractWebservice {
 	@Inject
 	private IPopulationService populationService;
 
+	@Inject
+	private IUtilService utilService;
+
 	@POST
 	@Path("/populations")
 	@ApiOperation(value = "Liste des individus correspondant aux catégories sélectionnées")
@@ -36,7 +40,7 @@ public class PopulationWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@Valid PopulationIn populationIn) throws MfcException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
-		responseWrapper.setData(populationService.getPopulations(userId, populationIn, null));
+		responseWrapper.setData(utilService.setNames(populationService.getPopulations(userId, populationIn, null)));
 		return responseWrapper;
 	}
 
@@ -48,7 +52,7 @@ public class PopulationWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Nom ou raison sociale", name = NAME) @QueryParam(value = NAME) String name,
 			@Valid PopulationIn populationIn) throws MfcException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
-		responseWrapper.setData(populationService.getPopulations(userId, populationIn, name));
+		responseWrapper.setData(utilService.setNames(populationService.getPopulations(userId, populationIn, name)));
 		return responseWrapper;
 	}
 
@@ -57,9 +61,9 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des clients")
 	public ResponseWrapper<List<PersonOut>> getClients(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-					throws MfcException {
+			throws MfcException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
-		responseWrapper.setData(populationService.getClients(userId));
+		responseWrapper.setData(utilService.setNames(populationService.getClients(userId)));
 		return responseWrapper;
 	}
 
@@ -70,7 +74,7 @@ public class PopulationWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(required = true, value = "Nom ou raison sociale", name = NAME) @QueryParam(value = NAME) String name) throws MfcException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
-		responseWrapper.setData(populationService.getClientsByName(userId, name));
+		responseWrapper.setData(utilService.setNames(populationService.getClientsByName(userId, name)));
 		return responseWrapper;
 	}
 
@@ -79,9 +83,9 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des courtiers")
 	public ResponseWrapper<List<PersonOut>> getBrokers(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-					throws MfcException {
+			throws MfcException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
-		responseWrapper.setData(populationService.getBrokers(userId));
+		responseWrapper.setData(utilService.setNames(populationService.getBrokers(userId)));
 		return responseWrapper;
 	}
 
@@ -92,7 +96,7 @@ public class PopulationWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(required = true, value = "Nom ou raison sociale", name = NAME) @QueryParam(value = NAME) String name) throws MfcException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
-		responseWrapper.setData(populationService.getBrokersByName(userId, name));
+		responseWrapper.setData(utilService.setNames(populationService.getBrokersByName(userId, name)));
 		return responseWrapper;
 	}
 
@@ -101,7 +105,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des assureurs")
 	public ResponseWrapper<List<PersonOut>> getInsurers(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-					throws MfcException {
+			throws MfcException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getInsurers(userId));
 		return responseWrapper;
@@ -123,7 +127,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des réassureurs")
 	public ResponseWrapper<List<PersonOut>> getReinsurers(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-					throws MfcException {
+			throws MfcException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getReinsurers(userId));
 		return responseWrapper;
@@ -145,7 +149,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des experts")
 	public ResponseWrapper<List<PersonOut>> getExperts(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-					throws MfcException {
+			throws MfcException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getExperts(userId));
 		return responseWrapper;
@@ -167,7 +171,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des avocats")
 	public ResponseWrapper<List<PersonOut>> getLawyers(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-					throws MfcException {
+			throws MfcException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getLawyers(userId));
 		return responseWrapper;
@@ -189,7 +193,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des benéficiaires")
 	public ResponseWrapper<List<PersonOut>> getBeneficiaries(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-					throws MfcException {
+			throws MfcException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getBeneficiaries(userId));
 		return responseWrapper;
@@ -211,7 +215,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des tiers")
 	public ResponseWrapper<List<PersonOut>> getThirdParties(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-					throws MfcException {
+			throws MfcException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getThirdParties(userId));
 		return responseWrapper;
@@ -233,7 +237,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Liste des agences de souscription")
 	public ResponseWrapper<List<PersonOut>> getAgencies(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-					throws MfcException {
+			throws MfcException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getAgencies(userId));
 		return responseWrapper;
@@ -255,7 +259,7 @@ public class PopulationWebservice extends AbstractWebservice {
 	@ApiOperation(value = "Toutes les populations")
 	public ResponseWrapper<List<PersonOut>> getAll(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
-					throws MfcException {
+			throws MfcException {
 		ResponseWrapper<List<PersonOut>> responseWrapper = new ResponseWrapper<List<PersonOut>>();
 		responseWrapper.setData(populationService.getAll(userId));
 		return responseWrapper;

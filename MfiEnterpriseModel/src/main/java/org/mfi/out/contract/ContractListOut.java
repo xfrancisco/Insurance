@@ -1,8 +1,12 @@
 package org.mfi.out.contract;
 
+import org.mfi.annotations.NameSetter;
+
 public class ContractListOut {
 
+	@NameSetter
 	private long personId;
+	private String personIdLabel;
 	private int contractId;
 	private String branchId;
 	private String categoryId;
@@ -55,5 +59,13 @@ public class ContractListOut {
 
 	public void setQuoteId(Integer quoteId) {
 		this.quoteId = quoteId;
+	}
+
+	public String getPersonIdLabel() {
+		return personIdLabel;
+	}
+
+	public void setPersonIdLabel(String personIdLabel) {
+		this.personIdLabel = personIdLabel;
 	}
 }

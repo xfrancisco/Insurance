@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 import org.mfi.common.IProtocolService;
+import org.mfi.common.IUtilService;
 import org.mfi.exception.MfcException;
 import org.mfi.in.ProtocolIn;
 import org.mfi.in.UpdateProtocolIn;
@@ -30,6 +31,9 @@ public class ProtocolWebservice extends AbstractWebservice {
 	@Inject
 	private IProtocolService protocolService;
 
+	@Inject
+	private IUtilService utilService;
+
 	@POST
 	@Path("/create")
 	@ApiOperation(value = "Création d'un protocole")
@@ -37,7 +41,7 @@ public class ProtocolWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@Valid ProtocolIn newProtocolIn) throws MfcException {
 		ResponseWrapper<ProtocolOut> responseWrapper = new ResponseWrapper<ProtocolOut>();
-		responseWrapper.setData(protocolService.insertProtocol(userId, newProtocolIn));
+		responseWrapper.setData(utilService.setNames(protocolService.insertProtocol(userId, newProtocolIn)));
 		return responseWrapper;
 	}
 
@@ -48,7 +52,7 @@ public class ProtocolWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@Valid UpdateProtocolIn updateProtocolIn) throws MfcException {
 		ResponseWrapper<ProtocolOut> responseWrapper = new ResponseWrapper<ProtocolOut>();
-		responseWrapper.setData(protocolService.updateProtocol(userId, updateProtocolIn));
+		responseWrapper.setData(utilService.setNames(protocolService.updateProtocol(userId, updateProtocolIn)));
 		return responseWrapper;
 	}
 
@@ -61,7 +65,7 @@ public class ProtocolWebservice extends AbstractWebservice {
 			@ApiParam(required = false, value = "Intitulé du protocole", name = PROTOCOL_NAME) @QueryParam(value = PROTOCOL_NAME) String protocolName)
 			throws MfcException {
 		ResponseWrapper<ProtocolOut> responseWrapper = new ResponseWrapper<ProtocolOut>();
-		responseWrapper.setData(protocolService.getProtocol(userId, protocolId, protocolName));
+		responseWrapper.setData(utilService.setNames(protocolService.getProtocol(userId, protocolId, protocolName)));
 		return responseWrapper;
 	}
 
@@ -72,7 +76,7 @@ public class ProtocolWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId)
 			throws MfcException {
 		ResponseWrapper<List<ProtocolOut>> responseWrapper = new ResponseWrapper<List<ProtocolOut>>();
-		responseWrapper.setData(protocolService.getProtocols(userId));
+		responseWrapper.setData(utilService.setNames(protocolService.getProtocols(userId)));
 		return responseWrapper;
 	}
 

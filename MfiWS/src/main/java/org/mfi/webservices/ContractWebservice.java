@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 import org.mfi.common.IContractService;
+import org.mfi.common.IUtilService;
 import org.mfi.exception.MfcException;
 import org.mfi.in.ContractIn;
 import org.mfi.in.UpdateContractIn;
@@ -31,6 +32,9 @@ public class ContractWebservice extends AbstractWebservice {
 	@Inject
 	private IContractService contractService;
 
+	@Inject
+	private IUtilService utilService;
+
 	@POST
 	@Path("/create")
 	@ApiOperation(value = "Création d'un contrat")
@@ -38,7 +42,7 @@ public class ContractWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@Valid ContractIn newContractIn) throws MfcException {
 		ResponseWrapper<ContractOut> responseWrapper = new ResponseWrapper<ContractOut>();
-		responseWrapper.setData(contractService.insertContract(userId, newContractIn));
+		responseWrapper.setData(utilService.setNames(contractService.insertContract(userId, newContractIn)));
 		return responseWrapper;
 	}
 
@@ -49,7 +53,7 @@ public class ContractWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@Valid UpdateContractIn updateContractIn) throws MfcException {
 		ResponseWrapper<ContractOut> responseWrapper = new ResponseWrapper<ContractOut>();
-		responseWrapper.setData(contractService.updateContract(userId, updateContractIn));
+		responseWrapper.setData(utilService.setNames(contractService.updateContract(userId, updateContractIn)));
 		return responseWrapper;
 	}
 
@@ -62,7 +66,7 @@ public class ContractWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Contrat", name = CONTRACT_ID) @QueryParam(value = CONTRACT_ID) Integer contractId)
 			throws MfcException {
 		ResponseWrapper<ContractOut> responseWrapper = new ResponseWrapper<ContractOut>();
-		responseWrapper.setData(contractService.getContract(userId, personId, contractId));
+		responseWrapper.setData(utilService.setNames(contractService.getContract(userId, personId, contractId)));
 		return responseWrapper;
 	}
 
@@ -73,7 +77,7 @@ public class ContractWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(required = true, value = "Client", name = PERSON_ID) @QueryParam(value = PERSON_ID) Long personId) throws MfcException {
 		ResponseWrapper<List<ContractListOut>> responseWrapper = new ResponseWrapper<List<ContractListOut>>();
-		responseWrapper.setData(contractService.getContracts(userId, personId));
+		responseWrapper.setData(utilService.setNames(contractService.getContracts(userId, personId)));
 		return responseWrapper;
 	}
 

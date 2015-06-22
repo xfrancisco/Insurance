@@ -1,7 +1,11 @@
 package org.mfi.out.billing;
 
+import org.mfi.annotations.NameSetter;
+
 public class LeadingFeesBillOut {
+	@NameSetter
 	private long insurerId;
+	private String insurerIdLabel;
 	private String rate;
 	private String amount;
 	private String share;
@@ -36,6 +40,14 @@ public class LeadingFeesBillOut {
 
 	public void setShare(String share) {
 		this.share = share;
+	}
+
+	public String getInsurerIdLabel() {
+		return insurerIdLabel;
+	}
+
+	public void setInsurerIdLabel(String insurerIdLabel) {
+		this.insurerIdLabel = insurerIdLabel;
 	}
 
 }

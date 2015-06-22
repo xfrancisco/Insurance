@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 import org.mfi.common.IQuoteService;
+import org.mfi.common.IUtilService;
 import org.mfi.exception.MfcException;
 import org.mfi.in.QuoteIn;
 import org.mfi.in.UpdateQuoteIn;
@@ -30,6 +31,9 @@ public class QuoteWebservice extends AbstractWebservice {
 	@Inject
 	private IQuoteService quoteService;
 
+	@Inject
+	private IUtilService utilService;
+
 	@POST
 	@Path("/create")
 	@ApiOperation(value = "Création d'une proposition")
@@ -37,7 +41,7 @@ public class QuoteWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@Valid QuoteIn newQuoteIn) throws MfcException {
 		ResponseWrapper<QuoteOut> responseWrapper = new ResponseWrapper<QuoteOut>();
-		responseWrapper.setData(quoteService.insertQuote(userId, newQuoteIn));
+		responseWrapper.setData(utilService.setNames(quoteService.insertQuote(userId, newQuoteIn)));
 		return responseWrapper;
 	}
 
@@ -48,7 +52,7 @@ public class QuoteWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@Valid UpdateQuoteIn updateQuoteIn) throws MfcException {
 		ResponseWrapper<QuoteOut> responseWrapper = new ResponseWrapper<QuoteOut>();
-		responseWrapper.setData(quoteService.updateQuote(userId, updateQuoteIn));
+		responseWrapper.setData(utilService.setNames(quoteService.updateQuote(userId, updateQuoteIn)));
 		return responseWrapper;
 	}
 
@@ -58,10 +62,9 @@ public class QuoteWebservice extends AbstractWebservice {
 	public ResponseWrapper<QuoteOut> getQuote(
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(required = true, value = "Client", name = PERSON_ID) @QueryParam(value = PERSON_ID) Long personId,
-			@ApiParam(required = true, value = "Proposition", name = QUOTE_ID) @QueryParam(value = QUOTE_ID) Integer quoteId)
-			throws MfcException {
+			@ApiParam(required = true, value = "Proposition", name = QUOTE_ID) @QueryParam(value = QUOTE_ID) Integer quoteId) throws MfcException {
 		ResponseWrapper<QuoteOut> responseWrapper = new ResponseWrapper<QuoteOut>();
-		responseWrapper.setData(quoteService.getQuote(userId, personId, quoteId, true));
+		responseWrapper.setData(utilService.setNames(quoteService.getQuote(userId, personId, quoteId, true)));
 		return responseWrapper;
 	}
 
@@ -72,7 +75,7 @@ public class QuoteWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(required = true, value = "Client", name = PERSON_ID) @QueryParam(value = PERSON_ID) Long personId) throws MfcException {
 		ResponseWrapper<List<QuoteOut>> responseWrapper = new ResponseWrapper<List<QuoteOut>>();
-		responseWrapper.setData(quoteService.getQuotes(userId, personId));
+		responseWrapper.setData(utilService.setNames(quoteService.getQuotes(userId, personId)));
 		return responseWrapper;
 	}
 

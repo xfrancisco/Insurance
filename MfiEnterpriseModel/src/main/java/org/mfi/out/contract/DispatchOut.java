@@ -1,18 +1,16 @@
 package org.mfi.out.contract;
 
-import org.mfi.validation.constraints.EnterpriseModelEnum;
-import org.mfi.validation.constraints.Length;
-import org.mfi.validation.constraints.Percentage;
+import org.mfi.annotations.NameSetter;
 
 public class DispatchOut {
 
-	@Length(max = EnterpriseModelEnum.PERSONID)
+	@NameSetter
 	private Long insurerId;
 
-	@Percentage
+	private String insurerIdLabel;
+
 	private String insurerShare;
 
-	@Percentage
 	private String agencyCommissionRate;
 
 	public Long getInsurerId() {
@@ -37,6 +35,14 @@ public class DispatchOut {
 
 	public void setAgencyCommissionRate(String agencyCommissionRate) {
 		this.agencyCommissionRate = agencyCommissionRate;
+	}
+
+	public String getInsurerIdLabel() {
+		return insurerIdLabel;
+	}
+
+	public void setInsurerIdLabel(String insurerIdLabel) {
+		this.insurerIdLabel = insurerIdLabel;
 	}
 
 }

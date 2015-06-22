@@ -121,14 +121,16 @@ public class PersonInfo extends ServiceCore implements IPersonInfo {
 		Cli_client person = getPerson(numcli);
 		Cod_civility codCivility = genericDao.get(Cod_civility.class, person.getCcivil());
 		StringBuffer result = new StringBuffer("");
-		result.append(codCivility.getLcivil());
-		result.append(" ");
 		if (Strings.isNullOrEmpty(person.getCompanyname())) {
-			result.append(person.getName());
+			result.append(codCivility.getLcivil());
 			result.append(" ");
-			result.append(person.getFirstname());
+			result.append(Strings.nullToEmpty(person.getName()));
+			if (!Strings.isNullOrEmpty(person.getFirstname())) {
+				result.append(" ");
+				result.append(person.getFirstname());
+			}
 		} else
-			result.append(person.getCompanyname());
+			result.append(Strings.nullToEmpty(person.getCompanyname()));
 		return result.toString();
 	}
 

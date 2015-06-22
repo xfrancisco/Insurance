@@ -2,13 +2,20 @@ package org.mfi.out.contract;
 
 import java.util.List;
 
+import org.mfi.annotations.NameSetter;
 import org.mfi.out.codes.GuaranteeOut;
 
 public class ContractOut {
+	@NameSetter
 	private Long personId;
+	private String personIdLabel;
 	private Integer contractId;
+	@NameSetter
 	private Long leaderId;
+	private String leaderIdLabel;
+	@NameSetter
 	private Long brokerId;
+	private String brokerIdLabel;
 	private Integer quoteId;
 	private String branchId;
 	private String categoryId;
@@ -175,6 +182,30 @@ public class ContractOut {
 
 	public void setContractId(Integer contractId) {
 		this.contractId = contractId;
+	}
+
+	public String getPersonIdLabel() {
+		return personIdLabel;
+	}
+
+	public void setPersonIdLabel(String personIdLabel) {
+		this.personIdLabel = personIdLabel;
+	}
+
+	public String getLeaderIdLabel() {
+		return leaderIdLabel;
+	}
+
+	public void setLeaderIdLabel(String leaderIdLabel) {
+		this.leaderIdLabel = leaderIdLabel;
+	}
+
+	public String getBrokerIdLabel() {
+		return brokerIdLabel;
+	}
+
+	public void setBrokerIdLabel(String brokerIdLabel) {
+		this.brokerIdLabel = brokerIdLabel;
 	}
 
 }

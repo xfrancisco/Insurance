@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 import org.mfi.common.IPersonService;
+import org.mfi.common.IUtilService;
 import org.mfi.exception.MfcException;
 import org.mfi.in.InsertPersonIn;
 import org.mfi.in.UpdatePersonIn;
@@ -34,6 +35,9 @@ public class PersonWebservice extends AbstractWebservice {
 	@Inject
 	private IPersonService personService;
 
+	@Inject
+	private IUtilService utilService;
+
 	@POST
 	@Path("/create")
 	@ApiOperation(value = "Création d'un individu")
@@ -41,7 +45,7 @@ public class PersonWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@Valid InsertPersonIn insertPersonIn) throws MfcException {
 		ResponseWrapper<PersonOut> responseWrapper = new ResponseWrapper<PersonOut>();
-		responseWrapper.setData(personService.insertPerson(userId, insertPersonIn));
+		responseWrapper.setData(utilService.setNames(personService.insertPerson(userId, insertPersonIn)));
 		return responseWrapper;
 	}
 
@@ -52,7 +56,7 @@ public class PersonWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@Valid UpdatePersonIn updatePersonIn) throws MfcException {
 		ResponseWrapper<PersonOut> responseWrapper = new ResponseWrapper<PersonOut>();
-		responseWrapper.setData(personService.updatePerson(userId, updatePersonIn));
+		responseWrapper.setData(utilService.setNames(personService.updatePerson(userId, updatePersonIn)));
 		return responseWrapper;
 	}
 
@@ -63,7 +67,7 @@ public class PersonWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(value = "personId", required = true) @QueryParam(PERSON_ID) Long personId) throws MfcException {
 		ResponseWrapper<PersonOut> responseWrapper = new ResponseWrapper<PersonOut>();
-		responseWrapper.setData(personService.getPerson(userId, personId));
+		responseWrapper.setData(utilService.setNames(personService.getPerson(userId, personId)));
 		return responseWrapper;
 	}
 
@@ -74,7 +78,7 @@ public class PersonWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(value = "personId", required = true) @QueryParam(PERSON_ID) Long personId) throws MfcException {
 		ResponseWrapper<List<AddressHistoryOut>> responseWrapper = new ResponseWrapper<List<AddressHistoryOut>>();
-		responseWrapper.setData(personService.getAddressHistory(userId, personId));
+		responseWrapper.setData(utilService.setNames(personService.getAddressHistory(userId, personId)));
 		return responseWrapper;
 	}
 
@@ -85,7 +89,7 @@ public class PersonWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(value = "personId", required = true) @QueryParam(PERSON_ID) Long personId) throws MfcException {
 		ResponseWrapper<List<PhoneHistoryOut>> responseWrapper = new ResponseWrapper<List<PhoneHistoryOut>>();
-		responseWrapper.setData(personService.getPhoneHistory(userId, personId));
+		responseWrapper.setData(utilService.setNames(personService.getPhoneHistory(userId, personId)));
 		return responseWrapper;
 	}
 
@@ -96,7 +100,7 @@ public class PersonWebservice extends AbstractWebservice {
 			@ApiParam(required = true, value = "Utilisateur connecté", name = USER_ID) @QueryParam(value = USER_ID) String userId,
 			@ApiParam(value = "personId", required = true) @QueryParam(PERSON_ID) Long personId) throws MfcException {
 		ResponseWrapper<List<EmailHistoryOut>> responseWrapper = new ResponseWrapper<List<EmailHistoryOut>>();
-		responseWrapper.setData(personService.getEmailHistory(userId, personId));
+		responseWrapper.setData(utilService.setNames(personService.getEmailHistory(userId, personId)));
 		return responseWrapper;
 	}
 

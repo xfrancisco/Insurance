@@ -1,6 +1,8 @@
 package org.mfi.utils.mapping;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.mfi.data.Cli_contract;
@@ -20,6 +22,8 @@ import org.mfi.out.contract.ContractListOut;
 import org.mfi.out.contract.ContractOut;
 import org.mfi.out.contract.DispatchOut;
 import org.mfi.util.DateUtils;
+import org.mfi.util.DateUtils.DatePattern;
+import org.mfi.util.DateUtils.TimePeriod;
 import org.mfi.util.MappingUtils;
 
 import com.google.common.base.Strings;
@@ -47,7 +51,14 @@ public final class ContractMapping {
 		contract.setEndval(DateUtils.parseStringToSqlDate(contractIn.getEndDate()));
 		String renewalDate = contractIn.getRenewalDate();
 		if (!Strings.isNullOrEmpty(renewalDate)) {
-			contract.setRenewalDate(DateUtils.parseStringToSqlDate(renewalDate));
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(contract.getStartval());
+			int year = cal.get(Calendar.YEAR);
+			renewalDate += "/" + year;
+			Date renewal = DateUtils.parseStringToSqlDate(renewalDate, DatePattern.DATE_DD_MM_YYYY);
+			if (renewal.before(contract.getStartval()))
+				renewal = DateUtils.addToDate(renewal, 1, TimePeriod.YEAR);
+			contract.setRenewalDate(DateUtils.convertUtilDateToSqlDate(renewal));
 			contract.setEndval(contract.getRenewalDate());
 		}
 		contract.setNumclibroker(contractIn.getBrokerId());

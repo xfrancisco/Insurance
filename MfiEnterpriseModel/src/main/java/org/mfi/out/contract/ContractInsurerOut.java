@@ -1,10 +1,12 @@
 package org.mfi.out.contract;
 
+import org.mfi.annotations.NameSetter;
 
 public class ContractInsurerOut {
 
 	private String insurerShare;
 
+	@NameSetter
 	private Long insurerId;
 
 	private String insurerIdLabel;
