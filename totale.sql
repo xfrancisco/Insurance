@@ -1560,5 +1560,11 @@ NOCYCLE;
 
 insert into COD_TABLE(CTABLE, LTABLE, TABLENAME, TABLECODE, TABLELABEL, INDVALI)
 values ('PREMIUMS', 'LISTE DES PRIMES', 'Cod_premium', 'cpremium', 'indpremium', '1');
-
 commit;
+
+update COD_TABLE set tablelabel = 'lpremium' where ctable = 'PREMIUMS';
+commit;
+
+
+
+
