@@ -83,6 +83,13 @@
 				<value>org.mfi.data.Cpt_guarbroker</value>
 				<value>org.mfi.data.Cpt_fee</value>
 				<value>org.mfi.data.Cpt_leadingfee</value>
+				
+				<value>org.mfi.data.Cpt_bill</value>
+				<value>org.mfi.data.Cpt_billleader</value>
+				<value>org.mfi.data.Cpt_billbroker</value>
+				<value>org.mfi.data.Cpt_billcoinsurance</value>
+				<value>org.mfi.data.Cpt_billplacement</value>
+				<value>org.mfi.data.Cpt_billagency</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
